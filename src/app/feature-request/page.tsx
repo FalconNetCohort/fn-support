@@ -3,7 +3,11 @@ import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-export default function FeatureRequest() {
+/**
+ * Renders the Feature Request form including form fields for name, rank, email, job title, feature description, supplemental info, attachment, and chain of command.
+ *
+ * @return {JSX.Element} The JSX element representing the Feature Request form.
+ */
     const [formData, setFormData] = useState({
         name: "",
         rank: "",
@@ -15,7 +19,12 @@ export default function FeatureRequest() {
     });
     const [attachment, setAttachment] = useState(null);
 
-    const handleChange = (e) => {
+    /**
+     * Updates the form data state with the new value for the specified input field.
+     *
+     * @param {React.ChangeEvent<HTMLInputElement>} e - The event object representing the change event.
+     * @return {void} This function does not return anything.
+     */
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
