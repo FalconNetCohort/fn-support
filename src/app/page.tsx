@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 
 export default function Home() {
@@ -41,8 +42,8 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="w-full max-w-5xl text-center">
+      <main className="flex flex-col items-center justify-between min-h-screen p-24">
+        <div className="w-full max-w-5xl text-center mb-6">
           <input
             type="text"
             placeholder="Search for FAQs or info..."
@@ -78,6 +79,7 @@ export default function Home() {
           />
         )}
       </main>
+      <Footer />
     </>
   );
 }
