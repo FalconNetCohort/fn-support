@@ -98,18 +98,22 @@ export default function UserGuides() {
             }
             logEvent(analytics, editingId ? 'user_guide_update' : 'user_guide_create', { title: formData.title });
             alert(`User guide ${editingId ? 'updated' : 'created'} successfully!`);
-            setFormData({
-                title: "",
-                body: "",
-                tags: [],
-            });
-            setEditingId(null);
-            setInputTag("");
+            clearForm();
             fetchUserGuides();
         } catch (err) {
             console.error(err);
             alert(`Error ${editingId ? 'updating' : 'creating'} user guide`);
         }
+    };
+
+    const clearForm = () => {
+        setFormData({
+            title: "",
+            body: "",
+            tags: [],
+        });
+        setEditingId(null);
+        setInputTag("");
     };
 
     const handleEdit = (guide) => {
@@ -205,6 +209,7 @@ export default function UserGuides() {
                                 value={formData.body}
                                 onChange={handleBodyChange}
                                 className="h-full bg-white text-black"
+                                style={{ height: '320px' }} // Adjust the height to ensure proper spacing
                             />
                         </div>
                     </div>
