@@ -2,6 +2,8 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { db } from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 export default function FeatureRequest() {
     const [formData, setFormData] = useState({
@@ -24,11 +26,28 @@ export default function FeatureRequest() {
         setAttachment(e.target.files[0]);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic
-        console.log("Form data:", formData);
-        console.log("Attachment:", attachment);
+        try {
+            await addDoc(collection(db, "featureRequests"), {
+                ...formData,
+                attachment: attachment ? attachment.name : "",
+            });
+            alert("Feature request submitted successfully!");
+            setFormData({
+                name: "",
+                rank: "",
+                email: "",
+                jobTitle: "",
+                featureDescription: "",
+                supplementalInfo: "",
+                chainOfCommand: "no",
+            });
+            setAttachment(null);
+        } catch (err) {
+            console.error(err);
+            alert("Error submitting feature request");
+        }
     };
 
     return (
@@ -48,6 +67,7 @@ export default function FeatureRequest() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             value={formData.name}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                     <div className="mb-4">
@@ -61,6 +81,7 @@ export default function FeatureRequest() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             value={formData.rank}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                     <div className="mb-4">
@@ -74,6 +95,7 @@ export default function FeatureRequest() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             value={formData.email}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                     <div className="mb-4">
@@ -87,6 +109,7 @@ export default function FeatureRequest() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             value={formData.jobTitle}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                     <div className="mb-4">
@@ -99,6 +122,7 @@ export default function FeatureRequest() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             value={formData.featureDescription}
                             onChange={handleChange}
+                            required
                         ></textarea>
                     </div>
                     <div className="mb-4">

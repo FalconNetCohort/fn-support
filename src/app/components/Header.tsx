@@ -10,6 +10,7 @@ export default function Header() {
                 <Link href="/feature-request" className="mx-2">Feature Request</Link>
                 <Link href="/support-bug-report" className="mx-2">Support/Bug Report</Link>
                 <Link href="/in-progress" className="mx-2">In Progress</Link>
+                <Link href="/dashboard" className="mx-2">Admin Dashboard</Link>
             </nav>
         </header>
     );
