@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { db, auth, analytics, logEvent } from "../firebase";
+import { useRouter } from "next/navigation";
+import { db, analytics, logEvent } from "../firebase";
 import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import AuthWrapper from "../components/AuthWrapper";
 import "react-quill/dist/quill.snow.css";
 
 // Dynamically import react-quill to prevent SSR issues
@@ -25,16 +26,9 @@ export default function UserGuides() {
     const tagInputRef = useRef(null);
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (!user) {
-                router.push("/login");
-            } else {
-                logEvent(analytics, 'user_guides_page_view');
-                fetchUserGuides();
-            }
-        });
-        return () => unsubscribe();
-    }, [router]);
+        logEvent(analytics, 'user_guides_page_view');
+        fetchUserGuides();
+    }, []);
 
     const fetchUserGuides = async () => {
         const userGuidesSnapshot = await getDocs(collection(db, "userGuides"));
@@ -97,7 +91,6 @@ export default function UserGuides() {
                 });
             }
             logEvent(analytics, editingId ? 'user_guide_update' : 'user_guide_create', { title: formData.title });
-            alert(`User guide ${editingId ? 'updated' : 'created'} successfully!`);
             clearForm();
             fetchUserGuides();
         } catch (err) {
@@ -141,11 +134,11 @@ export default function UserGuides() {
 
     const handleLogout = async () => {
         await signOut(auth);
-        router.push("/");
+        router.push("/login");
     };
 
     return (
-        <>
+        <AuthWrapper>
             <Header />
             <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
                 <div className="w-full max-w-lg flex justify-between items-center mb-6">
@@ -262,6 +255,6 @@ export default function UserGuides() {
                 </div>
             </main>
             <Footer />
-        </>
+        </AuthWrapper>
     );
 }

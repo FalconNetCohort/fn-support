@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, analytics, logEvent } from "../firebase";
-import Header from "../components/Header";
+import Header from "./Header";
 
-export default function Login() {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export default function Login() {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             logEvent(analytics, 'login', { method: 'email/password' });
-            router.push("/dashboard"); // Redirect to dashboard
+            router.push("/");
         } catch (error) {
             alert(error.message);
         } finally {
@@ -72,4 +72,6 @@ export default function Login() {
             </main>
         </>
     );
-}
+};
+
+export default Login;

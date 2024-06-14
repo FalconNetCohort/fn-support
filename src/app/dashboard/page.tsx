@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { db, auth, analytics, logEvent } from "../firebase";
 import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "firebase/firestore";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import AuthWrapper from "../components/AuthWrapper";
 
 export default function Dashboard() {
     const [featureRequests, setFeatureRequests] = useState([]);
@@ -16,15 +17,8 @@ export default function Dashboard() {
     const router = useRouter();
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (!user) {
-                router.push("/login");
-            } else {
-                logEvent(analytics, 'dashboard_view');
-                fetchRequests();
-            }
-        });
-        return () => unsubscribe();
+        logEvent(analytics, 'dashboard_view');
+        fetchRequests();
     }, []);
 
     const fetchRequests = async () => {
@@ -60,7 +54,7 @@ export default function Dashboard() {
     const handleSignOut = async () => {
         await signOut(auth);
         logEvent(analytics, 'sign_out');
-        router.push("/");
+        router.push("/login");
     };
 
     const handleChange = (id, field, value) => {
@@ -152,7 +146,7 @@ export default function Dashboard() {
     );
 
     return (
-        <>
+        <AuthWrapper>
             <Header />
             <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
                 <h1 className="text-3xl mb-6">Dashboard</h1>
@@ -195,6 +189,6 @@ export default function Dashboard() {
                 </div>
             </main>
             <Footer />
-        </>
+        </AuthWrapper>
     );
 }
