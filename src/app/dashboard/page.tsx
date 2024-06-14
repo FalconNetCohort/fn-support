@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { db } from "../firebase";
-import { collection, getDocs, updateDoc, doc, arrayUnion } from "firebase/firestore";
+import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "firebase/firestore";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -11,9 +12,14 @@ export default function Dashboard() {
     const [comments, setComments] = useState({});
     const [updates, setUpdates] = useState({});
     const [searchTerm, setSearchTerm] = useState("");
+    const router = useRouter();
 
     useEffect(() => {
-        fetchRequests();
+        if (sessionStorage.getItem("authenticated") !== "true") {
+            router.push("/login");
+        } else {
+            fetchRequests();
+        }
     }, []);
 
     const fetchRequests = async () => {
@@ -34,6 +40,13 @@ export default function Dashboard() {
         alert('Request updated successfully');
         setComments({ ...comments, [id]: "" });
         setUpdates({});
+        fetchRequests();
+    };
+
+    const handleDelete = async (id, type) => {
+        const requestRef = doc(db, type === 'feature' ? 'featureRequests' : 'supportRequests', id);
+        await deleteDoc(requestRef);
+        alert('Request deleted successfully');
         fetchRequests();
     };
 
@@ -109,6 +122,12 @@ export default function Dashboard() {
                     className="mt-2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                 >
                     Update/Post Comment
+                </button>
+                <button
+                    onClick={() => handleDelete(request.id, type)}
+                    className="mt-2 ml-2 bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline"
+                >
+                    Delete
                 </button>
                 <div className="text-gray-400 text-sm mt-2">Submitted by: {request.name}</div>
             </div>
