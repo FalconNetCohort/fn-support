@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, analytics, logEvent } from "../firebase";
 import Header from "../components/Header";
 
 export default function Login() {
@@ -10,10 +10,15 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
+    useEffect(() => {
+        logEvent(analytics, 'login_page_view');
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password);
+            logEvent(analytics, 'login', { method: 'email/password' });
             router.push("/dashboard");
         } catch (error) {
             alert(error.message);

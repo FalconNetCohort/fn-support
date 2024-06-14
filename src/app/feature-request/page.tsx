@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { db } from "../firebase";
+import { db, analytics, logEvent } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 export default function FeatureRequest() {
@@ -16,6 +16,10 @@ export default function FeatureRequest() {
         chainOfCommand: "no",
     });
     const [attachment, setAttachment] = useState(null);
+
+    useEffect(() => {
+        logEvent(analytics, 'feature_request_page_view');
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -33,6 +37,7 @@ export default function FeatureRequest() {
                 ...formData,
                 attachment: attachment ? attachment.name : "",
             });
+            logEvent(analytics, 'feature_request_submit', { feature: formData.featureDescription });
             alert("Feature request submitted successfully!");
             setFormData({
                 name: "",

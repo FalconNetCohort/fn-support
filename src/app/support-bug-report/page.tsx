@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { db } from "../firebase";
+import { db, analytics, logEvent } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 export default function SupportBugReport() {
@@ -16,6 +16,10 @@ export default function SupportBugReport() {
         chainOfCommand: "no",
     });
     const [attachment, setAttachment] = useState(null);
+
+    useEffect(() => {
+        logEvent(analytics, 'support_bug_report_page_view');
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -33,6 +37,7 @@ export default function SupportBugReport() {
                 ...formData,
                 attachment: attachment ? attachment.name : "",
             });
+            logEvent(analytics, 'support_bug_report_submit', { bug: formData.bugDescription });
             alert("Support request submitted successfully!");
             setFormData({
                 name: "",
