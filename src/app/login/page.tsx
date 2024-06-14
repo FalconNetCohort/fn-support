@@ -19,7 +19,7 @@ export default function Login() {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             logEvent(analytics, 'login', { method: 'email/password' });
-            router.push("/dashboard");
+            router.push("/user-guides"); // Redirect to user guides page
         } catch (error) {
             alert(error.message);
         }

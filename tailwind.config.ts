@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["./src/**/*.{ts,tsx}"],
+  content: ["./src/**/*.{ts,tsx,js,jsx,html}"],  // Add other file types if necessary
   darkMode: "class",
   theme: {
     extend: {
@@ -47,5 +47,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),  // Add the typography plugin
+  ],
 };

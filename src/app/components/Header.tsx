@@ -11,6 +11,7 @@ export default function Header() {
                 <Link href="/feature-request" className="mx-2">Feature Request</Link>
                 <Link href="/support-bug-report" className="mx-2">Support/Bug Report</Link>
                 <Link href="/dashboard" className="mx-2">Admin Dashboard</Link>
+                <Link href="/user-guides" className="mx-2">User Guide Admin</Link>
             </nav>
         </header>
     );
