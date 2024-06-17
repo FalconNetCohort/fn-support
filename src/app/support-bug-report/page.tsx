@@ -39,26 +39,30 @@ export default function SupportBugReport() {
             });
             logEvent(analytics, 'support_bug_report_submit', { bug: formData.bugDescription });
             alert("Support request submitted successfully!");
-            setFormData({
-                name: "",
-                rank: "",
-                email: "",
-                jobTitle: "",
-                bugDescription: "",
-                supplementalInfo: "",
-                chainOfCommand: "no",
-            });
-            setAttachment(null);
+            clearForm();
         } catch (err) {
             console.error(err);
             alert("Error submitting support request");
         }
     };
 
+    const clearForm = () => {
+        setFormData({
+            name: "",
+            rank: "",
+            email: "",
+            jobTitle: "",
+            bugDescription: "",
+            supplementalInfo: "",
+            chainOfCommand: "no",
+        });
+        setAttachment(null);
+    };
+
     return (
-        <>
+        <div className="flex flex-col min-h-screen bg-gray-900 text-white">
             <Header />
-            <main className="flex min-h-screen flex-col items-center justify-center p-6">
+            <main className="flex-grow flex flex-col items-center justify-center p-6">
                 <h1 className="text-3xl mb-6">Support/Bug Report Form</h1>
                 <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -189,6 +193,6 @@ export default function SupportBugReport() {
                 </form>
             </main>
             <Footer />
-        </>
+        </div>
     );
 }
