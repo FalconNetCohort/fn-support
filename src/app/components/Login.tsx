@@ -5,27 +5,23 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, analytics, logEvent } from "../firebase";
 import Header from "./Header";
 
-const Login = () => {
+export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
-        logEvent(analytics, 'login_page_view');
+        logEvent(analytics, "login_page_view");
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            logEvent(analytics, 'login', { method: 'email/password' });
-            router.push("/");
+            logEvent(analytics, "login", { method: "email/password" });
+            router.push("/user-guides"); // Redirect to user guides page
         } catch (error) {
             alert(error.message);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -45,7 +41,6 @@ const Login = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            required
                         />
                     </div>
                     <div className="mb-4">
@@ -58,20 +53,16 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            required
                         />
                     </div>
                     <button
                         type="submit"
                         className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                        disabled={loading}
                     >
-                        {loading ? 'Loading...' : 'Login'}
+                        Login
                     </button>
                 </form>
             </main>
         </>
     );
-};
-
-export default Login;
+}
