@@ -73,6 +73,32 @@ export default function UserGuides() {
         }));
     };
 
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        if (file && file.name.endsWith(".md")) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setFormData((prev) => ({ ...prev, body: reader.result }));
+            };
+            reader.readAsText(file);
+        }
+    };
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const imageUrl = reader.result;
+                setFormData((prev) => ({
+                    ...prev,
+                    body: prev.body + `\n![Image](${imageUrl})\n`,
+                }));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -215,6 +241,30 @@ export default function UserGuides() {
                             required
                             rows="10"
                         ></textarea>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="mdFile">
+                            Upload Markdown File
+                        </label>
+                        <input
+                            type="file"
+                            name="mdFile"
+                            id="mdFile"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            onChange={handleFileUpload}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="imageFile">
+                            Upload Image
+                        </label>
+                        <input
+                            type="file"
+                            name="imageFile"
+                            id="imageFile"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            onChange={handleImageUpload}
+                        />
                     </div>
                     <div className="mb-4">
                         <button
