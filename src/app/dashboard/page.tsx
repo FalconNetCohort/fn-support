@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { db, auth, analytics, logEvent } from "../firebase";
 import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "firebase/firestore";
+import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import AuthWrapper from "../components/AuthWrapper";
 
 export default function Dashboard() {
     const [featureRequests, setFeatureRequests] = useState([]);
@@ -17,44 +17,51 @@ export default function Dashboard() {
     const router = useRouter();
 
     useEffect(() => {
-        logEvent(analytics, 'dashboard_view');
-        fetchRequests();
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (!user) {
+                router.push("/login");
+            } else {
+                logEvent(analytics, "dashboard_view");
+                fetchRequests();
+            }
+        });
+        return () => unsubscribe();
     }, []);
 
     const fetchRequests = async () => {
         const featureSnapshot = await getDocs(collection(db, "featureRequests"));
         const supportSnapshot = await getDocs(collection(db, "supportRequests"));
 
-        setFeatureRequests(featureSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-        setSupportRequests(supportSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+        setFeatureRequests(featureSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setSupportRequests(supportSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
     const handleUpdate = async (id, type) => {
-        const requestRef = doc(db, type === 'feature' ? 'featureRequests' : 'supportRequests', id);
+        const requestRef = doc(db, type === "feature" ? "featureRequests" : "supportRequests", id);
         const updateData = updates[id] || {};
         if (comments[id]) {
             updateData.comments = arrayUnion({ text: comments[id], timestamp: new Date() });
         }
         await updateDoc(requestRef, updateData);
-        logEvent(analytics, 'update_request', { id, type });
-        alert('Request updated successfully');
+        logEvent(analytics, "update_request", { id, type });
+        alert("Request updated successfully");
         setComments({ ...comments, [id]: "" });
         setUpdates({});
         fetchRequests();
     };
 
     const handleDelete = async (id, type) => {
-        const requestRef = doc(db, type === 'feature' ? 'featureRequests' : 'supportRequests', id);
+        const requestRef = doc(db, type === "feature" ? "featureRequests" : "supportRequests", id);
         await deleteDoc(requestRef);
-        logEvent(analytics, 'delete_request', { id, type });
-        alert('Request deleted successfully');
+        logEvent(analytics, "delete_request", { id, type });
+        alert("Request deleted successfully");
         fetchRequests();
     };
 
     const handleSignOut = async () => {
         await signOut(auth);
-        logEvent(analytics, 'sign_out');
-        router.push("/login");
+        logEvent(analytics, "sign_out");
+        router.push("/");
     };
 
     const handleChange = (id, field, value) => {
@@ -65,21 +72,21 @@ export default function Dashboard() {
         setComments({ ...comments, [id]: value });
     };
 
-    const filteredFeatureRequests = featureRequests.filter(request =>
+    const filteredFeatureRequests = featureRequests.filter((request) =>
         request.featureDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.supplementalInfo.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const filteredSupportRequests = supportRequests.filter(request =>
+    const filteredSupportRequests = supportRequests.filter((request) =>
         request.bugDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.supplementalInfo.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const renderRequests = (requests, type) => (
+    const renderRequests = (requests, type) =>
         requests.length === 0 ? (
             <div className="text-gray-400">No posts yet</div>
         ) : (
-            requests.map(request => (
+            requests.map((request) => (
                 <div key={request.id} className="p-4 mb-4 border rounded-lg shadow bg-gray-800">
                     <h3 className="text-xl font-semibold">{request.featureDescription || request.bugDescription}</h3>
                     <p className="text-gray-300 mb-2">{request.supplementalInfo}</p>
@@ -90,7 +97,7 @@ export default function Dashboard() {
                         <select
                             id="priority"
                             value={updates[request.id]?.priority || request.priority || "Low"}
-                            onChange={(e) => handleChange(request.id, 'priority', e.target.value)}
+                            onChange={(e) => handleChange(request.id, "priority", e.target.value)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         >
                             <option value="Low">Low</option>
@@ -106,7 +113,7 @@ export default function Dashboard() {
                         <select
                             id="status"
                             value={updates[request.id]?.status || request.status || "in-progress"}
-                            onChange={(e) => handleChange(request.id, 'status', e.target.value)}
+                            onChange={(e) => handleChange(request.id, "status", e.target.value)}
                             className={`px-2 py-1 rounded-lg text-sm ${updates[request.id]?.status === "complete" || request.status === "complete"
                                     ? "bg-green-500 text-white"
                                     : "bg-yellow-500 text-white"
@@ -142,8 +149,7 @@ export default function Dashboard() {
                     <div className="text-gray-400 text-sm mt-2">Submitted by: {request.name}</div>
                 </div>
             ))
-        )
-    );
+        );
 
     return (
         <AuthWrapper>
@@ -168,22 +174,22 @@ export default function Dashboard() {
                     <div className="flex justify-between">
                         <div className="w-1/2 pr-2">
                             <h3 className="text-xl mb-2">Feature Requests</h3>
-                            {renderRequests(filteredFeatureRequests.filter(request => request.status !== 'complete'), 'feature')}
+                            {renderRequests(filteredFeatureRequests.filter((request) => request.status !== "complete"), "feature")}
                         </div>
                         <div className="w-1/2 pl-2">
                             <h3 className="text-xl mb-2">Support Requests</h3>
-                            {renderRequests(filteredSupportRequests.filter(request => request.status !== 'complete'), 'support')}
+                            {renderRequests(filteredSupportRequests.filter((request) => request.status !== "complete"), "support")}
                         </div>
                     </div>
                     <h2 className="text-2xl mt-6 mb-4">Complete</h2>
                     <div className="flex justify-between">
                         <div className="w-1/2 pr-2">
                             <h3 className="text-xl mb-2">Feature Requests</h3>
-                            {renderRequests(filteredFeatureRequests.filter(request => request.status === 'complete'), 'feature')}
+                            {renderRequests(filteredFeatureRequests.filter((request) => request.status === "complete"), "feature")}
                         </div>
                         <div className="w-1/2 pl-2">
                             <h3 className="text-xl mb-2">Support Requests</h3>
-                            {renderRequests(filteredSupportRequests.filter(request => request.status === 'complete'), 'support')}
+                            {renderRequests(filteredSupportRequests.filter((request) => request.status === "complete"), "support")}
                         </div>
                     </div>
                 </div>

@@ -1,17 +1,16 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
-import { db, auth, analytics, logEvent } from "../firebase";
-import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { signOut } from "firebase/auth";
+import { db, analytics, logEvent, auth } from "../firebase";
+import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs } from "firebase/firestore";
+import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import AuthWrapper from "../components/AuthWrapper";
 import Modal from "../components/Modal";
+import MarkdownIt from "markdown-it";
 
-// Dynamically import react-markdown to prevent SSR issues
-const ReactMarkdown = dynamic(() => import("react-markdown"), { ssr: false });
+const mdParser = new MarkdownIt();
 
 export default function UserGuides() {
     const [formData, setFormData] = useState({
@@ -22,20 +21,14 @@ export default function UserGuides() {
     const [userGuides, setUserGuides] = useState([]);
     const [editingId, setEditingId] = useState(null);
     const [inputTag, setInputTag] = useState("");
-    const router = useRouter();
     const tagInputRef = useRef(null);
+    const [selectedResult, setSelectedResult] = useState(null);
+    const router = useRouter();
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (!user) {
-                router.push("/login");
-            } else {
-                logEvent(analytics, 'user_guides_page_view');
-                fetchUserGuides();
-            }
-        });
-        return () => unsubscribe();
-    }, [router]);
+        logEvent(analytics, "user_guides_page_view");
+        fetchUserGuides();
+    }, []);
 
     const fetchUserGuides = async () => {
         const userGuidesSnapshot = await getDocs(collection(db, "userGuides"));
@@ -51,12 +44,16 @@ export default function UserGuides() {
         setFormData({ ...formData, [name]: value });
     };
 
+    const handleBodyChange = (e) => {
+        setFormData({ ...formData, body: e.target.value });
+    };
+
     const handleTagChange = (e) => {
         setInputTag(e.target.value);
     };
 
     const handleTagKeyDown = (e) => {
-        if (e.key === 'Enter' || e.key === ',') {
+        if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
             const newTag = inputTag.trim();
             if (newTag && !formData.tags.includes(newTag)) {
@@ -93,13 +90,13 @@ export default function UserGuides() {
                     lastUpdated: now,
                 });
             }
-            logEvent(analytics, editingId ? 'user_guide_update' : 'user_guide_create', { title: formData.title });
-            alert(`User guide ${editingId ? 'updated' : 'created'} successfully!`);
+            logEvent(analytics, editingId ? "user_guide_update" : "user_guide_create", { title: formData.title });
+            alert(`User guide ${editingId ? "updated" : "created"} successfully!`);
             clearForm();
             fetchUserGuides();
         } catch (err) {
             console.error(err);
-            alert(`Error ${editingId ? 'updating' : 'creating'} user guide`);
+            alert(`Error ${editingId ? "updating" : "creating"} user guide`);
         }
     };
 
@@ -126,7 +123,7 @@ export default function UserGuides() {
         if (confirm("Are you sure you want to delete this guide?")) {
             try {
                 await deleteDoc(doc(db, "userGuides", id));
-                logEvent(analytics, 'user_guide_delete', { id });
+                logEvent(analytics, "user_guide_delete", { id });
                 alert("User guide deleted successfully!");
                 fetchUserGuides();
             } catch (err) {
@@ -138,7 +135,15 @@ export default function UserGuides() {
 
     const handleLogout = async () => {
         await signOut(auth);
-        router.push("/");
+        router.push("/login");
+    };
+
+    const handleResultClick = (result) => {
+        setSelectedResult(result);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedResult(null);
     };
 
     return (
@@ -204,18 +209,19 @@ export default function UserGuides() {
                         <textarea
                             name="body"
                             id="body"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-40 resize-none"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             value={formData.body}
-                            onChange={(e) => handleChange(e)}
+                            onChange={handleBodyChange}
                             required
-                        />
+                            rows="10"
+                        ></textarea>
                     </div>
                     <div className="mb-4">
                         <button
                             type="submit"
                             className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                         >
-                            {editingId ? 'Update Guide' : 'Create Guide'}
+                            {editingId ? "Update Guide" : "Create Guide"}
                         </button>
                     </div>
                 </form>
@@ -224,7 +230,7 @@ export default function UserGuides() {
                     {userGuides.length === 0 ? (
                         <div className="text-gray-400">No user guides yet</div>
                     ) : (
-                        userGuides.map(guide => (
+                        userGuides.map((guide) => (
                             <div key={guide.id} className="p-4 mb-4 border rounded-lg shadow bg-gray-800">
                                 <h3 className="text-xl font-semibold">{guide.title}</h3>
                                 <div className="flex items-center flex-wrap mb-2">
@@ -257,6 +263,14 @@ export default function UserGuides() {
                         ))
                     )}
                 </div>
+                {selectedResult && (
+                    <Modal
+                        isOpen={!!selectedResult}
+                        onClose={handleCloseModal}
+                        title={selectedResult.title}
+                        content={mdParser.render(selectedResult.body)}
+                    />
+                )}
             </main>
             <Footer />
         </AuthWrapper>
