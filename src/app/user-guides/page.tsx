@@ -1,17 +1,17 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { db, analytics, logEvent } from "../firebase";
+import dynamic from "next/dynamic";
+import { db, auth, analytics, logEvent } from "../firebase";
 import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AuthWrapper from "../components/AuthWrapper";
-import "react-quill/dist/quill.snow.css";
+import Modal from "../components/Modal";
 
-// Dynamically import react-quill to prevent SSR issues
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+// Dynamically import react-markdown to prevent SSR issues
+const ReactMarkdown = dynamic(() => import("react-markdown"), { ssr: false });
 
 export default function UserGuides() {
     const [formData, setFormData] = useState({
@@ -26,9 +26,16 @@ export default function UserGuides() {
     const tagInputRef = useRef(null);
 
     useEffect(() => {
-        logEvent(analytics, 'user_guides_page_view');
-        fetchUserGuides();
-    }, []);
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (!user) {
+                router.push("/login");
+            } else {
+                logEvent(analytics, 'user_guides_page_view');
+                fetchUserGuides();
+            }
+        });
+        return () => unsubscribe();
+    }, [router]);
 
     const fetchUserGuides = async () => {
         const userGuidesSnapshot = await getDocs(collection(db, "userGuides"));
@@ -42,10 +49,6 @@ export default function UserGuides() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-    };
-
-    const handleBodyChange = (value) => {
-        setFormData({ ...formData, body: value });
     };
 
     const handleTagChange = (e) => {
@@ -91,6 +94,7 @@ export default function UserGuides() {
                 });
             }
             logEvent(analytics, editingId ? 'user_guide_update' : 'user_guide_create', { title: formData.title });
+            alert(`User guide ${editingId ? 'updated' : 'created'} successfully!`);
             clearForm();
             fetchUserGuides();
         } catch (err) {
@@ -134,7 +138,7 @@ export default function UserGuides() {
 
     const handleLogout = async () => {
         await signOut(auth);
-        router.push("/login");
+        router.push("/");
     };
 
     return (
@@ -197,14 +201,14 @@ export default function UserGuides() {
                         <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="body">
                             Body
                         </label>
-                        <div className="h-80 mb-4">
-                            <ReactQuill
-                                value={formData.body}
-                                onChange={handleBodyChange}
-                                className="h-full bg-white text-black"
-                                style={{ height: '320px' }} // Adjust the height to ensure proper spacing
-                            />
-                        </div>
+                        <textarea
+                            name="body"
+                            id="body"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-40 resize-none"
+                            value={formData.body}
+                            onChange={(e) => handleChange(e)}
+                            required
+                        />
                     </div>
                     <div className="mb-4">
                         <button

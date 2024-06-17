@@ -11,7 +11,7 @@ interface AuthWrapperProps {
 
 const AuthWrapper = ({ children }: AuthWrapperProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true); 
     const router = useRouter();
 
     useEffect(() => {
