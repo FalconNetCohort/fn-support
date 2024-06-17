@@ -27,6 +27,7 @@ export default function Home() {
     setSearchTerm(query);
 
     if (query.length > 0) {
+      logEvent(analytics, 'search', { search_term: query });
       const filteredResults = userGuides.filter((item) =>
         item.title.toLowerCase().includes(query) ||
         item.body.toLowerCase().includes(query) ||
@@ -39,10 +40,12 @@ export default function Home() {
   };
 
   const handleResultClick = (result) => {
+    logEvent(analytics, 'select_content', { content_id: result.id, content_type: 'user_guide' });
     setSelectedResult(result);
   };
 
   const handleCloseModal = () => {
+    logEvent(analytics, 'close_modal', { content_id: selectedResult.id });
     setSelectedResult(null);
   };
 
