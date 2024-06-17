@@ -47,9 +47,9 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
       <Header />
-      <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
+      <main className="flex-grow flex flex-col items-center justify-center p-6">
         <h1 className="text-3xl mb-6">Welcome to FalconNet Support</h1>
         <input
           type="text"
@@ -90,6 +90,6 @@ export default function Home() {
         )}
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
