@@ -1,0 +1,132 @@
+[debug] [2024-08-13T18:51:09.987Z] ----------------------------------------------------------------------
+[debug] [2024-08-13T18:51:09.989Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2024-08-13T18:51:09.989Z] CLI Version:   13.15.1
+[debug] [2024-08-13T18:51:09.989Z] Platform:      darwin
+[debug] [2024-08-13T18:51:09.989Z] Node Version:  v20.16.0
+[debug] [2024-08-13T18:51:09.989Z] Time:          Tue Aug 13 2024 12:51:09 GMT-0600 (Mountain Daylight Time)
+[debug] [2024-08-13T18:51:09.989Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-08-13T18:51:10.049Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-08-13T18:51:10.050Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
+[debug] [2024-08-13T18:51:10.050Z] [iam] checking project fn-support-e5ac9 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-08-13T18:51:10.050Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
+[debug] [2024-08-13T18:51:10.050Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
+[debug] [2024-08-13T18:51:10.051Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-08-13T18:51:10.290Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
+[debug] [2024-08-13T18:51:10.290Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-08-13T18:51:10.291Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
+[debug] [2024-08-13T18:51:10.406Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
+[debug] [2024-08-13T18:51:10.406Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
+[debug] [2024-08-13T18:51:11.062Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
+[debug] [2024-08-13T18:51:11.731Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites 200
+[debug] [2024-08-13T18:51:11.731Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites {"sites":[{"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}]}
+[debug] [2024-08-13T18:51:11.732Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config [none]
+[debug] [2024-08-13T18:51:11.923Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config 200
+[debug] [2024-08-13T18:51:11.923Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config {"projectId":"fn-support-e5ac9","appId":"1:734672940110:web:5cf194766053d357a6a71f","storageBucket":"fn-support-e5ac9.appspot.com","apiKey":"AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw","authDomain":"fn-support-e5ac9.firebaseapp.com","messagingSenderId":"734672940110","measurementId":"G-XVL9ER0BX7"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 14.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2024-08-13T18:51:13.371Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 [none]
+[debug] [2024-08-13T18:51:13.683Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 200
+[debug] [2024-08-13T18:51:13.683Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 {"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}
+[info]   ▲ Next.js 14.2.4
+
+[info] 
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully
+
+[info]    Linting and checking validity of types ...
+
+[info] Failed to compile.
+
+
+[info] ./functions/src/index.ts:10:25
+Type error: Cannot find module 'firebase-functions/v2/https' or its corresponding type declarations.
+
+   8 |  */
+   9 |
+> 10 | import {onRequest} from "firebase-functions/v2/https";
+     |                         ^
+  11 | import * as logger from "firebase-functions/logger";
+  12 |
+  13 | // Start writing functions
+
+[debug] [2024-08-13T18:51:18.662Z] Error: ENOENT: no such file or directory, open '/Users/tomishamilton/WebstormProjects/fn-support/.next/export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2024-08-13T18:51:35.219Z] ----------------------------------------------------------------------
+[debug] [2024-08-13T18:51:35.221Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2024-08-13T18:51:35.221Z] CLI Version:   13.15.1
+[debug] [2024-08-13T18:51:35.221Z] Platform:      darwin
+[debug] [2024-08-13T18:51:35.222Z] Node Version:  v20.16.0
+[debug] [2024-08-13T18:51:35.222Z] Time:          Tue Aug 13 2024 12:51:35 GMT-0600 (Mountain Daylight Time)
+[debug] [2024-08-13T18:51:35.222Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-08-13T18:51:35.259Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-08-13T18:51:35.259Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
+[debug] [2024-08-13T18:51:35.259Z] [iam] checking project fn-support-e5ac9 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-08-13T18:51:35.260Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
+[debug] [2024-08-13T18:51:35.260Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
+[debug] [2024-08-13T18:51:35.260Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-08-13T18:51:35.460Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
+[debug] [2024-08-13T18:51:35.460Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-08-13T18:51:35.460Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
+[debug] [2024-08-13T18:51:35.550Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
+[debug] [2024-08-13T18:51:35.550Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
+[debug] [2024-08-13T18:51:36.199Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
+[debug] [2024-08-13T18:51:36.826Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites 200
+[debug] [2024-08-13T18:51:36.826Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites {"sites":[{"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}]}
+[debug] [2024-08-13T18:51:36.827Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config [none]
+[debug] [2024-08-13T18:51:37.103Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config 200
+[debug] [2024-08-13T18:51:37.104Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config {"projectId":"fn-support-e5ac9","appId":"1:734672940110:web:5cf194766053d357a6a71f","storageBucket":"fn-support-e5ac9.appspot.com","apiKey":"AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw","authDomain":"fn-support-e5ac9.firebaseapp.com","messagingSenderId":"734672940110","measurementId":"G-XVL9ER0BX7"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 14.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2024-08-13T18:51:38.541Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 [none]
+[debug] [2024-08-13T18:51:38.881Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 200
+[debug] [2024-08-13T18:51:38.882Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 {"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}
+[info]   ▲ Next.js 14.2.4
+
+[info] 
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully
+
+[info]    Linting and checking validity of types ...
+
+[info] Failed to compile.
+
+
+[info] ./src/app/components/ImageUpload.tsx:7:24
+Type error: Binding element 'onUpload' implicitly has an 'any' type.
+
+   5 | const storage = getStorage();
+   6 |
+>  7 | const ImageUpload = ({ onUpload }) => {
+     |                        ^
+   8 |     const [uploading, setUploading] = useState(false);
+   9 |
+  10 |     const handleFileChange = async (e) => {
+
+[debug] [2024-08-13T18:51:43.068Z] Error: ENOENT: no such file or directory, open '/Users/tomishamilton/WebstormProjects/fn-support/.next/export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.
