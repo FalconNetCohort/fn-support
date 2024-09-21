@@ -2,9 +2,16 @@
 import { useEffect } from "react";
 import ReactMarkdown from 'react-markdown';
 
-export default function Modal({ isOpen, onClose, title, content }) {
+interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    title: string;
+    content: string;
+}
+
+export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
     useEffect(() => {
-        const handleEsc = (event) => {
+        const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 onClose();
             }

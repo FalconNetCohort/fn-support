@@ -1,10 +1,14 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+interface ImageUploadProps {
+    onUpload: (downloadURL: string) => void
+}
 
 const storage = getStorage();
 
-const ImageUpload = ({ onUpload }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
     const [uploading, setUploading] = useState(false);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

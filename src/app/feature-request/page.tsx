@@ -15,22 +15,22 @@ export default function FeatureRequest() {
         supplementalInfo: "",
         chainOfCommand: "no",
     });
-    const [attachment, setAttachment] = useState(null);
+    const [attachment, setAttachment] = useState<File | null>(null);
 
     useEffect(() => {
         logEvent(analytics, 'feature_request_page_view');
     }, []);
 
-    const handleChange = (e: { target: { name: string; value: any; }; }) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value});
     };
 
-    const handleFileChange = (e: any) => {
-        setAttachment(e.target.files[0]);
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAttachment(e.target.files && e.target.files[0]);
     };
 
-    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await addDoc(collection(db, "featureRequests"), {
