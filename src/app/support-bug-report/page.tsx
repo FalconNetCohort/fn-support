@@ -15,22 +15,22 @@ export default function SupportBugReport() {
         supplementalInfo: "",
         chainOfCommand: "no",
     });
-    const [attachment, setAttachment] = useState(null);
+    const [attachment, setAttachment] = useState<File | null>(null);
 
     useEffect(() => {
         logEvent(analytics, 'support_bug_report_page_view');
     }, []);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleFileChange = (e) => {
-        setAttachment(e.target.files[0]);
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAttachment(e.target.files && e.target.files[0]);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await addDoc(collection(db, "supportRequests"), {
