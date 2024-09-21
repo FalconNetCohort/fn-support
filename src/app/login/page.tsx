@@ -15,15 +15,17 @@ export default function Login() {
         logEvent(analytics, 'login_page_view');
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         try {
             await signInWithEmailAndPassword(auth, email, password);
             logEvent(analytics, 'login', { method: 'email/password' });
             router.push("/dashboard"); // Redirect to dashboard
-        } catch (error) {
-            alert(error.message);
+        } catch (error: unknown) {
+            if (error && typeof error === "object" && "message" in error){
+                alert(error.message);
+            }
         } finally {
             setLoading(false);
         }
