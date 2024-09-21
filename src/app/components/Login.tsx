@@ -14,14 +14,16 @@ export default function Login() {
         logEvent(analytics, "login_page_view");
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password);
             logEvent(analytics, "login", { method: "email/password" });
             router.push("/user-guides"); // Redirect to user guides page
         } catch (error) {
-            alert(error.message);
+            if (error instanceof Error) {
+                alert(error.message);
+            }
         }
     };
 

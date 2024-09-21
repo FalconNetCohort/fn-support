@@ -7,8 +7,8 @@ const storage = getStorage();
 const ImageUpload = ({ onUpload }) => {
     const [uploading, setUploading] = useState(false);
 
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
         if (file) {
             setUploading(true);
             try {
