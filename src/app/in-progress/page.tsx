@@ -3,12 +3,30 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, Timestamp } from "firebase/firestore";
+
+type Priority = "Low" | "Medium" | "High" | "Critical" | undefined
+type SortField = "priority" | "status" | "name"
+
+interface Ticket {
+    id: string; 
+    type: string;
+    featureDescription?: string;
+    bugDescription?: string;
+    supplementalInfo?: string;
+    priority?: Priority;
+    comments?: {
+        text: string;
+        timestamp: Timestamp
+    }[];
+    status?: string;
+    name?: string
+}
 
 export default function InProgress() {
-    const [tickets, setTickets] = useState([]);
+    const [tickets, setTickets] = useState<Ticket[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [sortField, setSortField] = useState("priority");
+    const [sortField, setSortField] = useState<SortField>("priority");
 
     useEffect(() => {
         const fetchTickets = async () => {
@@ -32,10 +50,14 @@ export default function InProgress() {
         )
         .sort((a, b) => {
             if (sortField === "priority") {
-                const priorityOrder = ["Low", "Medium", "High", "Critical"];
+                const priorityOrder: Priority[] = ["Low", "Medium", "High", "Critical"];
                 return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
             }
-            return a[sortField]?.localeCompare(b[sortField]);
+            
+            const aValue = a[sortField] ?? String.fromCharCode(255)
+            const bValue = b[sortField] ?? String.fromCharCode(255)
+
+            return aValue.localeCompare(bValue)
         });
 
     return (
@@ -58,7 +80,7 @@ export default function InProgress() {
                         <select
                             id="sortField"
                             value={sortField}
-                            onChange={(e) => setSortField(e.target.value)}
+                            onChange={(e) => setSortField(e.target.value as SortField)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         >
                             <option value="priority">Priority</option>
