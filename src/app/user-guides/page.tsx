@@ -4,7 +4,7 @@ import
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { db, analytics, logEvent, auth } from "../firebase";
-import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs, DocumentReference, CollectionReference } from "firebase/firestore";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -13,17 +13,25 @@ import MarkdownIt from "markdown-it";
 
 const mdParser = new MarkdownIt();
 
+interface UserGuide {
+    id: string;
+    title: string;
+    body: string;
+    tags: string[];
+    lastUpdated: string; 
+}
+
 export default function UserGuides() {
     const [formData, setFormData] = useState({
         title: "",
         body: "",
-        tags: [],
+        tags: [] as string[],
     });
-    const [userGuides, setUserGuides] = useState([]);
-    const [editingId, setEditingId] = useState(null);
+    const [userGuides, setUserGuides] = useState<UserGuide[]>([]);
+    const [editingId, setEditingId] = useState<string | null>(null);
     const [inputTag, setInputTag] = useState("");
     const tagInputRef = useRef(null);
-    const [selectedResult, setSelectedResult] = useState(null);
+    const [selectedResult, setSelectedResult] = useState<UserGuide | null>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -37,23 +45,23 @@ export default function UserGuides() {
             ...doc.data(),
             id: doc.id,
             tags: doc.data().tags || [],
-        })));
+        } as UserGuide)));
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleBodyChange = (e) => {
+    const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setFormData({ ...formData, body: e.target.value });
     };
 
-    const handleTagChange = (e) => {
+    const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputTag(e.target.value);
     };
 
-    const handleTagKeyDown = (e) => {
+    const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
             const newTag = inputTag.trim();
@@ -67,30 +75,32 @@ export default function UserGuides() {
         }
     };
 
-    const handleTagDelete = (tagToDelete) => {
+    const handleTagDelete = (tagToDelete: string) => {
         setFormData((prev) => ({
             ...prev,
             tags: prev.tags.filter((tag) => tag !== tagToDelete),
         }));
     };
 
-    const handleFileUpload = async (e) => {
-        const file = e.target.files[0];
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
         if (file && file.name.endsWith(".md")) {
             const reader = new FileReader();
             reader.onload = () => {
-                setFormData((prev) => ({ ...prev, body: reader.result }));
+                if (typeof reader.result === 'string') {
+                    setFormData((prev) => ({ ...prev, body: reader.result as string }));
+                }
             };
             reader.readAsText(file);
         }
     };
 
-    const handleImageUpload = async (e) => {
-        const file = e.target.files[0];
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                const imageUrl = reader.result;
+                const imageUrl = reader.result as string;
                 setFormData((prev) => ({
                     ...prev,
                     body: prev.body + `\n![Image](${imageUrl})\n`,
@@ -100,18 +110,18 @@ export default function UserGuides() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const guideRef = editingId ? doc(db, "userGuides", editingId) : collection(db, "userGuides");
             const now = new Date().toISOString();
             if (editingId) {
-                await updateDoc(guideRef, {
+                await updateDoc(guideRef as DocumentReference, {
                     ...formData,
                     lastUpdated: now,
                 });
             } else {
-                await addDoc(guideRef, {
+                await addDoc(guideRef as CollectionReference, {
                     ...formData,
                     created: now,
                     lastUpdated: now,
@@ -137,16 +147,16 @@ export default function UserGuides() {
         setInputTag("");
     };
 
-    const handleEdit = (guide) => {
+    const handleEdit = (guide: UserGuide) => {
         setFormData({
             title: guide.title,
             body: guide.body,
             tags: guide.tags,
         });
-        setEditingId(guide.id);
+        setEditingId(guide.id as string);
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (id: string) => {
         if (confirm("Are you sure you want to delete this guide?")) {
             try {
                 await deleteDoc(doc(db, "userGuides", id));
@@ -165,7 +175,7 @@ export default function UserGuides() {
         router.push("/login");
     };
 
-    const handleResultClick = (result) => {
+    const handleResultClick = (result: UserGuide) => {
         setSelectedResult(result);
     };
 
@@ -240,7 +250,7 @@ export default function UserGuides() {
                             value={formData.body}
                             onChange={handleBodyChange}
                             required
-                            rows="10"
+                            rows={10}
                         ></textarea>
                     </div>
                     <div className="mb-4">
