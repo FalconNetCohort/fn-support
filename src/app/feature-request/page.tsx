@@ -1,9 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import {useState, useEffect, SetStateAction, ChangeEventHandler} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { db, analytics, logEvent } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import {db, analytics, logEvent} from "../firebase";
+import {collection, addDoc} from "firebase/firestore";
 
 export default function FeatureRequest() {
     const [formData, setFormData] = useState({
@@ -21,16 +21,16 @@ export default function FeatureRequest() {
         logEvent(analytics, 'feature_request_page_view');
     }, []);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+    const handleChange = (e: { target: { name: string; value: any; }; }) => {
+        const {name, value} = e.target;
+        setFormData({...formData, [name]: value});
     };
 
-    const handleFileChange = (e) => {
+    const handleFileChange = (e: any) => {
         setAttachment(e.target.files[0]);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         try {
             await addDoc(collection(db, "featureRequests"), {
