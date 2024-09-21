@@ -6,11 +6,18 @@ import { db, analytics, logEvent } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Modal from "./components/Modal";
 
+interface UserGuide {
+  id: string;
+  title: string;
+  body: string;
+  tags: string[];
+}
+
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState([]);
-  const [selectedResult, setSelectedResult] = useState(null);
-  const [userGuides, setUserGuides] = useState([]);
+  const [results, setResults] = useState<UserGuide[]>([]);
+  const [selectedResult, setSelectedResult] = useState<UserGuide | null>(null);
+  const [userGuides, setUserGuides] = useState<UserGuide[]>([]);
 
   useEffect(() => {
     logEvent(analytics, 'home_page_view');
@@ -19,10 +26,10 @@ export default function Home() {
 
   const fetchUserGuides = async () => {
     const userGuidesSnapshot = await getDocs(collection(db, "userGuides"));
-    setUserGuides(userGuidesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    setUserGuides(userGuidesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as UserGuide)));
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchTerm(query);
 
@@ -39,14 +46,16 @@ export default function Home() {
     }
   };
 
-  const handleResultClick = (result) => {
+  const handleResultClick = (result: UserGuide) => {
     logEvent(analytics, 'select_content', { content_id: result.id, content_type: 'user_guide' });
     setSelectedResult(result);
   };
 
   const handleCloseModal = () => {
+    if (selectedResult != null) {
     logEvent(analytics, 'close_modal', { content_id: selectedResult.id });
     setSelectedResult(null);
+    }
   };
 
   return (
