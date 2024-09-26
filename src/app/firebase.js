@@ -5,13 +5,13 @@ import { getAuth } from "firebase/auth";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA8ek_byVEr7PwmHDb_OYZUKMz4zVG6-Sc",
-  authDomain: "fn-support-44ece.firebaseapp.com",
-  projectId: "fn-support-44ece",
-  storageBucket: "fn-support-44ece.appspot.com",
-  messagingSenderId: "766747324313",
-  appId: "1:766747324313:web:df27625d3553445b9fad08",
-  measurementId: "G-PT3RVVV81E",
+  apiKey: "AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw",
+  authDomain: "fn-support-e5ac9.firebaseapp.com",
+  projectId: "fn-support-e5ac9",
+  storageBucket: "fn-support-e5ac9.appspot.com",
+  messagingSenderId: "734672940110",
+  appId: "1:734672940110:web:5cf194766053d357a6a71f",
+  measurementId: "G-XVL9ER0BX7"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -20,3 +20,4 @@ const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
 export { auth, db, analytics, logEvent };
+
