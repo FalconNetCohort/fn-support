@@ -1,48 +1,79 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
+import { signOut, User } from "firebase/auth";
 import { db, auth, analytics, logEvent } from "../firebase";
 import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "firebase/firestore";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+// Define types for requests
+interface Request {
+    id: string;
+    featureDescription?: string;
+    bugDescription?: string;
+    supplementalInfo: string;
+    priority?: string;
+    status?: string;
+    name: string;
+}
+
+interface UpdateData {
+    priority?: string;
+    status?: string;
+    comments?: any;
+}
+
+interface CommentData {
+    [key: string]: string;
+}
+
 export default function Dashboard() {
-    const [featureRequests, setFeatureRequests] = useState([]);
-    const [supportRequests, setSupportRequests] = useState([]);
-    const [comments, setComments] = useState({});
-    const [updates, setUpdates] = useState({});
+    const [featureRequests, setFeatureRequests] = useState<Request[]>([]);
+    const [supportRequests, setSupportRequests] = useState<Request[]>([]);
+    const [comments, setComments] = useState<CommentData>({});
+    const [updates, setUpdates] = useState<{ [key: string]: UpdateData }>({});
     const [searchTerm, setSearchTerm] = useState("");
     const router = useRouter();
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
+        const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
             if (!user) {
                 router.push("/login");
             } else {
                 logEvent(analytics, "dashboard_view");
-                fetchRequests();
+                fetchRequests().then(r => r);
             }
         });
         return () => unsubscribe();
-    }, []);
+    }, [router]);
 
     const fetchRequests = async () => {
         const featureSnapshot = await getDocs(collection(db, "featureRequests"));
         const supportSnapshot = await getDocs(collection(db, "supportRequests"));
 
-        setFeatureRequests(featureSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        setSupportRequests(supportSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setFeatureRequests(featureSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as Request)));
+        setSupportRequests(supportSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as Request)));
     };
 
-    const handleUpdate = async (id, type) => {
+    const handleUpdate = async (id: string, type: "feature" | "support") => {
         const requestRef = doc(db, type === "feature" ? "featureRequests" : "supportRequests", id);
-        const updateData = updates[id] || {};
+
+        const updateData: UpdateData = updates[id] || {};
+
+        // Ensure updateData is non-empty before updating
         if (comments[id]) {
-            updateData.comments = arrayUnion({ text: comments[id], timestamp: new Date() });
+            // Cast the update object to the expected Firestore format
+            await updateDoc(requestRef, {
+                ...updateData,
+                comments: arrayUnion({ text: comments[id], timestamp: new Date() }),
+            } as Partial<UpdateData>); // Ensure Firestore accepts it as a partial update
+        } else {
+            // If no comments to add, update only the existing data
+            await updateDoc(requestRef, updateData as Partial<UpdateData>);
         }
-        await updateDoc(requestRef, updateData);
+
         logEvent(analytics, "update_request", { id, type });
         alert("Request updated successfully");
         setComments({ ...comments, [id]: "" });
@@ -50,7 +81,8 @@ export default function Dashboard() {
         fetchRequests();
     };
 
-    const handleDelete = async (id, type) => {
+
+    const handleDelete = async (id: string, type: "feature" | "support") => {
         const requestRef = doc(db, type === "feature" ? "featureRequests" : "supportRequests", id);
         await deleteDoc(requestRef);
         logEvent(analytics, "delete_request", { id, type });
@@ -64,25 +96,25 @@ export default function Dashboard() {
         router.push("/");
     };
 
-    const handleChange = (id, field, value) => {
+    const handleChange = (id: string, field: keyof UpdateData, value: string) => {
         setUpdates({ ...updates, [id]: { ...updates[id], [field]: value } });
     };
 
-    const handleCommentChange = (id, value) => {
+    const handleCommentChange = (id: string, value: string) => {
         setComments({ ...comments, [id]: value });
     };
 
     const filteredFeatureRequests = featureRequests.filter((request) =>
-        request.featureDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        request.featureDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.supplementalInfo.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const filteredSupportRequests = supportRequests.filter((request) =>
-        request.bugDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        request.bugDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         request.supplementalInfo.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const renderRequests = (requests, type) =>
+    const renderRequests = (requests: Request[], type: "feature" | "support") =>
         requests.length === 0 ? (
             <div className="text-gray-400">No posts yet</div>
         ) : (

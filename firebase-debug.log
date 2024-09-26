@@ -1,28 +1,28 @@
-[debug] [2024-08-13T18:51:09.987Z] ----------------------------------------------------------------------
-[debug] [2024-08-13T18:51:09.989Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting
-[debug] [2024-08-13T18:51:09.989Z] CLI Version:   13.15.1
-[debug] [2024-08-13T18:51:09.989Z] Platform:      darwin
-[debug] [2024-08-13T18:51:09.989Z] Node Version:  v20.16.0
-[debug] [2024-08-13T18:51:09.989Z] Time:          Tue Aug 13 2024 12:51:09 GMT-0600 (Mountain Daylight Time)
-[debug] [2024-08-13T18:51:09.989Z] ----------------------------------------------------------------------
+[debug] [2024-09-26T22:41:29.624Z] ----------------------------------------------------------------------
+[debug] [2024-09-26T22:41:29.626Z] Command:       /opt/homebrew/Cellar/node@20/20.17.0/bin/node /opt/homebrew/bin/firebase deploy --only hosting
+[debug] [2024-09-26T22:41:29.626Z] CLI Version:   13.20.0
+[debug] [2024-09-26T22:41:29.626Z] Platform:      darwin
+[debug] [2024-09-26T22:41:29.626Z] Node Version:  v20.17.0
+[debug] [2024-09-26T22:41:29.626Z] Time:          Thu Sep 26 2024 16:41:29 GMT-0600 (Mountain Daylight Time)
+[debug] [2024-09-26T22:41:29.627Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2024-08-13T18:51:10.049Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2024-08-13T18:51:10.050Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
-[debug] [2024-08-13T18:51:10.050Z] [iam] checking project fn-support-e5ac9 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
-[debug] [2024-08-13T18:51:10.050Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
-[debug] [2024-08-13T18:51:10.050Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
-[debug] [2024-08-13T18:51:10.051Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
-[debug] [2024-08-13T18:51:10.290Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
-[debug] [2024-08-13T18:51:10.290Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
-[debug] [2024-08-13T18:51:10.291Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
-[debug] [2024-08-13T18:51:10.406Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
-[debug] [2024-08-13T18:51:10.406Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
-[debug] [2024-08-13T18:51:11.062Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
-[debug] [2024-08-13T18:51:11.731Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites 200
-[debug] [2024-08-13T18:51:11.731Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites {"sites":[{"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}]}
-[debug] [2024-08-13T18:51:11.732Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config [none]
-[debug] [2024-08-13T18:51:11.923Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config 200
-[debug] [2024-08-13T18:51:11.923Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config {"projectId":"fn-support-e5ac9","appId":"1:734672940110:web:5cf194766053d357a6a71f","storageBucket":"fn-support-e5ac9.appspot.com","apiKey":"AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw","authDomain":"fn-support-e5ac9.firebaseapp.com","messagingSenderId":"734672940110","measurementId":"G-XVL9ER0BX7"}
+[debug] [2024-09-26T22:41:29.666Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-09-26T22:41:29.666Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
+[debug] [2024-09-26T22:41:29.666Z] [iam] checking project fn-support-e5ac9 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-09-26T22:41:29.667Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
+[debug] [2024-09-26T22:41:29.667Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
+[debug] [2024-09-26T22:41:29.668Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T22:41:29.773Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
+[debug] [2024-09-26T22:41:29.773Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T22:41:29.774Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
+[debug] [2024-09-26T22:41:29.856Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
+[debug] [2024-09-26T22:41:29.856Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
+[debug] [2024-09-26T22:41:30.525Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
+[debug] [2024-09-26T22:41:30.888Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites 200
+[debug] [2024-09-26T22:41:30.888Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites {"sites":[{"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}]}
+[debug] [2024-09-26T22:41:30.889Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config [none]
+[debug] [2024-09-26T22:41:31.182Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config 200
+[debug] [2024-09-26T22:41:31.182Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config {"projectId":"fn-support-e5ac9","appId":"1:734672940110:web:5cf194766053d357a6a71f","storageBucket":"fn-support-e5ac9.appspot.com","apiKey":"AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw","authDomain":"fn-support-e5ac9.firebaseapp.com","messagingSenderId":"734672940110","measurementId":"G-XVL9ER0BX7"}
 [info] 
    Thank you for trying our early preview of Next.js support on Firebase Hosting.
    During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
@@ -34,9 +34,9 @@
 
    We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
 
-[debug] [2024-08-13T18:51:13.371Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 [none]
-[debug] [2024-08-13T18:51:13.683Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 200
-[debug] [2024-08-13T18:51:13.683Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 {"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}
+[debug] [2024-09-26T22:41:32.647Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 [none]
+[debug] [2024-09-26T22:41:32.792Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 200
+[debug] [2024-09-26T22:41:32.792Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 {"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}
 [info]   ▲ Next.js 14.2.4
 
 [info] 
@@ -50,45 +50,47 @@
 [info] Failed to compile.
 
 
-[info] ./functions/src/index.ts:10:25
-Type error: Cannot find module 'firebase-functions/v2/https' or its corresponding type declarations.
+[info] ./src/app/dashboard/page.tsx:35:28
+Type error: Argument of type '{ id: string; }[]' is not assignable to parameter of type 'SetStateAction<never[]>'.
+  Type '{ id: string; }[]' is not assignable to type 'never[]'.
+    Type '{ id: string; }' is not assignable to type 'never'.
 
-   8 |  */
-   9 |
-> 10 | import {onRequest} from "firebase-functions/v2/https";
-     |                         ^
-  11 | import * as logger from "firebase-functions/logger";
-  12 |
-  13 | // Start writing functions
+  33 |         const supportSnapshot = await getDocs(collection(db, "supportRequests"));
+  34 |
+> 35 |         setFeatureRequests(featureSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+     |                            ^
+  36 |         setSupportRequests(supportSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  37 |     };
+  38 |
 
-[debug] [2024-08-13T18:51:18.662Z] Error: ENOENT: no such file or directory, open '/Users/tomishamilton/WebstormProjects/fn-support/.next/export-marker.json'
+[debug] [2024-09-26T22:41:38.855Z] Error: ENOENT: no such file or directory, open '/Users/tomishamilton/development/FN/fn-support/.next/export-marker.json'
 [error] 
 [error] Error: An unexpected error has occurred.
-[debug] [2024-08-13T18:51:35.219Z] ----------------------------------------------------------------------
-[debug] [2024-08-13T18:51:35.221Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting
-[debug] [2024-08-13T18:51:35.221Z] CLI Version:   13.15.1
-[debug] [2024-08-13T18:51:35.221Z] Platform:      darwin
-[debug] [2024-08-13T18:51:35.222Z] Node Version:  v20.16.0
-[debug] [2024-08-13T18:51:35.222Z] Time:          Tue Aug 13 2024 12:51:35 GMT-0600 (Mountain Daylight Time)
-[debug] [2024-08-13T18:51:35.222Z] ----------------------------------------------------------------------
+[debug] [2024-09-26T22:58:41.217Z] ----------------------------------------------------------------------
+[debug] [2024-09-26T22:58:41.219Z] Command:       /opt/homebrew/Cellar/node@20/20.17.0/bin/node /opt/homebrew/bin/firebase deploy --only hosting
+[debug] [2024-09-26T22:58:41.219Z] CLI Version:   13.20.0
+[debug] [2024-09-26T22:58:41.219Z] Platform:      darwin
+[debug] [2024-09-26T22:58:41.219Z] Node Version:  v20.17.0
+[debug] [2024-09-26T22:58:41.219Z] Time:          Thu Sep 26 2024 16:58:41 GMT-0600 (Mountain Daylight Time)
+[debug] [2024-09-26T22:58:41.219Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2024-08-13T18:51:35.259Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2024-08-13T18:51:35.259Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
-[debug] [2024-08-13T18:51:35.259Z] [iam] checking project fn-support-e5ac9 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
-[debug] [2024-08-13T18:51:35.260Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
-[debug] [2024-08-13T18:51:35.260Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
-[debug] [2024-08-13T18:51:35.260Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
-[debug] [2024-08-13T18:51:35.460Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
-[debug] [2024-08-13T18:51:35.460Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
-[debug] [2024-08-13T18:51:35.460Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
-[debug] [2024-08-13T18:51:35.550Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
-[debug] [2024-08-13T18:51:35.550Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
-[debug] [2024-08-13T18:51:36.199Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
-[debug] [2024-08-13T18:51:36.826Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites 200
-[debug] [2024-08-13T18:51:36.826Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites {"sites":[{"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}]}
-[debug] [2024-08-13T18:51:36.827Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config [none]
-[debug] [2024-08-13T18:51:37.103Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config 200
-[debug] [2024-08-13T18:51:37.104Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config {"projectId":"fn-support-e5ac9","appId":"1:734672940110:web:5cf194766053d357a6a71f","storageBucket":"fn-support-e5ac9.appspot.com","apiKey":"AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw","authDomain":"fn-support-e5ac9.firebaseapp.com","messagingSenderId":"734672940110","measurementId":"G-XVL9ER0BX7"}
+[debug] [2024-09-26T22:58:41.260Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-09-26T22:58:41.260Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
+[debug] [2024-09-26T22:58:41.260Z] [iam] checking project fn-support-e5ac9 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-09-26T22:58:41.261Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
+[debug] [2024-09-26T22:58:41.261Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
+[debug] [2024-09-26T22:58:41.261Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T22:58:41.465Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
+[debug] [2024-09-26T22:58:41.465Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T22:58:41.466Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
+[debug] [2024-09-26T22:58:41.614Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
+[debug] [2024-09-26T22:58:41.614Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
+[debug] [2024-09-26T22:58:42.389Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
+[debug] [2024-09-26T22:58:42.750Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites 200
+[debug] [2024-09-26T22:58:42.750Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites {"sites":[{"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}]}
+[debug] [2024-09-26T22:58:42.751Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config [none]
+[debug] [2024-09-26T22:58:42.965Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config 200
+[debug] [2024-09-26T22:58:42.965Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config {"projectId":"fn-support-e5ac9","appId":"1:734672940110:web:5cf194766053d357a6a71f","storageBucket":"fn-support-e5ac9.appspot.com","apiKey":"AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw","authDomain":"fn-support-e5ac9.firebaseapp.com","messagingSenderId":"734672940110","measurementId":"G-XVL9ER0BX7"}
 [info] 
    Thank you for trying our early preview of Next.js support on Firebase Hosting.
    During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
@@ -100,9 +102,9 @@ Type error: Cannot find module 'firebase-functions/v2/https' or its correspondin
 
    We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
 
-[debug] [2024-08-13T18:51:38.541Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 [none]
-[debug] [2024-08-13T18:51:38.881Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 200
-[debug] [2024-08-13T18:51:38.882Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 {"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}
+[debug] [2024-09-26T22:58:44.496Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 [none]
+[debug] [2024-09-26T22:58:44.634Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 200
+[debug] [2024-09-26T22:58:44.635Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 {"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}
 [info]   ▲ Next.js 14.2.4
 
 [info] 
@@ -116,17 +118,584 @@ Type error: Cannot find module 'firebase-functions/v2/https' or its correspondin
 [info] Failed to compile.
 
 
-[info] ./src/app/components/ImageUpload.tsx:7:24
-Type error: Binding element 'onUpload' implicitly has an 'any' type.
+[info] ./src/app/user-guides/page.tsx:12:24
+Type error: Could not find a declaration file for module 'markdown-it'. '/Users/tomishamilton/development/FN/fn-support/node_modules/markdown-it/index.mjs' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/markdown-it` if it exists or add a new declaration (.d.ts) file containing `declare module 'markdown-it';`
 
-   5 | const storage = getStorage();
-   6 |
->  7 | const ImageUpload = ({ onUpload }) => {
+  10 | import Footer from "../components/Footer";
+  11 | import Modal from "../components/Modal";
+> 12 | import MarkdownIt from "markdown-it";
      |                        ^
-   8 |     const [uploading, setUploading] = useState(false);
-   9 |
-  10 |     const handleFileChange = async (e) => {
+  13 |
+  14 | const mdParser = new MarkdownIt();
+  15 |
 
-[debug] [2024-08-13T18:51:43.068Z] Error: ENOENT: no such file or directory, open '/Users/tomishamilton/WebstormProjects/fn-support/.next/export-marker.json'
+[debug] [2024-09-26T22:58:50.790Z] Error: ENOENT: no such file or directory, open '/Users/tomishamilton/development/FN/fn-support/.next/export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2024-09-26T23:00:27.737Z] ----------------------------------------------------------------------
+[debug] [2024-09-26T23:00:27.739Z] Command:       /opt/homebrew/Cellar/node@20/20.17.0/bin/node /opt/homebrew/bin/firebase deploy --only hosting
+[debug] [2024-09-26T23:00:27.739Z] CLI Version:   13.20.0
+[debug] [2024-09-26T23:00:27.739Z] Platform:      darwin
+[debug] [2024-09-26T23:00:27.739Z] Node Version:  v20.17.0
+[debug] [2024-09-26T23:00:27.739Z] Time:          Thu Sep 26 2024 17:00:27 GMT-0600 (Mountain Daylight Time)
+[debug] [2024-09-26T23:00:27.739Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-09-26T23:00:27.780Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-09-26T23:00:27.781Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
+[debug] [2024-09-26T23:00:27.781Z] [iam] checking project fn-support-e5ac9 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-09-26T23:00:27.781Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
+[debug] [2024-09-26T23:00:27.782Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
+[debug] [2024-09-26T23:00:27.782Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T23:00:27.883Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
+[debug] [2024-09-26T23:00:27.884Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T23:00:27.884Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
+[debug] [2024-09-26T23:00:28.013Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
+[debug] [2024-09-26T23:00:28.013Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
+[debug] [2024-09-26T23:00:28.863Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
+[debug] [2024-09-26T23:00:29.336Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites 200
+[debug] [2024-09-26T23:00:29.336Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites {"sites":[{"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}]}
+[debug] [2024-09-26T23:00:29.337Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config [none]
+[debug] [2024-09-26T23:00:29.541Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config 200
+[debug] [2024-09-26T23:00:29.541Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config {"projectId":"fn-support-e5ac9","appId":"1:734672940110:web:5cf194766053d357a6a71f","storageBucket":"fn-support-e5ac9.appspot.com","apiKey":"AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw","authDomain":"fn-support-e5ac9.firebaseapp.com","messagingSenderId":"734672940110","measurementId":"G-XVL9ER0BX7"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 14.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2024-09-26T23:00:31.043Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 [none]
+[debug] [2024-09-26T23:00:31.194Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 200
+[debug] [2024-09-26T23:00:31.194Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 {"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}
+[info]   ▲ Next.js 14.2.13
+
+[info] 
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully
+
+[info]    Linting and checking validity of types ...
+
+[info]    Collecting page data ...
+
+[info]    Generating static pages (0/11) ...
+
+[info] [2024-09-26T23:00:44.051Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/dashboard/page.js:1:13616)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 59530 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/dashboard/page.js:1:7752) {
+  digest: '181568671'
+}
+
+Error occurred prerendering page "/dashboard". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/dashboard/page.js:1:13616)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 59530 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/dashboard/page.js:1:7752)
+
+[info] [2024-09-26T23:00:44.051Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/login/page.js:1:5165)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 24146 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/login/page.js:1:5279) {
+  digest: '2101346826'
+}
+
+Error occurred prerendering page "/login". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/login/page.js:1:5165)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 24146 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/login/page.js:1:5279)
+[2024-09-26T23:00:44.055Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/in-progress/page.js:1:7802)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 44263 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/in-progress/page.js:1:10656) {
+  digest: '1598543871'
+}
+
+Error occurred prerendering page "/in-progress". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/in-progress/page.js:1:7802)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 44263 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/in-progress/page.js:1:10656)
+[2024-09-26T23:00:44.061Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/page.js:1:8556)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 54497 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/page.js:1:8669) {
+  digest: '3739434437'
+}
+
+Error occurred prerendering page "/". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/page.js:1:8556)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 54497 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/page.js:1:8669)
+
+[info]    Generating static pages (2/11) 
+   Generating static pages (5/11) 
+   Generating static pages (8/11) 
+ ✓ Generating static pages (11/11)
+
+[info] [2024-09-26T23:00:44.064Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/user-guides/page.js:1:8957)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 94333 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/user-guides/page.js:1:9654) {
+  digest: '163718754'
+}
+
+Error occurred prerendering page "/user-guides". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/user-guides/page.js:1:8957)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 94333 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/user-guides/page.js:1:9654)
+[2024-09-26T23:00:44.065Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/support-bug-report/page.js:1:7843)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 74507 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/support-bug-report/page.js:1:7956) {
+  digest: '3114298309'
+}
+
+Error occurred prerendering page "/support-bug-report". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/support-bug-report/page.js:1:7843)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 74507 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/support-bug-report/page.js:1:7956)
+[2024-09-26T23:00:44.083Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/feature-request/page.js:1:12545)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 592 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/feature-request/page.js:1:7471) {
+  digest: '2799286653'
+}
+
+Error occurred prerendering page "/feature-request". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/feature-request/page.js:1:12545)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 592 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/feature-request/page.js:1:7471)
+
+[info] 
+
+[info] > Export encountered errors on following paths:
+	/dashboard/page: /dashboard
+	/feature-request/page: /feature-request
+	/in-progress/page: /in-progress
+	/login/page: /login
+	/page: /
+	/support-bug-report/page: /support-bug-report
+	/user-guides/page: /user-guides
+
+[debug] [2024-09-26T23:00:44.614Z] Error: ENOENT: no such file or directory, open '/Users/tomishamilton/development/FN/fn-support/.next/export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2024-09-26T23:01:22.295Z] ----------------------------------------------------------------------
+[debug] [2024-09-26T23:01:22.296Z] Command:       /opt/homebrew/Cellar/node@20/20.17.0/bin/node /opt/homebrew/bin/firebase deploy --only hosting
+[debug] [2024-09-26T23:01:22.297Z] CLI Version:   13.20.0
+[debug] [2024-09-26T23:01:22.297Z] Platform:      darwin
+[debug] [2024-09-26T23:01:22.297Z] Node Version:  v20.17.0
+[debug] [2024-09-26T23:01:22.297Z] Time:          Thu Sep 26 2024 17:01:22 GMT-0600 (Mountain Daylight Time)
+[debug] [2024-09-26T23:01:22.297Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-09-26T23:01:22.337Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-09-26T23:01:22.337Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
+[debug] [2024-09-26T23:01:22.337Z] [iam] checking project fn-support-e5ac9 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-09-26T23:01:22.338Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
+[debug] [2024-09-26T23:01:22.338Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
+[debug] [2024-09-26T23:01:22.338Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T23:01:22.495Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
+[debug] [2024-09-26T23:01:22.495Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T23:01:22.496Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
+[debug] [2024-09-26T23:01:22.598Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
+[debug] [2024-09-26T23:01:22.598Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
+[debug] [2024-09-26T23:01:23.285Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
+[debug] [2024-09-26T23:01:27.383Z] ----------------------------------------------------------------------
+[debug] [2024-09-26T23:01:27.385Z] Command:       /opt/homebrew/Cellar/node@20/20.17.0/bin/node /opt/homebrew/bin/firebase deploy
+[debug] [2024-09-26T23:01:27.385Z] CLI Version:   13.20.0
+[debug] [2024-09-26T23:01:27.385Z] Platform:      darwin
+[debug] [2024-09-26T23:01:27.385Z] Node Version:  v20.17.0
+[debug] [2024-09-26T23:01:27.385Z] Time:          Thu Sep 26 2024 17:01:27 GMT-0600 (Mountain Daylight Time)
+[debug] [2024-09-26T23:01:27.385Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-09-26T23:01:27.424Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-09-26T23:01:27.424Z] > authorizing via signed-in user (tomisnhamilton@gmail.com)
+[debug] [2024-09-26T23:01:27.424Z] [iam] checking project fn-support-e5ac9 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-09-26T23:01:27.425Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions [none]
+[debug] [2024-09-26T23:01:27.425Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions x-goog-quota-user=projects/fn-support-e5ac9
+[debug] [2024-09-26T23:01:27.425Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T23:01:27.573Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions 200
+[debug] [2024-09-26T23:01:27.573Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fn-support-e5ac9:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-09-26T23:01:27.573Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/fn-support-e5ac9/serviceAccounts/fn-support-e5ac9@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-09-26T23:01:27.574Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/fn-support-e5ac9/serviceAccounts/fn-support-e5ac9@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-09-26T23:01:27.790Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/fn-support-e5ac9/serviceAccounts/fn-support-e5ac9@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2024-09-26T23:01:27.790Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/fn-support-e5ac9/serviceAccounts/fn-support-e5ac9@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-09-26T23:01:27.791Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 [none]
+[debug] [2024-09-26T23:01:27.914Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 200
+[debug] [2024-09-26T23:01:27.915Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fn-support-e5ac9 {"projectId":"fn-support-e5ac9","projectNumber":"734672940110","displayName":"fn-support","name":"projects/fn-support-e5ac9","resources":{"hostingSite":"fn-support-e5ac9"},"state":"ACTIVE","etag":"1_716d49d4-1b09-4318-99df-5a7e159022b7"}
+[debug] [2024-09-26T23:01:28.702Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites pageToken=&pageSize=10
+[debug] [2024-09-26T23:01:29.001Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites 200
+[debug] [2024-09-26T23:01:29.001Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites {"sites":[{"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}]}
+[debug] [2024-09-26T23:01:29.002Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config [none]
+[debug] [2024-09-26T23:01:29.308Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config 200
+[debug] [2024-09-26T23:01:29.308Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:734672940110:web:5cf194766053d357a6a71f/config {"projectId":"fn-support-e5ac9","appId":"1:734672940110:web:5cf194766053d357a6a71f","storageBucket":"fn-support-e5ac9.appspot.com","apiKey":"AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw","authDomain":"fn-support-e5ac9.firebaseapp.com","messagingSenderId":"734672940110","measurementId":"G-XVL9ER0BX7"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 14.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2024-09-26T23:01:30.776Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 [none]
+[debug] [2024-09-26T23:01:30.905Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 200
+[debug] [2024-09-26T23:01:30.905Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fn-support-e5ac9/sites/fn-support-e5ac9 {"name":"projects/fn-support-e5ac9/sites/fn-support-e5ac9","defaultUrl":"https://fn-support-e5ac9.web.app","appId":"1:734672940110:web:5cf194766053d357a6a71f","type":"DEFAULT_SITE"}
+[info]   ▲ Next.js 14.2.13
+
+[info] 
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully
+
+[info]    Linting and checking validity of types ...
+
+[info]    Collecting page data ...
+
+[info]    Generating static pages (0/11) ...
+
+[info] [2024-09-26T23:01:38.040Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/dashboard/page.js:1:13616)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 59530 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/dashboard/page.js:1:7752) {
+  digest: '181568671'
+}
+
+Error occurred prerendering page "/dashboard". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/dashboard/page.js:1:13616)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 59530 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/dashboard/page.js:1:7752)
+
+[info] [2024-09-26T23:01:38.050Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/in-progress/page.js:1:7802)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 44263 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/in-progress/page.js:1:10656) {
+  digest: '1598543871'
+}
+
+Error occurred prerendering page "/in-progress". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/in-progress/page.js:1:7802)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 44263 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/in-progress/page.js:1:10656)
+[2024-09-26T23:01:38.051Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/feature-request/page.js:1:12545)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 592 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/feature-request/page.js:1:7471) {
+  digest: '2799286653'
+}
+
+Error occurred prerendering page "/feature-request". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/feature-request/page.js:1:12545)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 592 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/feature-request/page.js:1:7471)
+[2024-09-26T23:01:38.056Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/login/page.js:1:5165)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 24146 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/login/page.js:1:5279) {
+  digest: '2101346826'
+}
+
+Error occurred prerendering page "/login". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/login/page.js:1:5165)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 24146 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/login/page.js:1:5279)
+
+[info]    Generating static pages (2/11) 
+   Generating static pages (5/11) 
+   Generating static pages (8/11) 
+ ✓ Generating static pages (11/11)
+
+[info] [2024-09-26T23:01:38.069Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/page.js:1:8556)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 54497 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/page.js:1:8669) {
+  digest: '3739434437'
+}
+
+Error occurred prerendering page "/". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/page.js:1:8556)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 54497 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/page.js:1:8669)
+[2024-09-26T23:01:38.070Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/support-bug-report/page.js:1:7843)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 74507 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/support-bug-report/page.js:1:7956) {
+  digest: '3114298309'
+}
+
+Error occurred prerendering page "/support-bug-report". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/support-bug-report/page.js:1:7843)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 74507 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/support-bug-report/page.js:1:7956)
+[2024-09-26T23:01:38.073Z]  @firebase/analytics: Analytics: Firebase Analytics is not supported in this environment. Wrap initialization of analytics in analytics.isSupported() to prevent initialization in unsupported environments. Details: (1) Cookies are not available. (analytics/invalid-analytics-context).
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/user-guides/page.js:1:8957)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 94333 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/user-guides/page.js:1:9654) {
+  digest: '163718754'
+}
+
+Error occurred prerendering page "/user-guides". Read more: https://nextjs.org/docs/messages/prerender-error
+
+ReferenceError: window is not defined
+    at eG (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:136796)
+    at ta (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:142935)
+    at i.instanceFactory (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143703)
+    at A.getOrInitializeService (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113833)
+    at A.initialize (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:113208)
+    at tc (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143331)
+    at tl (/Users/tomishamilton/development/FN/fn-support/.next/server/chunks/632.js:36:143152)
+    at 78600 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/user-guides/page.js:1:8957)
+    at t (/Users/tomishamilton/development/FN/fn-support/.next/server/webpack-runtime.js:1:128)
+    at 94333 (/Users/tomishamilton/development/FN/fn-support/.next/server/app/user-guides/page.js:1:9654)
+
+[info] 
+
+[info] > Export encountered errors on following paths:
+	/dashboard/page: /dashboard
+	/feature-request/page: /feature-request
+	/in-progress/page: /in-progress
+	/login/page: /login
+	/page: /
+	/support-bug-report/page: /support-bug-report
+	/user-guides/page: /user-guides
+
+[debug] [2024-09-26T23:01:38.577Z] Error: ENOENT: no such file or directory, open '/Users/tomishamilton/development/FN/fn-support/.next/export-marker.json'
 [error] 
 [error] Error: An unexpected error has occurred.

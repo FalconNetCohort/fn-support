@@ -15,7 +15,7 @@
     "firebase": "^10.12.5",
     "framer-motion": "^11.2.10",
     "markdown-it": "^14.1.0",
-    "next": "14.2.4",
+    "next": "^14.2.13",
     "qss": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
@@ -25,6 +25,7 @@
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
