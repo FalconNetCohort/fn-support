@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, analytics, logEvent } from "../firebase";
+import { auth } from "../firebase";
 import Header from "../components/Header";
+import {logEventHelper} from "@/app/logEventHelper";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ export default function Login() {
     const router = useRouter();
 
     useEffect(() => {
-        logEvent(analytics, 'login_page_view');
+        logEventHelper('login_page_view');
     }, []);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +21,7 @@ export default function Login() {
         setLoading(true);
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            logEvent(analytics, 'login', { method: 'email/password' });
+            logEventHelper( 'login', { method: 'email/password' });
             router.push("/dashboard"); // Redirect to dashboard
         } catch (error: unknown) {
             if (error && typeof error === "object" && "message" in error){

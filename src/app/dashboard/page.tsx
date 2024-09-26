@@ -7,6 +7,7 @@ import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "fire
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import {logEventHelper} from "@/app/logEventHelper";
 
 // Define types for requests
 interface Request {
@@ -42,7 +43,7 @@ export default function Dashboard() {
             if (!user) {
                 router.push("/login");
             } else {
-                logEvent(analytics, "dashboard_view");
+                logEventHelper( "dashboard_view");
                 fetchRequests().then(r => r);
             }
         });
@@ -74,7 +75,7 @@ export default function Dashboard() {
             await updateDoc(requestRef, updateData as Partial<UpdateData>);
         }
 
-        logEvent(analytics, "update_request", { id, type });
+        logEventHelper( "update_request", { id, type });
         alert("Request updated successfully");
         setComments({ ...comments, [id]: "" });
         setUpdates({});
@@ -85,14 +86,14 @@ export default function Dashboard() {
     const handleDelete = async (id: string, type: "feature" | "support") => {
         const requestRef = doc(db, type === "feature" ? "featureRequests" : "supportRequests", id);
         await deleteDoc(requestRef);
-        logEvent(analytics, "delete_request", { id, type });
+        logEventHelper( "delete_request", { id, type });
         alert("Request deleted successfully");
         fetchRequests();
     };
 
     const handleSignOut = async () => {
         await signOut(auth);
-        logEvent(analytics, "sign_out");
+        logEventHelper( "sign_out");
         router.push("/");
     };
 

@@ -3,13 +3,14 @@ import React,
 { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
-import { db, analytics, logEvent, auth } from "../firebase";
+import { db, auth } from "../firebase";
 import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs, DocumentReference, CollectionReference } from "firebase/firestore";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import MarkdownIt from "markdown-it";
+import {logEventHelper} from "@/app/logEventHelper";
 
 const mdParser = new MarkdownIt();
 
@@ -35,7 +36,7 @@ export default function UserGuides() {
     const router = useRouter();
 
     useEffect(() => {
-        logEvent(analytics, "user_guides_page_view");
+        logEventHelper("user_guides_page_view");
         fetchUserGuides();
     }, []);
 
@@ -127,7 +128,7 @@ export default function UserGuides() {
                     lastUpdated: now,
                 });
             }
-            logEvent(analytics, editingId ? "user_guide_update" : "user_guide_create", { title: formData.title });
+            logEventHelper( editingId ? "user_guide_update" : "user_guide_create", { title: formData.title });
             alert(`User guide ${editingId ? "updated" : "created"} successfully!`);
             clearForm();
             fetchUserGuides();
@@ -160,7 +161,7 @@ export default function UserGuides() {
         if (confirm("Are you sure you want to delete this guide?")) {
             try {
                 await deleteDoc(doc(db, "userGuides", id));
-                logEvent(analytics, "user_guide_delete", { id });
+                logEventHelper( "user_guide_delete", { id });
                 alert("User guide deleted successfully!");
                 fetchUserGuides();
             } catch (err) {

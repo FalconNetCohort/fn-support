@@ -1,9 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, analytics, logEvent } from "../firebase";
 import Header from "./Header";
+import {logEventHelper} from "@/app/logEventHelper";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -11,14 +12,16 @@ export default function Login() {
     const router = useRouter();
 
     useEffect(() => {
-        logEvent(analytics, "login_page_view");
+        if (analytics ) {
+            logEvent(analytics, "login_page_view");
+        }
     }, []);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            logEvent(analytics, "login", { method: "email/password" });
+            logEventHelper( "login", { method: "email/password" });
             router.push("/user-guides"); // Redirect to user guides page
         } catch (error) {
             if (error instanceof Error) {

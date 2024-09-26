@@ -2,9 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { db, analytics, logEvent } from "./firebase";
+import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Modal from "./components/Modal";
+import {logEventHelper} from "@/app/logEventHelper";
 
 interface UserGuide {
   id: string;
@@ -22,8 +23,13 @@ export default function Home() {
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    // No need to check for analytics, just use the helper
+    logEventHelper('home_page_view');
+  }, []);
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
-      logEvent(analytics, 'home_page_view');
+      logEventHelper('home_page_view');
     }
     fetchUserGuides();
   }, []);
@@ -50,7 +56,7 @@ export default function Home() {
 
     searchTimeoutRef.current = setTimeout(() => {
       if (query.length > 0) {
-        logEvent(analytics, 'search', { search_term: query });
+        logEventHelper( 'search', { search_term: query });
         const filteredResults = userGuides.filter((item) =>
             item.title.toLowerCase().includes(query) ||
             item.body.toLowerCase().includes(query) ||
@@ -64,13 +70,13 @@ export default function Home() {
   };
 
   const handleResultClick = (result: UserGuide) => {
-    logEvent(analytics, 'select_content', { content_id: result.id, content_type: 'user_guide' });
+    logEventHelper( 'select_content', { content_id: result.id, content_type: 'user_guide' });
     setSelectedResult(result);
   };
 
   const handleCloseModal = () => {
     if (selectedResult != null) {
-    logEvent(analytics, 'close_modal', { content_id: selectedResult.id });
+    logEventHelper( 'close_modal', { content_id: selectedResult.id });
     setSelectedResult(null);
     }
   };

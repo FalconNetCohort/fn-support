@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { getAnalytics, logEvent, Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDkSTrfVNFYiy26b0heGsTrnX6nCZaqVUw",
@@ -14,10 +14,13 @@ const firebaseConfig = {
   measurementId: "G-XVL9ER0BX7"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore and Auth (these don't depend on the window object)
 const auth = getAuth(app);
 const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
-export { auth, db, analytics, logEvent };
 
+export { auth, db, analytics, logEvent };

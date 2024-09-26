@@ -2,8 +2,9 @@
 import {useState, useEffect, SetStateAction, ChangeEventHandler} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {db, analytics, logEvent} from "../firebase";
+import {db} from "../firebase";
 import {collection, addDoc} from "firebase/firestore";
+import {logEventHelper} from "@/app/logEventHelper";
 
 export default function FeatureRequest() {
     const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ export default function FeatureRequest() {
     const [attachment, setAttachment] = useState<File | null>(null);
 
     useEffect(() => {
-        logEvent(analytics, 'feature_request_page_view');
+        logEventHelper( 'feature_request_page_view');
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -37,7 +38,7 @@ export default function FeatureRequest() {
                 ...formData,
                 attachment: attachment ? attachment.name : "",
             });
-            logEvent(analytics, 'feature_request_submit', { feature: formData.featureDescription });
+            logEventHelper( 'feature_request_submit', { feature: formData.featureDescription });
             alert("Feature request submitted successfully!");
             clearForm();
         } catch (err) {

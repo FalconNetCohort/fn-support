@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { db, analytics, logEvent } from "../firebase";
+import { db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
+import {logEventHelper} from "@/app/logEventHelper";
 
 export default function SupportBugReport() {
     const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ export default function SupportBugReport() {
     const [attachment, setAttachment] = useState<File | null>(null);
 
     useEffect(() => {
-        logEvent(analytics, 'support_bug_report_page_view');
+        logEventHelper( 'support_bug_report_page_view');
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -37,7 +38,7 @@ export default function SupportBugReport() {
                 ...formData,
                 attachment: attachment ? attachment.name : "",
             });
-            logEvent(analytics, 'support_bug_report_submit', { bug: formData.bugDescription });
+            logEventHelper( 'support_bug_report_submit', { bug: formData.bugDescription });
             alert("Support request submitted successfully!");
             clearForm();
         } catch (err) {
