@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { db, analytics, logEvent } from "./firebase";
@@ -19,31 +19,48 @@ export default function Home() {
   const [selectedResult, setSelectedResult] = useState<UserGuide | null>(null);
   const [userGuides, setUserGuides] = useState<UserGuide[]>([]);
 
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
-    logEvent(analytics, 'home_page_view');
+    if (typeof window !== "undefined") {
+      logEvent(analytics, 'home_page_view');
+    }
     fetchUserGuides();
   }, []);
 
+
   const fetchUserGuides = async () => {
-    const userGuidesSnapshot = await getDocs(collection(db, "userGuides"));
-    setUserGuides(userGuidesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as UserGuide)));
+    try {
+      const userGuidesSnapshot = await getDocs(collection(db, "userGuides"));
+      setUserGuides(userGuidesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as UserGuide)));
+    } catch (error) {
+      console.error("Error fetching user guides:", error);
+      // Optionally, display an error message in the UI
+    }
   };
+
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchTerm(query);
 
-    if (query.length > 0) {
-      logEvent(analytics, 'search', { search_term: query });
-      const filteredResults = userGuides.filter((item) =>
-        item.title.toLowerCase().includes(query) ||
-        item.body.toLowerCase().includes(query) ||
-        item.tags.some(tag => tag.toLowerCase().includes(query))
-      );
-      setResults(filteredResults);
-    } else {
-      setResults([]);
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
     }
+
+    searchTimeoutRef.current = setTimeout(() => {
+      if (query.length > 0) {
+        logEvent(analytics, 'search', { search_term: query });
+        const filteredResults = userGuides.filter((item) =>
+            item.title.toLowerCase().includes(query) ||
+            item.body.toLowerCase().includes(query) ||
+            item.tags.some(tag => tag.toLowerCase().includes(query))
+        );
+        setResults(filteredResults);
+      } else {
+        setResults([]);
+      }
+    }, 300); // Adjust debounce delay as necessary
   };
 
   const handleResultClick = (result: UserGuide) => {
@@ -92,13 +109,13 @@ export default function Home() {
             )}
           </div>
         )}
-        {selectedResult && (
-          <Modal
-            isOpen={!!selectedResult}
-            onClose={handleCloseModal}
-            title={selectedResult.title}
-            content={selectedResult.body}
-          />
+        {typeof window !== "undefined" && selectedResult && (
+            <Modal
+                isOpen={!!selectedResult}
+                onClose={handleCloseModal}
+                title={selectedResult.title}
+                content={selectedResult.body}
+            />
         )}
       </main>
       <Footer />
