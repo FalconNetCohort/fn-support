@@ -10,7 +10,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import MarkdownIt from "markdown-it";
-import {logEventHelper} from "@/app/logEventHelper";
 
 const mdParser = new MarkdownIt();
 
@@ -36,7 +35,6 @@ export default function UserGuides() {
     const router = useRouter();
 
     useEffect(() => {
-        logEventHelper("user_guides_page_view");
         fetchUserGuides();
     }, []);
 
@@ -128,7 +126,6 @@ export default function UserGuides() {
                     lastUpdated: now,
                 });
             }
-            logEventHelper( editingId ? "user_guide_update" : "user_guide_create", { title: formData.title });
             alert(`User guide ${editingId ? "updated" : "created"} successfully!`);
             clearForm();
             fetchUserGuides();
@@ -161,7 +158,6 @@ export default function UserGuides() {
         if (confirm("Are you sure you want to delete this guide?")) {
             try {
                 await deleteDoc(doc(db, "userGuides", id));
-                logEventHelper( "user_guide_delete", { id });
                 alert("User guide deleted successfully!");
                 fetchUserGuides();
             } catch (err) {

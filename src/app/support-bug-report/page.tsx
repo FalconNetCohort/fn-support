@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
-import {logEventHelper} from "@/app/logEventHelper";
 
 export default function SupportBugReport() {
     const [formData, setFormData] = useState({
@@ -18,9 +17,6 @@ export default function SupportBugReport() {
     });
     const [attachment, setAttachment] = useState<File | null>(null);
 
-    useEffect(() => {
-        logEventHelper( 'support_bug_report_page_view');
-    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -38,7 +34,6 @@ export default function SupportBugReport() {
                 ...formData,
                 attachment: attachment ? attachment.name : "",
             });
-            logEventHelper( 'support_bug_report_submit', { bug: formData.bugDescription });
             alert("Support request submitted successfully!");
             clearForm();
         } catch (err) {

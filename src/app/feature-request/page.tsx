@@ -1,10 +1,9 @@
 "use client";
-import {useState, useEffect, SetStateAction, ChangeEventHandler} from "react";
+import {useState} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {db} from "../firebase";
 import {collection, addDoc} from "firebase/firestore";
-import {logEventHelper} from "@/app/logEventHelper";
 
 export default function FeatureRequest() {
     const [formData, setFormData] = useState({
@@ -17,10 +16,6 @@ export default function FeatureRequest() {
         chainOfCommand: "no",
     });
     const [attachment, setAttachment] = useState<File | null>(null);
-
-    useEffect(() => {
-        logEventHelper( 'feature_request_page_view');
-    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target;
@@ -38,7 +33,6 @@ export default function FeatureRequest() {
                 ...formData,
                 attachment: attachment ? attachment.name : "",
             });
-            logEventHelper( 'feature_request_submit', { feature: formData.featureDescription });
             alert("Feature request submitted successfully!");
             clearForm();
         } catch (err) {

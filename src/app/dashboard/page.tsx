@@ -2,12 +2,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signOut, User } from "firebase/auth";
-import { db, auth, analytics, logEvent } from "../firebase";
+import { db, auth } from "../firebase";
 import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "firebase/firestore";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {logEventHelper} from "@/app/logEventHelper";
 
 // Define types for requests
 interface Request {
@@ -43,7 +42,6 @@ export default function Dashboard() {
             if (!user) {
                 router.push("/login");
             } else {
-                logEventHelper( "dashboard_view");
                 fetchRequests().then(r => r);
             }
         });
@@ -75,7 +73,6 @@ export default function Dashboard() {
             await updateDoc(requestRef, updateData as Partial<UpdateData>);
         }
 
-        logEventHelper( "update_request", { id, type });
         alert("Request updated successfully");
         setComments({ ...comments, [id]: "" });
         setUpdates({});
@@ -86,14 +83,12 @@ export default function Dashboard() {
     const handleDelete = async (id: string, type: "feature" | "support") => {
         const requestRef = doc(db, type === "feature" ? "featureRequests" : "supportRequests", id);
         await deleteDoc(requestRef);
-        logEventHelper( "delete_request", { id, type });
         alert("Request deleted successfully");
         fetchRequests();
     };
 
     const handleSignOut = async () => {
         await signOut(auth);
-        logEventHelper( "sign_out");
         router.push("/");
     };
 

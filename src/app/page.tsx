@@ -5,7 +5,6 @@ import Footer from "./components/Footer";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Modal from "./components/Modal";
-import {logEventHelper} from "@/app/logEventHelper";
 
 interface UserGuide {
   id: string;
@@ -23,14 +22,6 @@ export default function Home() {
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // No need to check for analytics, just use the helper
-    logEventHelper('home_page_view');
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      logEventHelper('home_page_view');
-    }
     fetchUserGuides();
   }, []);
 
@@ -56,7 +47,6 @@ export default function Home() {
 
     searchTimeoutRef.current = setTimeout(() => {
       if (query.length > 0) {
-        logEventHelper( 'search', { search_term: query });
         const filteredResults = userGuides.filter((item) =>
             item.title.toLowerCase().includes(query) ||
             item.body.toLowerCase().includes(query) ||
@@ -70,13 +60,11 @@ export default function Home() {
   };
 
   const handleResultClick = (result: UserGuide) => {
-    logEventHelper( 'select_content', { content_id: result.id, content_type: 'user_guide' });
     setSelectedResult(result);
   };
 
   const handleCloseModal = () => {
     if (selectedResult != null) {
-    logEventHelper( 'close_modal', { content_id: selectedResult.id });
     setSelectedResult(null);
     }
   };
