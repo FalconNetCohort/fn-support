@@ -20,7 +20,7 @@ const AuthWrapper = ({ children }: AuthWrapperProps) => {
     }, [user, loading, router]);
 
     if (loading || !user) {
-        return </Loading>;
+        return <Loading />;
     }
 
     return <>{children}</>;
