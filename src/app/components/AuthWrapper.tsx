@@ -3,6 +3,7 @@ import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
+import Loading from "loading.tsx";
 
 interface AuthWrapperProps {
     children: ReactNode;
@@ -19,7 +20,7 @@ const AuthWrapper = ({ children }: AuthWrapperProps) => {
     }, [user, loading, router]);
 
     if (loading || !user) {
-        return <div>Loading...</div>;
+        return <Loading/>;
     }
 
     return <>{children}</>;
