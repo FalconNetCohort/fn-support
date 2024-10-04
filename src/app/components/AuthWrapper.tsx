@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import Loading from "loading.tsx";
+import Loading from "@/app/loading/page";
 
 interface AuthWrapperProps {
     children: ReactNode;
