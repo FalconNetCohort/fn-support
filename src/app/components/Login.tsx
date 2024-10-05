@@ -26,7 +26,7 @@ export default function Login() {
         <>
             <Header />
             <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
-                <h1 className="text-3xl mb-6">Admin Login</h1>
+                <h1 className="text-3xl mb-6">Login</h1>
                 <form onSubmit={handleSubmit} className="w-full max-w-sm">
                     <div className="mb-4">
                         <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="email">
