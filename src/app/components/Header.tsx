@@ -10,7 +10,7 @@ export default function Header() {
     return (
         <header className="w-full p-4 bg-blue-600 text-white flex justify-between items-center">
             <Link href="/" className="mx-2">
-                <img src="falconsupport.png" alt="Falcon Support" className="h-8 w-auto" />
+                <img src="/falconsupport.png" alt="Falcon Support" className="h-8 w-auto" />
             </Link>
             <nav className="text-gray-300">
                 {tabs.map((tab) => (
