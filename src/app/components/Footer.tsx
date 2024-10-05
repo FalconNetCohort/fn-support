@@ -4,8 +4,7 @@ import { LinkPreview } from "../components/ui/link-preview";
 export default function Footer() {
     return (
         <footer className="w-full p-4 bg-gray-800 text-white flex flex-col items-center">
-            <div className="flex flex-col items-start">
-                <h2 className="text-lg font-bold">Helpful Links</h2>
+            <div className="flex space-x-2">
                 <LinkPreview url="https://github.com/FalconNetCohort" className="mt-2">
                     GitHub Organization
                 </LinkPreview>
