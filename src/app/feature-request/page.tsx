@@ -1,9 +1,10 @@
 "use client";
-import {useState} from "react";
-import Header from "../components/Header";
+import {useEffect, useState} from "react";
 import Footer from "../components/Footer";
-import {db} from "../firebase";
+import {auth, db} from "../firebase";
 import {collection, addDoc} from "firebase/firestore";
+import { User } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function FeatureRequest() {
     const [formData, setFormData] = useState({
@@ -16,6 +17,16 @@ export default function FeatureRequest() {
         chainOfCommand: "no",
     });
     const [attachment, setAttachment] = useState<File | null>(null);
+    const router = useRouter();
+
+    useEffect(() => {
+        auth.onAuthStateChanged((user: User | null) => {
+            if (!user || !user?.emailVerified) {
+                router.push("/login");
+            }
+        });
+    }, [auth]);
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target;
@@ -56,7 +67,6 @@ export default function FeatureRequest() {
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-            <Header />
             <main className="flex-grow flex flex-col items-center justify-center p-6">
                 <h1 className="text-3xl mb-6">Feature Request Form</h1>
                 <form className="w-full max-w-lg" onSubmit={handleSubmit}>

@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { User } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function SupportBugReport() {
     const [formData, setFormData] = useState({
@@ -16,7 +17,15 @@ export default function SupportBugReport() {
         chainOfCommand: "no",
     });
     const [attachment, setAttachment] = useState<File | null>(null);
+    const router = useRouter();
 
+    useEffect(() => {
+        auth.onAuthStateChanged((user: User | null) => {
+            if (!user || !user?.emailVerified) {
+                router.push("/login");
+            }
+        });
+    }, [auth]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -57,7 +66,6 @@ export default function SupportBugReport() {
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-            <Header />
             <main className="flex-grow flex flex-col items-center justify-center p-6">
                 <h1 className="text-3xl mb-6">Support/Bug Report Form</h1>
                 <form className="w-full max-w-lg" onSubmit={handleSubmit}>

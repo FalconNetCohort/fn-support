@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { db } from "../firebase";
 import { collection, getDocs, Timestamp } from "firebase/firestore";
@@ -62,7 +61,6 @@ export default function InProgress() {
 
     return (
         <>
-            <Header />
             <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
                 <h1 className="text-3xl mb-6">In Progress</h1>
                 <div className="w-full max-w-5xl">

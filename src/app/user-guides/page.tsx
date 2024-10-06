@@ -2,11 +2,10 @@
 import React,
 { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
+import { signOut, User } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs, DocumentReference, CollectionReference } from "firebase/firestore";
 import AuthWrapper from "../components/AuthWrapper";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import MarkdownIt from "markdown-it";
@@ -33,6 +32,14 @@ export default function UserGuides() {
     const tagInputRef = useRef(null);
     const [selectedResult, setSelectedResult] = useState<UserGuide | null>(null);
     const router = useRouter();
+
+    useEffect(() => {
+        auth.onAuthStateChanged((user: User | null) => {
+            if (!user || !user?.emailVerified) {
+                router.push("/login");
+            }
+        });
+    }, [auth]);
 
     useEffect(() => {
         fetchUserGuides();
@@ -182,7 +189,6 @@ export default function UserGuides() {
 
     return (
         <AuthWrapper>
-            <Header />
             <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
                 <div className="w-full max-w-lg flex justify-between items-center mb-6">
                     <h1 className="text-3xl">User Guides</h1>

@@ -5,7 +5,6 @@ import { signOut, User } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "firebase/firestore";
 import AuthWrapper from "../components/AuthWrapper";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 // Define types for requests
@@ -38,15 +37,12 @@ export default function Dashboard() {
     const router = useRouter();
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
-            if (!user) {
+        auth.onAuthStateChanged((user: User | null) => {
+            if (!user || !user?.emailVerified) {
                 router.push("/login");
-            } else {
-                fetchRequests().then(r => r);
             }
         });
-        return () => unsubscribe();
-    }, [router]);
+    }, [auth]);
 
     const fetchRequests = async () => {
         const featureSnapshot = await getDocs(collection(db, "featureRequests"));
@@ -181,7 +177,6 @@ export default function Dashboard() {
 
     return (
         <AuthWrapper>
-            <Header />
             <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
                 <h1 className="text-3xl mb-6">Dashboard</h1>
                 <button
