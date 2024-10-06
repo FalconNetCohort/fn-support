@@ -8,6 +8,15 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+input, select, textarea {
+  @apply border rounded-lg text-black dark:text-white border-gray-500 dark:border-gray-500 
+  bg-white dark:bg-gray-950
+}
+
+label{
+  @apply text-gray-700 dark:text-gray-300
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;

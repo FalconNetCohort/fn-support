@@ -1,6 +1,5 @@
 "use client";
 import {useState} from "react";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {db} from "../firebase";
 import {collection, addDoc} from "firebase/firestore";
@@ -55,8 +54,7 @@ export default function FeatureRequest() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-            <Header />
+        <div className="flex flex-col min-h-screen">
             <main className="flex-grow flex flex-col items-center justify-center p-6">
                 <h1 className="text-3xl mb-6">Feature Request Form</h1>
                 <form className="w-full max-w-lg" onSubmit={handleSubmit}>
@@ -137,7 +135,7 @@ export default function FeatureRequest() {
                             type="file"
                             name="attachment"
                             id="attachment"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
                             onChange={handleFileChange}
                         />
                     </div>

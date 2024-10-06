@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
@@ -56,13 +55,12 @@ export default function SupportBugReport() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-            <Header />
+        <div className="flex flex-col min-h-screen">
             <main className="flex-grow flex flex-col items-center justify-center p-6">
                 <h1 className="text-3xl mb-6">Support/Bug Report Form</h1>
                 <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                        <label className="block text-sm font-bold mb-2" htmlFor="name">
                             Name
                         </label>
                         <input
@@ -76,7 +74,7 @@ export default function SupportBugReport() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="rank">
+                        <label className="block text-sm font-bold mb-2" htmlFor="rank">
                             Rank
                         </label>
                         <input
@@ -90,7 +88,7 @@ export default function SupportBugReport() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                        <label className="block text-sm font-bold mb-2" htmlFor="email">
                             Email
                         </label>
                         <input
@@ -104,7 +102,7 @@ export default function SupportBugReport() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobTitle">
+                        <label className="block text-sm font-bold mb-2" htmlFor="jobTitle">
                             Job Title
                         </label>
                         <input
@@ -118,7 +116,7 @@ export default function SupportBugReport() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="bugDescription">
+                        <label className="block text-sm font-bold mb-2" htmlFor="bugDescription">
                             Bug Description
                         </label>
                         <textarea
@@ -131,19 +129,19 @@ export default function SupportBugReport() {
                         ></textarea>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="attachment">
+                        <label className="block text-sm font-bold mb-2" htmlFor="attachment">
                             Attachment
                         </label>
                         <input
                             type="file"
                             name="attachment"
                             id="attachment"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
                             onChange={handleFileChange}
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="supplementalInfo">
+                        <label className="block text-sm font-bold mb-2" htmlFor="supplementalInfo">
                             Supplemental Info
                         </label>
                         <textarea
@@ -155,7 +153,7 @@ export default function SupportBugReport() {
                         ></textarea>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="chainOfCommand">
+                        <label className="block text-sm font-bold mb-2" htmlFor="chainOfCommand">
                             Has this info been sent up the chain of command?
                         </label>
                         <div className="flex items-center">
