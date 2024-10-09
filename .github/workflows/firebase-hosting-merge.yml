@@ -31,7 +31,7 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_FN_SUPPORT_E5AC9 }}
-          channelId: live
+          channelId: pr-01
           projectId: fn-support-e5ac9
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks

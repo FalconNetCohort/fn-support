@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 import { signOut, User } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "firebase/firestore";
-import AuthWrapper from "../components/AuthWrapper";
+
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import AuthWrapper from "@/app/components/AuthWrapper";
 
 // Define types for requests
 interface Request {

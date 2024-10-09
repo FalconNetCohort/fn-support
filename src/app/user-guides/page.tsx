@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs, DocumentReference, CollectionReference } from "firebase/firestore";
-import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import MarkdownIt from "markdown-it";
+import AuthWrapper from "../components/AuthWrapper";
 
 const mdParser = new MarkdownIt();
 

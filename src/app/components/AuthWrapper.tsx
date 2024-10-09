@@ -1,9 +1,8 @@
-"use client";
 import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
 import Loading from "@/app/loading/page";
+import {auth} from "@/app/firebase";
 
 interface AuthWrapperProps {
     children: ReactNode;
@@ -11,15 +10,15 @@ interface AuthWrapperProps {
 
 const AuthWrapper = ({ children }: AuthWrapperProps) => {
     const router = useRouter();
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     useEffect(() => {
-        if (!loading && !user) {
-            router.push("/login");
+        if (!user) {
+            router.push("/auth");
         }
     }, [user, loading, router]);
 
-    if (loading || !user) {
+    if (loading) {
         return <Loading />;
     }
 
