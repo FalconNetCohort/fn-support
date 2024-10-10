@@ -58,6 +58,10 @@ export default function NavMenu() {
         handleClose();
     };
 
+    const handleNavigation = (type: string) => {
+        router.push(`/requests?type=${type}`);
+    };
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -141,8 +145,12 @@ export default function NavMenu() {
                 open={submenuOpen}
                 onClose={() => setSubmenuAnchorEl(null)}
             >
-                <MenuItem onClick={handleClose}>Bug Report</MenuItem>
-                <MenuItem onClick={handleClose}>Feature Request</MenuItem>
+                <MenuItem onClick={() => handleNavigation('bug')}>
+                    Bug Report
+                </MenuItem>
+                <MenuItem onClick={() => handleNavigation('feature')}>
+                    Feature Request
+                </MenuItem>
             </Menu>
         </div>
     );

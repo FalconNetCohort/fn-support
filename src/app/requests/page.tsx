@@ -1,18 +1,20 @@
-"use client";
-import React from "react";
-import AuthWrapper from "@/app/components/AuthWrapper";
-import Header from "@/app/components/Header";
+'use client';
 
-export default function FeatureRequest() {
+import { useSearchParams } from 'next/navigation';
+import FeatureRequest from '../components/FeatureRequest';
+import BugReport from '../components/BugReport';
 
+const RequestsPage = () => {
+    const searchParams = useSearchParams();
+    const type = searchParams.get('type');
 
     return (
-        <AuthWrapper>
-            <Header />
-            <div className="text-black bg-gray-900 flex flex-row items-center justify-center min-h-screen font-MyriadPro font-semibold">
-
-            </div>
-
-        </AuthWrapper>
+        <div>
+            {type === 'feature' && <FeatureRequest />}
+            {type === 'bug' && <BugReport />}
+            {!type && <p>Please select an issue type from the menu.</p>}
+        </div>
     );
-}
+};
+
+export default RequestsPage;
