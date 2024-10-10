@@ -114,7 +114,6 @@ export default function NavMenu() {
                     onClose={handleClose}
                 >
                     <MenuItem onClick={handleIssue}>Submit Issue</MenuItem>
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     {/* Render admin-only routes */}
                     {isAdmin && (
                         <>
@@ -126,6 +125,7 @@ export default function NavMenu() {
                             </MenuItem>
                         </>
                     )}
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
             )}
 
