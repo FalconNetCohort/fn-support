@@ -28,7 +28,7 @@ export default function LogIn() {
                     setErrorMessage("Please verify your email before logging in.");
                     return;
                 } else {
-                    await router.push('/');
+                    router.push('/');
                 }
             }
         } catch (error: any) {
