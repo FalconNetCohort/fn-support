@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from 'react';
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
+import {auth} from "@/app/firebase";
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -9,7 +10,6 @@ export default function ForgotPassword() {
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const auth = getAuth();
     useRouter();
     const sendResetEmail = async () => {
         setIsLoading(true);

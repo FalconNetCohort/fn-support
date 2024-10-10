@@ -2,7 +2,6 @@
 import React,
 { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs, DocumentReference, CollectionReference } from "firebase/firestore";
 import Header from "../components/Header";
@@ -167,11 +166,6 @@ export default function UserGuides() {
         }
     };
 
-    const handleLogout = async () => {
-        await signOut(auth);
-        router.push("/login");
-    };
-
     const handleResultClick = (result: UserGuide) => {
         setSelectedResult(result);
     };
@@ -186,12 +180,6 @@ export default function UserGuides() {
             <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
                 <div className="w-full max-w-lg flex justify-between items-center mb-6">
                     <h1 className="text-3xl">User Guides</h1>
-                    <button
-                        onClick={handleLogout}
-                        className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline"
-                    >
-                        Logout
-                    </button>
                 </div>
                 <form className="w-full max-w-lg mb-6" onSubmit={handleSubmit}>
                     <div className="mb-4">

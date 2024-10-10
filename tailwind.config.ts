@@ -46,6 +46,9 @@ module.exports = {
         },
       },
     },
+    fontFamily: {
+      MyriadPro: ['Myriad Pro', 'sans-serif'],
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),  // Add the typography plugin

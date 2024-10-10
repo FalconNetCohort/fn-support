@@ -88,11 +88,6 @@ export default function Dashboard() {
         fetchRequests();
     };
 
-    const handleSignOut = async () => {
-        await signOut(auth);
-        router.push("/");
-    };
-
     const handleChange = (id: string, field: keyof UpdateData, value: string) => {
         setUpdates({ ...updates, [id]: { ...updates[id], [field]: value } });
     };
@@ -185,12 +180,6 @@ export default function Dashboard() {
             <Header />
             <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
                 <h1 className="text-3xl mb-6">Dashboard</h1>
-                <button
-                    onClick={handleSignOut}
-                    className="mb-6 bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline"
-                >
-                    Sign Out
-                </button>
                 <input
                     type="text"
                     placeholder="Search..."

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import '../firebase.js';
 
@@ -39,27 +38,27 @@ export default function LogIn() {
     }
 
     return (
-        <div className="auth-form">
+        <div className="w-full max-w-sm flex flex-col items-center justify-center text-white">
             <h1 className="text-3xl mb-4">Login</h1>
             {errorMessage && <div className="alert alert-danger text-red-500">{errorMessage}</div>}
-            <form onSubmit={handleAuth} className="w-64">
+            <form onSubmit={handleAuth} className="w-92">
                 <input
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="mb-2 p-2 border rounded w-64"
+                    className="mb-2 p-2 border rounded w-full text-black"
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="mb-2 p-2 border rounded w-64"
+                    className="mb-2 p-2 border rounded w-full text-black"
                 />
                 <p style={{color: 'red', textAlign: 'center'}} className="mt-0 mb-4 p-2">Do not use your Office 365
                     Microsoft Password!</p>
-                <button type="submit" className="auth-btn">
+                <button type="submit" className="w-full mb-3 bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-xl transform transition-all duration-300 hover:scale-105">
                     Log In
                 </button>
             </form>

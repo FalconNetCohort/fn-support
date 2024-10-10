@@ -27,7 +27,7 @@ export default function SignUp() {
                     await signOut(auth);
                     // set flag in localStorage
                     localStorage.setItem('showEmailVerificationMessage', 'true');
-                    await router.push('/auth');  // Redirect to login page after successful account creation
+                    router.push('/auth');  // Redirect to login page after successful account creation
                 }
             }
 
@@ -44,27 +44,27 @@ export default function SignUp() {
     }
 
     return (
-        <div className="auth-form">
-            <h1 className="text-2xl mb-4">Sign up for FalconShop</h1>
+        <div className="w-full max-w-sm flex flex-col items-center justify-center text-white">
+            <h1 className="text-2xl mb-4">Sign up for FalconSupport</h1>
             {error && <p className="text-red-500">{error}</p>}
-            <form onSubmit={handleAuth} className="w-64">
+            <form onSubmit={handleAuth} className="w-92">
                 <input
                     type="email"
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full mb-3 p-2 border rounded shadow-lg"
+                    className="w-full mb-3 p-2 border rounded shadow-lg text-black"
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full mb-3 p-2 border rounded shadow-lg"
+                    className="w-full mb-3 p-2 border rounded shadow-lg text-black"
                 />
                 <p style={{color: 'red', textAlign: 'center'}} className="mt-0 mb-4 p-2">Do not use your Office 365 Microsoft Password!</p>
-                <button type="submit" className="auth-btn">
-                    Create FalconShop account
+                <button type="submit" className="w-full mb-3 bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-xl transform transition-all duration-300 hover:scale-105">
+                    Create account
                 </button>
             </form>
             {verificationMessage && <p className="text-green-500">{verificationMessage}</p>}
