@@ -145,10 +145,10 @@ export default function NavMenu() {
                 open={submenuOpen}
                 onClose={() => setSubmenuAnchorEl(null)}
             >
-                <MenuItem onClick={() => handleNavigation('bug')}>
+                <MenuItem onClick={() => handleNavigation('supportRequests')}>
                     Bug Report
                 </MenuItem>
-                <MenuItem onClick={() => handleNavigation('feature')}>
+                <MenuItem onClick={() => handleNavigation('featureRequests')}>
                     Feature Request
                 </MenuItem>
             </Menu>

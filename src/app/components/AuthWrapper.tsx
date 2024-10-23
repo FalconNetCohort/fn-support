@@ -13,7 +13,7 @@ const AuthWrapper = ({ children }: AuthWrapperProps) => {
     const [user, loading] = useAuthState(auth);
 
     useEffect(() => {
-        if (!user) {
+        if (!auth) {
             router.push("/auth");
         }
     }, [user, loading, router]);

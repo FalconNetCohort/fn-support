@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signOut, User } from "firebase/auth";
+import { User } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { collection, getDocs, updateDoc, deleteDoc, doc, arrayUnion } from "firebase/firestore";
 
@@ -12,12 +12,11 @@ import AuthWrapper from "@/app/components/AuthWrapper";
 // Define types for requests
 interface Request {
     id: string;
-    featureDescription?: string;
-    bugDescription?: string;
-    supplementalInfo: string;
+    title?: string;
+    description: string;
     priority?: string;
     status?: string;
-    name: string;
+    userName: string;
 }
 
 interface UpdateData {
@@ -41,7 +40,7 @@ export default function Dashboard() {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
             if (!user) {
-                router.push("/login");
+                router.push("/auth");
             } else {
                 fetchRequests().then(r => r);
             }
@@ -77,7 +76,7 @@ export default function Dashboard() {
         alert("Request updated successfully");
         setComments({ ...comments, [id]: "" });
         setUpdates({});
-        fetchRequests();
+        await fetchRequests();
     };
 
 
@@ -85,7 +84,7 @@ export default function Dashboard() {
         const requestRef = doc(db, type === "feature" ? "featureRequests" : "supportRequests", id);
         await deleteDoc(requestRef);
         alert("Request deleted successfully");
-        fetchRequests();
+        await fetchRequests();
     };
 
     const handleChange = (id: string, field: keyof UpdateData, value: string) => {
@@ -97,13 +96,13 @@ export default function Dashboard() {
     };
 
     const filteredFeatureRequests = featureRequests.filter((request) =>
-        request.featureDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        request.supplementalInfo.toLowerCase().includes(searchTerm.toLowerCase())
+        request.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        request.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const filteredSupportRequests = supportRequests.filter((request) =>
-        request.bugDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        request.supplementalInfo.toLowerCase().includes(searchTerm.toLowerCase())
+        request.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        request.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const renderRequests = (requests: Request[], type: "feature" | "support") =>
@@ -112,8 +111,8 @@ export default function Dashboard() {
         ) : (
             requests.map((request) => (
                 <div key={request.id} className="p-4 mb-4 border rounded-lg shadow bg-gray-800">
-                    <h3 className="text-xl font-semibold">{request.featureDescription || request.bugDescription}</h3>
-                    <p className="text-gray-300 mb-2">{request.supplementalInfo}</p>
+                    <h3 className="text-xl font-semibold">{request.title}</h3>
+                    <p className="text-gray-300 mb-2">{request.description}</p>
                     <div className="mb-2">
                         <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="priority">
                             Priority
@@ -170,7 +169,7 @@ export default function Dashboard() {
                     >
                         Delete
                     </button>
-                    <div className="text-gray-400 text-sm mt-2">Submitted by: {request.name}</div>
+                    <div className="text-gray-400 text-sm mt-2">Submitted by: {request.userName}</div>
                 </div>
             ))
         );
