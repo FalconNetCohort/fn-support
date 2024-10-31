@@ -66,15 +66,17 @@ const RequestsPage = () => {
         setAttachment(null);
     };
 
+    const nameType = (requestType === "supportRequests" ? "Bug Report" : "Feature Request");
+
     return (
         <AuthWrapper>
             <div className="flex flex-col min-h-screen bg-gray-900 text-white">
                 <Header/>
                 <main className="flex-grow flex flex-col items-center justify-center p-6">
-                    <h1 className="text-3xl mb-6">{requestType === "supportRequest" ? "Bug Report" : "Feature Request"}</h1>
+                    <h1 className="text-3xl mb-6">{nameType}</h1>
                     <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userName">
+                            <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="userName">
                                 Name
                             </label>
                             <input
@@ -88,7 +90,7 @@ const RequestsPage = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userRank">
+                            <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="userRank">
                                 Rank
                             </label>
                             <input
@@ -102,7 +104,7 @@ const RequestsPage = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userEmail">
+                            <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="userEmail">
                                 Email
                             </label>
                             <input
@@ -116,7 +118,7 @@ const RequestsPage = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobTitle">
+                            <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="jobTitle">
                                 Job Title
                             </label>
                             <input
@@ -130,8 +132,8 @@ const RequestsPage = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
-                                Bug Description
+                            <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="title">
+                                {nameType} Title
                             </label>
                             <textarea
                                 name="title"
@@ -143,7 +145,7 @@ const RequestsPage = () => {
                             ></textarea>
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="attachment">
+                            <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="attachment">
                                 Attachment
                             </label>
                             <input
@@ -155,8 +157,8 @@ const RequestsPage = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-                                Supplemental Info
+                            <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="description">
+                                {nameType} Description
                             </label>
                             <textarea
                                 name="description"

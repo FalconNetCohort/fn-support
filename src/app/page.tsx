@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Modal from "./components/Modal";
+import RecentItems from "@/app/components/RecentItems";
 
 interface UserGuide {
   id: string;
@@ -81,7 +82,7 @@ export default function Home() {
           value={searchTerm}
           onChange={handleSearch}
         />
-        {searchTerm.length > 0 && (
+        {searchTerm.length > 0 ? (
           <div className="mt-6 w-full max-w-5xl">
             {results.length > 0 ? (
               results.map((result) => (
@@ -102,6 +103,8 @@ export default function Home() {
               <p className="text-gray-400">No results found</p>
             )}
           </div>
+        ) : (
+            <RecentItems />
         )}
         {typeof window !== "undefined" && selectedResult && (
             <Modal

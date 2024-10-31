@@ -2,7 +2,7 @@
 import React,
 { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { db, auth } from "../firebase";
+import { db } from "../firebase";
 import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs, DocumentReference, CollectionReference } from "firebase/firestore";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -17,7 +17,8 @@ interface UserGuide {
     title: string;
     body: string;
     tags: string[];
-    lastUpdated: string; 
+    lastUpdated: string;
+    createdBy: string;
 }
 
 export default function UserGuides() {
@@ -164,10 +165,6 @@ export default function UserGuides() {
                 alert("Error deleting user guide");
             }
         }
-    };
-
-    const handleResultClick = (result: UserGuide) => {
-        setSelectedResult(result);
     };
 
     const handleCloseModal = () => {
