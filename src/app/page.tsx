@@ -5,13 +5,13 @@ import Footer from "./components/Footer";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Modal from "./components/Modal";
-import RecentItems from "@/app/components/RecentItems";
 
 interface UserGuide {
   id: string;
   title: string;
   body: string;
   tags: string[];
+  lastUpdated: string;
 }
 
 export default function Home() {
@@ -30,13 +30,14 @@ export default function Home() {
   const fetchUserGuides = async () => {
     try {
       const userGuidesSnapshot = await getDocs(collection(db, "userGuides"));
-      setUserGuides(userGuidesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as UserGuide)));
+      setUserGuides(userGuidesSnapshot.docs
+          .map(doc => ({ ...doc.data(), id: doc.id } as UserGuide))
+          .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()));
     } catch (error) {
       console.error("Error fetching user guides:", error);
       // Optionally, display an error message in the UI
     }
   };
-
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
@@ -104,7 +105,17 @@ export default function Home() {
             )}
           </div>
         ) : (
-            <RecentItems />
+            <div className="mb-8 grid mx-auto gap-8 grid-cols-4">
+              {userGuides && userGuides.slice(0, 4).map((guide) => (
+                  <div
+                      key={guide.id}
+                      className="p-16 mb-4 border rounded-lg cursor-pointer bg-gray-800"
+                      onClick={() => handleResultClick(guide)}
+                  >
+                    <h2 className="mb-2 text-xl font-semibold text-white">{guide.title}</h2>
+                  </div>
+              ))}
+            </div>
         )}
         {typeof window !== "undefined" && selectedResult && (
             <Modal
@@ -115,7 +126,7 @@ export default function Home() {
             />
         )}
       </main>
-      <Footer />
+      <Footer/>
     </div>
   );
 }
