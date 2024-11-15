@@ -21,7 +21,9 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "functions",
+      "functions/**"
     ],
     "frameworksBackend": {
       "region": "us-central1"
