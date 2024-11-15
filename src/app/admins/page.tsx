@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import { Alert, Icon, IconButton, Slide } from "@mui/material";
 import { addAdminRole, listUsers, removeAdminRole } from "../firebase";
@@ -8,6 +7,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import PlusIcon from "@mui/icons-material/Add";
 import CheckMarkIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AdminAuthWrapper from "../components/AdminAuthWrapper";
 
 interface User {
   email: string;
@@ -113,7 +113,7 @@ export default function Admin() {
   };
 
   return (
-    <AuthWrapper>
+    <AdminAuthWrapper>
       <Header />
       <main className="flex min-h-screen flex-col items-center p-6 bg-gray-900 text-white">
         <Slide in={alert.open} direction="up">
@@ -195,6 +195,6 @@ export default function Admin() {
           <h1>Loading...</h1>
         )}
       </main>
-    </AuthWrapper>
+    </AdminAuthWrapper>
   );
 }
