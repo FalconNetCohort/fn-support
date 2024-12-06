@@ -1,4 +1,4 @@
-@import url('@/../public/fonts/Myriad Pro/stylesheet.css');
+@import url("@/../public/fonts/Myriad Pro/stylesheet.css");
 
 @tailwind base;
 @tailwind components;
@@ -26,6 +26,14 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+input {
+  @apply bg-white dark:bg-gray-950;
+}
+
+textarea {
+  @apply bg-white dark:bg-gray-950;
 }
 
 @layer utilities {

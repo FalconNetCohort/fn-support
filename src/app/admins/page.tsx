@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Header from "../components/Header";
 import { Alert, Icon, IconButton, Slide } from "@mui/material";
 import { addAdminRole, listUsers, removeAdminRole } from "../firebase";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -114,8 +113,7 @@ export default function Admin() {
 
   return (
     <AdminAuthWrapper>
-      <Header />
-      <main className="flex min-h-screen flex-col items-center p-6 bg-gray-900 text-white">
+      <main className="flex min-h-screen flex-col items-center p-6">
         <Slide in={alert.open} direction="up">
           <Alert
             severity={alert.severity}
@@ -134,7 +132,7 @@ export default function Admin() {
             placeholder="Search..."
             value={adminInput}
             onChange={(e) => setAdminInput(e.target.value)}
-            className="flex-1 p-4 mb-6 border border-gray-300 rounded-lg text-black"
+            className="flex-1 p-4 mb-6 border border-gray-300 rounded-lg"
           />
         </div>
         {users ? (
@@ -147,14 +145,14 @@ export default function Admin() {
               .map((user) => (
                 <div
                   key={user.email}
-                  className="flex items-center space-x-2 w-full p-4 bg-gray-800 rounded-lg"
+                  className="flex items-center space-x-2 w-full p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
                 >
                   <div className="flex-1">
                     <p>{user.email}</p>
                   </div>
                   <div>
                     <span
-                      className={`px-2 py-1 rounded-lg ${
+                      className={`px-2 py-1 rounded-lg text-white ${
                         user.emailVerified ? "bg-green-500" : "bg-red-500"
                       }`}
                     >
@@ -166,7 +164,7 @@ export default function Admin() {
                   </div>
                   <div>
                     <span
-                      className={`px-2 py-1 rounded-lg ${
+                      className={`px-2 py-1 rounded-lg text-white ${
                         user.admin ? "bg-red-500" : "bg-green-500"
                       }`}
                     >

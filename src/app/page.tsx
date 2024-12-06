@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -26,13 +25,18 @@ export default function Home() {
     fetchUserGuides();
   }, []);
 
-
   const fetchUserGuides = async () => {
     try {
       const userGuidesSnapshot = await getDocs(collection(db, "userGuides"));
-      setUserGuides(userGuidesSnapshot.docs
-          .map(doc => ({ ...doc.data(), id: doc.id } as UserGuide))
-          .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()));
+      setUserGuides(
+        userGuidesSnapshot.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id } as UserGuide))
+          .sort(
+            (a, b) =>
+              new Date(b.lastUpdated).getTime() -
+              new Date(a.lastUpdated).getTime()
+          )
+      );
     } catch (error) {
       console.error("Error fetching user guides:", error);
       // Optionally, display an error message in the UI
@@ -49,10 +53,11 @@ export default function Home() {
 
     searchTimeoutRef.current = setTimeout(() => {
       if (query.length > 0) {
-        const filteredResults = userGuides.filter((item) =>
+        const filteredResults = userGuides.filter(
+          (item) =>
             item.title.toLowerCase().includes(query) ||
             item.body.toLowerCase().includes(query) ||
-            item.tags.some(tag => tag.toLowerCase().includes(query))
+            item.tags.some((tag) => tag.toLowerCase().includes(query))
         );
         setResults(filteredResults);
       } else {
@@ -67,35 +72,41 @@ export default function Home() {
 
   const handleCloseModal = () => {
     if (selectedResult != null) {
-    setSelectedResult(null);
+      setSelectedResult(null);
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-      <Header />
-      <main className="flex-grow flex flex-col items-center justify-center p-6">
+    <div className="flex flex-col min-h-[calc(100vh-80px)]">
+      <main className="flex-grow flex flex-col items-center justify-center p-6 mt-12">
         <h1 className="text-3xl mb-6">Welcome to FalconSupport</h1>
         <input
           type="text"
           placeholder="Search for FAQs or user guides..."
-          className="w-full p-4 mb-6 border border-gray-300 rounded-lg text-black"
+          className="w-full max-w-3xl p-4 mb-4 border rounded-lg shadow-md"
           value={searchTerm}
           onChange={handleSearch}
         />
         {searchTerm.length > 0 ? (
-          <div className="mt-6 w-full max-w-5xl">
+          <div className="mt-6 w-full max-w-3xl">
             {results.length > 0 ? (
               results.map((result) => (
                 <div
                   key={result.id}
-                  className="p-4 mb-4 border rounded-lg cursor-pointer bg-gray-800"
+                  className="p-4 mb-4 border rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800"
                   onClick={() => handleResultClick(result)}
                 >
-                  <h2 className="mb-2 text-xl font-semibold text-white">{result.title}</h2>
+                  <h2 className="mb-2 text-xl font-semibold ">
+                    {result.title}
+                  </h2>
                   <div className="flex flex-wrap">
                     {result.tags.map((tag, index) => (
-                      <span key={index} className="bg-blue-600 text-white px-2 py-1 rounded-full mr-2 mb-2">{tag}</span>
+                      <span
+                        key={index}
+                        className="bg-blue-600 text-white px-2 py-1 rounded-full mr-2 mb-2"
+                      >
+                        {tag}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -105,28 +116,29 @@ export default function Home() {
             )}
           </div>
         ) : (
-            <div className="mb-8 grid mx-auto gap-8 grid-cols-4">
-              {userGuides && userGuides.slice(0, 4).map((guide) => (
-                  <div
-                      key={guide.id}
-                      className="p-16 mb-4 border rounded-lg cursor-pointer bg-gray-800"
-                      onClick={() => handleResultClick(guide)}
-                  >
-                    <h2 className="mb-2 text-xl font-semibold text-white">{guide.title}</h2>
-                  </div>
+          <div className="mb-8 grid mx-auto gap-8 grid-cols-4 ">
+            {userGuides &&
+              userGuides.slice(0, 4).map((guide) => (
+                <div
+                  key={guide.id}
+                  className="p-16 mb-4 mt-12 border rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800"
+                  onClick={() => handleResultClick(guide)}
+                >
+                  <h2 className="mb-2 text-xl font-semibold">{guide.title}</h2>
+                </div>
               ))}
-            </div>
+          </div>
         )}
         {typeof window !== "undefined" && selectedResult && (
-            <Modal
-                isOpen={!!selectedResult}
-                onClose={handleCloseModal}
-                title={selectedResult.title}
-                content={selectedResult.body}
-            />
+          <Modal
+            isOpen={!!selectedResult}
+            onClose={handleCloseModal}
+            title={selectedResult.title}
+            content={selectedResult.body}
+          />
         )}
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

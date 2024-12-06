@@ -11,8 +11,6 @@ import {
   doc,
   arrayUnion,
 } from "firebase/firestore";
-
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AdminAuthWrapper from "../components/AdminAuthWrapper";
 
@@ -136,13 +134,13 @@ export default function Dashboard() {
       requests.map((request) => (
         <div
           key={request.id}
-          className="p-4 mb-4 border rounded-lg shadow bg-gray-800"
+          className="p-4 mb-4 border rounded-lg shadow bg-white dark:bg-gray-800"
         >
           <h3 className="text-xl font-semibold">{request.title}</h3>
-          <p className="text-gray-300 mb-2">{request.description}</p>
+          <p className="text-gray-400 mb-2">{request.description}</p>
           <div className="mb-2">
             <label
-              className="block text-gray-300 text-sm font-bold mb-2"
+              className="block text-gray-400 text-sm font-bold mb-2"
               htmlFor="priority"
             >
               Priority
@@ -163,7 +161,7 @@ export default function Dashboard() {
           </div>
           <div className="mb-2">
             <label
-              className="block text-gray-300 text-sm font-bold mb-2"
+              className="block text-gray-400 text-sm font-bold mb-2"
               htmlFor="status"
             >
               Status
@@ -189,7 +187,7 @@ export default function Dashboard() {
           </div>
           <div className="mb-2">
             <label
-              className="block text-gray-300 text-sm font-bold mb-2"
+              className="block text-gray-400 text-sm font-bold mb-2"
               htmlFor="comment"
             >
               Comment
@@ -222,15 +220,14 @@ export default function Dashboard() {
 
   return (
     <AdminAuthWrapper>
-      <Header />
-      <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
+      <main className="flex min-h-screen flex-col items-center justify-center p-6">
         <h1 className="text-3xl mb-6">Dashboard</h1>
         <input
           type="text"
           placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-4 mb-6 border border-gray-300 rounded-lg text-black"
+          className="w-full max-w-5xl shadow-md p-4 mb-6 border rounded-lg text-black"
         />
         <div className="w-full max-w-5xl">
           <h2 className="text-2xl mb-4">In Progress</h2>
