@@ -151,7 +151,7 @@ export default function Dashboard() {
               onChange={(e) =>
                 handleChange(request.id, "priority", e.target.value)
               }
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
@@ -196,7 +196,7 @@ export default function Dashboard() {
               id="comment"
               value={comments[request.id] || ""}
               onChange={(e) => handleCommentChange(request.id, e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             ></textarea>
           </div>
           <button
@@ -227,7 +227,7 @@ export default function Dashboard() {
           placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full max-w-5xl shadow-md p-4 mb-6 border rounded-lg text-black"
+          className="w-full max-w-5xl shadow-md p-4 mb-6 border rounded-lg"
         />
         <div className="w-full max-w-5xl">
           <h2 className="text-2xl mb-4">In Progress</h2>

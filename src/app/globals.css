@@ -28,10 +28,7 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-input {
-  @apply bg-white dark:bg-gray-950;
-}
-
+input,
 textarea {
   @apply bg-white dark:bg-gray-950;
 }

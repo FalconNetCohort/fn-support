@@ -77,7 +77,7 @@ const RequestsPage = () => {
           <form className="w-full max-w-lg" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
-                className="block text-neutral-100 text-sm font-bold mb-2"
+                className="block text-gray-400  text-sm font-bold mb-2"
                 htmlFor="userName"
               >
                 Name
@@ -86,7 +86,7 @@ const RequestsPage = () => {
                 type="text"
                 name="userName"
                 id="userName"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 value={formData.userName}
                 onChange={handleChange}
                 required
@@ -94,7 +94,7 @@ const RequestsPage = () => {
             </div>
             <div className="mb-4">
               <label
-                className="block text-neutral-100 text-sm font-bold mb-2"
+                className="block text-gray-400 text-sm font-bold mb-2"
                 htmlFor="userRank"
               >
                 Rank
@@ -103,7 +103,7 @@ const RequestsPage = () => {
                 type="text"
                 name="userRank"
                 id="userRank"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 value={formData.userRank}
                 onChange={handleChange}
                 required
@@ -111,7 +111,7 @@ const RequestsPage = () => {
             </div>
             <div className="mb-4">
               <label
-                className="block text-neutral-100 text-sm font-bold mb-2"
+                className="block text-gray-400 text-sm font-bold mb-2"
                 htmlFor="userEmail"
               >
                 Email
@@ -120,7 +120,7 @@ const RequestsPage = () => {
                 type="email"
                 name="userEmail"
                 id="userEmail"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 value={formData.userEmail}
                 onChange={handleChange}
                 required
@@ -128,7 +128,7 @@ const RequestsPage = () => {
             </div>
             <div className="mb-4">
               <label
-                className="block text-neutral-100 text-sm font-bold mb-2"
+                className="block text-gray-400 text-sm font-bold mb-2"
                 htmlFor="jobTitle"
               >
                 Job Title
@@ -137,7 +137,7 @@ const RequestsPage = () => {
                 type="text"
                 name="jobTitle"
                 id="jobTitle"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 value={formData.jobTitle}
                 onChange={handleChange}
                 required
@@ -145,7 +145,7 @@ const RequestsPage = () => {
             </div>
             <div className="mb-4">
               <label
-                className="block text-neutral-100 text-sm font-bold mb-2"
+                className="block text-gray-400 text-sm font-bold mb-2"
                 htmlFor="title"
               >
                 {nameType} Title
@@ -153,7 +153,7 @@ const RequestsPage = () => {
               <textarea
                 name="title"
                 id="title"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 value={formData.title}
                 onChange={handleChange}
                 required
@@ -161,7 +161,7 @@ const RequestsPage = () => {
             </div>
             <div className="mb-4">
               <label
-                className="block text-neutral-100 text-sm font-bold mb-2"
+                className="block text-gray-400 text-sm font-bold mb-2"
                 htmlFor="attachment"
               >
                 Attachment
@@ -170,13 +170,13 @@ const RequestsPage = () => {
                 type="file"
                 name="attachment"
                 id="attachment"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={handleFileChange}
               />
             </div>
             <div className="mb-4">
               <label
-                className="block text-neutral-100 text-sm font-bold mb-2"
+                className="block text-gray-400 text-sm font-bold mb-2"
                 htmlFor="description"
               >
                 {nameType} Description
@@ -184,7 +184,7 @@ const RequestsPage = () => {
               <textarea
                 name="description"
                 id="description"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 value={formData.description}
                 onChange={handleChange}
               ></textarea>
