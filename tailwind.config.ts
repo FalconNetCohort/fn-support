@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["./src/**/*.{ts,tsx,js,jsx,html}"],  // Add other file types if necessary
+  content: ["./src/**/*.{ts,tsx,js,jsx,html}"], // Add other file types if necessary
   darkMode: "class",
   theme: {
     extend: {
@@ -45,12 +45,16 @@ module.exports = {
           },
         },
       },
+      borderColor: {
+        DEFAULT: "#b0acac",
+        dark: "#444746",
+      },
     },
     fontFamily: {
-      MyriadPro: ['Myriad Pro', 'sans-serif'],
+      MyriadPro: ["Myriad Pro", "sans-serif"],
     },
   },
   plugins: [
-    require('@tailwindcss/typography'),  // Add the typography plugin
+    require("@tailwindcss/typography"), // Add the typography plugin
   ],
 };

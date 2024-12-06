@@ -12,7 +12,6 @@ import {
   DocumentReference,
   CollectionReference,
 } from "firebase/firestore";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import MarkdownIt from "markdown-it";
@@ -188,15 +187,14 @@ export default function UserGuides() {
 
   return (
     <AdminAuthWrapper>
-      <Header />
-      <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
+      <main className="flex min-h-[calc(100vh-80px)] flex-col items-center justify-center p-6">
         <div className="w-full max-w-lg flex justify-between items-center mb-6">
           <h1 className="text-3xl">User Guides</h1>
         </div>
         <form className="w-full max-w-lg mb-6" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              className="block text-gray-300 text-sm font-bold mb-2"
+              className="block text-gray-400 text-sm font-bold mb-2"
               htmlFor="title"
             >
               Title
@@ -205,7 +203,7 @@ export default function UserGuides() {
               type="text"
               name="title"
               id="title"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
               value={formData.title}
               onChange={handleChange}
               required
@@ -213,7 +211,7 @@ export default function UserGuides() {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-300 text-sm font-bold mb-2"
+              className="block text-gray-400 text-sm font-bold mb-2"
               htmlFor="tags"
             >
               Tags
@@ -240,14 +238,14 @@ export default function UserGuides() {
                 onChange={handleTagChange}
                 onKeyDown={handleTagKeyDown}
                 ref={tagInputRef}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter a tag and press Enter"
               />
             </div>
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-300 text-sm font-bold mb-2"
+              className="block text-gray-400 text-sm font-bold mb-2"
               htmlFor="body"
             >
               Body
@@ -255,7 +253,7 @@ export default function UserGuides() {
             <textarea
               name="body"
               id="body"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
               value={formData.body}
               onChange={handleBodyChange}
               required
@@ -264,7 +262,7 @@ export default function UserGuides() {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-300 text-sm font-bold mb-2"
+              className="block text-gray-400 text-sm font-bold mb-2"
               htmlFor="mdFile"
             >
               Upload Markdown File
@@ -273,13 +271,13 @@ export default function UserGuides() {
               type="file"
               name="mdFile"
               id="mdFile"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
               onChange={handleFileUpload}
             />
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-300 text-sm font-bold mb-2"
+              className="block text-gray-400 text-sm font-bold mb-2"
               htmlFor="imageFile"
             >
               Upload Image
@@ -288,7 +286,7 @@ export default function UserGuides() {
               type="file"
               name="imageFile"
               id="imageFile"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
               onChange={handleImageUpload}
             />
           </div>
@@ -309,7 +307,7 @@ export default function UserGuides() {
             userGuides.map((guide) => (
               <div
                 key={guide.id}
-                className="p-4 mb-4 border rounded-lg shadow bg-gray-800"
+                className="p-4 mb-4 border rounded-lg shadow bg-gray-100 dark:bg-gray-800"
               >
                 <h3 className="text-xl font-semibold">{guide.title}</h3>
                 <div className="flex items-center flex-wrap mb-2">
