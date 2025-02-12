@@ -122,7 +122,7 @@ export default function NavMenu() {
                 Admin Dashboard
               </MenuItem>
               <MenuItem onClick={() => router.push("/guides")}>
-                Admin Guides
+                Manage Guides
               </MenuItem>
               <MenuItem onClick={() => router.push("/admins")}>
                 Manage Admins

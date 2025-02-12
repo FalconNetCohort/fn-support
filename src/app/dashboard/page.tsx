@@ -24,6 +24,9 @@ interface Request {
   priority?: string;
   status?: string;
   userName: string;
+  userRank: string;
+  userEmail: string;
+  jobTitle: string;
 }
 
 interface UpdateData {
@@ -214,7 +217,10 @@ export default function Dashboard() {
             Delete
           </button>
           <div className="text-gray-400 text-sm mt-2">
-            Submitted by: {request.userName}
+            <br /> Submitted by:
+            <br /> Name: {request.userRank} {request.userName}
+            <br/> Job Title: {request.jobTitle}
+            <br/> Email: {request.userEmail}
           </div>
         </div>
       ))
