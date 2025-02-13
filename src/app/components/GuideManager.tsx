@@ -18,15 +18,16 @@ interface UserGuide {
 interface GuideManagerProps {
     searchEnabled?: boolean; // Enable search bar
     adminMode?: boolean; // If true, allows creating, editing, and deleting guides
+    showLimited?: boolean; // If true, only show a limited number of guides
 }
 
-const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, adminMode = false }) => {
+const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, adminMode = false, showLimited = false }) => {
     const [guides, setGuides] = useState<UserGuide[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [results, setResults] = useState<UserGuide[]>([]);
     const [selectedGuide, setSelectedGuide] = useState<UserGuide | null>(null);
     const [editingGuide, setEditingGuide] = useState<UserGuide | null>(null);
     const [newGuide, setNewGuide] = useState<UserGuide | null>(null); // Separate state for new guides
+    const [filteredGuides, setFilteredGuides] = useState<UserGuide[]>([]);
 
     // Fetch metadata only
     const fetchGuideMetadata = async () => {
@@ -36,7 +37,7 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
 
             if (querySnapshot.empty) console.warn("⚠️ No guides found in Firestore.");
 
-            const guideList = querySnapshot.docs.map((doc) => ({
+            let guideList = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 title: doc.data().title || "Untitled",
                 content: "", // Empty until fetched dynamically
@@ -47,7 +48,7 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
 
             console.log("✅ Retrieved guides:", guideList);
             setGuides(guideList);
-            setResults(guideList); // Ensure results is initialized
+            setFilteredGuides(guideList); // Initially, display all guides
         } catch (error) {
             console.error("❌ Error fetching guide metadata:", error);
         }
@@ -158,12 +159,15 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
                 guide.title.toLowerCase().includes(query) ||
                 guide.tags.some((tag) => tag.toLowerCase().includes(query))
             );
-            setResults(filteredResults);
+            setFilteredGuides(filteredResults);
         } else {
-            setResults(guides);
+            setFilteredGuides(guides);
         }
     };
 
+    const displayedGuides = showLimited && searchTerm.length === 0
+        ? filteredGuides.slice(0, 5) // Show only 5 guides on homepage
+        : filteredGuides; // Show all guides when searching
 
     useEffect(() => {
         fetchGuideMetadata();
@@ -196,6 +200,13 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
                         value={newGuide.title}
                         onChange={(e) => setNewGuide({ ...newGuide, title: e.target.value })}
                         placeholder="Guide Title"
+                        className="w-full p-2 mb-4 bg-gray-800 text-white rounded"
+                    />
+                    <input
+                        type="text"
+                        value={newGuide.tags.join(", ")}
+                        onChange={(e) => setNewGuide({ ...newGuide, tags: e.target.value.split(",") })}
+                        placeholder="Tags (comma-separated)"
                         className="w-full p-2 mb-4 bg-gray-800 text-white rounded"
                     />
                     <RichTextEditor content={newGuide.content} setContent={(content) => setNewGuide({ ...newGuide, content })} />
@@ -237,8 +248,8 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
                 </div>
             )}
 
-            <div className="grid grid-cols-4 gap-6">
-                {(searchTerm.length > 0 ? results : guides).map((guide) => (
+            <div className="grid grid-cols-5 gap-6">
+                {displayedGuides.map((guide) => (
                     <div key={guide.id} className="p-4 mb-4 border rounded-lg cursor-pointer bg-gray-800">
                         <h2 className="mb-2 text-xl font-semibold text-white" onClick={() => handleGuideClick(guide)}>
                             {guide.title}
