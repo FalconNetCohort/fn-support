@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -10,10 +11,7 @@ export default function Home() {
         <Header />
         <main className="flex-grow flex flex-col items-center justify-center p-6">
           <h1 className="text-3xl mb-6">Welcome to FalconSupport</h1>
-
-          {/* GuideManager with search enabled and limited results */}
           <GuideManager searchEnabled showLimited />
-
         </main>
         <Footer />
       </div>

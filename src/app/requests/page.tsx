@@ -128,21 +128,20 @@ const RequestsPage = () => {
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formData.jobTitle}
                                 onChange={handleChange}
-                                required
                             />
                         </div>
                         <div className="mb-4">
                             <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="title">
                                 {nameType} Title
                             </label>
-                            <textarea
+                            <input
                                 name="title"
                                 id="title"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formData.title}
                                 onChange={handleChange}
                                 required
-                            ></textarea>
+                            ></input>
                         </div>
                         <div className="mb-4">
                             <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="attachment">

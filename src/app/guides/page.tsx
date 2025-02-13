@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import GuideManager from "../components/GuideManager";
 import AdminAuthWrapper from "../components/AdminAuthWrapper";
@@ -10,8 +11,7 @@ export default function GuidesPage() {
       <AdminAuthWrapper>
         <Header />
         <main className="p-6 bg-gray-900 text-white min-h-screen">
-          <h1 className="text-3xl mb-6">Manage Guides</h1>
-          {/* Full GuideManager for admin use */}
+          <h1 className="flex justify-center text-3xl mb-6">Manage Guides</h1>
           <GuideManager searchEnabled adminMode />
         </main>
         <Footer />
