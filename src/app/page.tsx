@@ -113,6 +113,11 @@ export default function Home() {
                       onClick={() => handleResultClick(guide)}
                   >
                     <h2 className="mb-2 text-xl font-semibold text-white">{guide.title}</h2>
+                    <div className="flex flex-wrap">
+                      {guide.tags.map((tag, index) => (
+                          <span key={index} className="bg-blue-600 text-white px-2 py-1 rounded-full mr-2 mb-2">{tag}</span>
+                      ))}
+                    </div>
                   </div>
               ))}
             </div>

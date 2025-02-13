@@ -1,48 +1,57 @@
-"use client";
-import { useEffect } from "react";
-import ReactMarkdown from 'react-markdown';
+import { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     title: string;
-    content: string;
+    fileUrl: string;
 }
 
-export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
-    useEffect(() => {
-        const handleEsc = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                onClose();
-            }
-        };
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-            window.addEventListener('keydown', handleEsc);
-        } else {
-            document.body.style.overflow = "auto";
-        }
-        return () => {
-            window.removeEventListener('keydown', handleEsc);
-        };
-    }, [isOpen, onClose]);
+export default function Modal({ isOpen, onClose, title, fileUrl }: ModalProps) {
+    const [content, setContent] = useState("");
 
-    if (!isOpen) return null;
+    useEffect(() => {
+        if (isOpen && fileUrl) {
+            fetch(fileUrl)
+                .then((res) => res.text())
+                .then(setContent)
+                .catch(() => setContent("Error loading guide content."));
+        }
+    }, [isOpen, fileUrl]);
 
     return (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50" style={{ paddingTop: '5%', paddingBottom: '5%' }}>
-            <div className="bg-gray-900 text-white rounded-lg w-full max-w-4xl p-6 overflow-y-auto max-h-full">
-                <h2 className="text-2xl mb-4">{title}</h2>
-                <div className="prose prose-invert max-w-none">
-                    <ReactMarkdown>{content}</ReactMarkdown>
-                </div>
-                <button
-                    onClick={onClose}
-                    className="mt-4 p-2 bg-blue-600 text-white rounded-lg"
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-lg"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
                 >
-                    Close
-                </button>
-            </div>
-        </div>
+                    <motion.div
+                        className="bg-gray-900 text-white rounded-2xl w-[90%] md:w-[60%] lg:w-[50%] max-h-[80vh] p-6 shadow-xl overflow-y-auto"
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <h2 className="text-2xl font-semibold mb-4">{title}</h2>
+                        <div className="prose prose-invert max-w-none">
+                            <ReactMarkdown>{content}</ReactMarkdown>
+                        </div>
+                        <div className="mt-6 flex justify-end">
+                            <button
+                                onClick={onClose}
+                                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 transition rounded-lg"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }

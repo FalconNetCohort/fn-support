@@ -22,13 +22,7 @@ export default function Admin() {
     message: string;
     severity: "success" | "error" | "info" | "warning";
   }>({ open: false, message: "", severity: "success" });
-  const [users, setUsers] = useState<User[] | null>([
-    {
-      email: "c26tomis.hamilton@afacademy.af.edu",
-      emailVerified: true,
-      admin: false,
-    },
-  ]);
+    const [users, setUsers] = useState<User[] | null>(null);
 
   //call listUsers and update the users state
   useEffect(() => {
