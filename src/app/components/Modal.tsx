@@ -1,14 +1,45 @@
 import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     title: string;
-    content?: string; // Now passed directly
+    content?: string; // Passed directly as HTML
 }
 
 export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
     console.log("📌 Modal Opened with Content:", content);
+
+    // ✅ Convert <attachment-card> placeholders to actual JSX components
+    const parseAttachments = (htmlContent: string) => {
+        if (!htmlContent) return "";
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlContent, "text/html");
+
+        doc.querySelectorAll("attachment-card").forEach((node) => {
+            const fileUrl = node.getAttribute("data-url");
+            if (fileUrl) {
+                const fileName = decodeURIComponent(fileUrl.split("/").pop()?.split("?")[0] || "Unknown File");
+
+                // Create a new div element to replace <attachment-card>
+                const attachmentDiv = document.createElement("div");
+                attachmentDiv.className = "flex items-center gap-2 bg-gray-800 p-3 rounded-lg";
+                attachmentDiv.innerHTML = `
+                    <span style="font-size:1.5rem;">📎</span>
+                    <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" 
+                        style="color:white;font-weight:bold;text-decoration:none;">
+                        ${fileName}
+                    </a>
+                `;
+
+                node.replaceWith(attachmentDiv);
+            }
+        });
+
+        return doc.body.innerHTML;
+    };
 
     return (
         <AnimatePresence>
@@ -29,7 +60,7 @@ export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
                         <h2 className="text-2xl font-semibold mb-4">{title}</h2>
                         <div className="prose prose-invert max-w-none">
                             {content ? (
-                                <div dangerouslySetInnerHTML={{ __html: content }} />
+                                <div dangerouslySetInnerHTML={{ __html: parseAttachments(content) }} />
                             ) : (
                                 <p className="text-gray-300">Loading content...</p>
                             )}
@@ -48,4 +79,3 @@ export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
         </AnimatePresence>
     );
 }
-
