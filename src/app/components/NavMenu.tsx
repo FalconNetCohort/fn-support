@@ -116,19 +116,19 @@ export default function NavMenu() {
         >
           <MenuItem onClick={handleIssue}>Submit Issue</MenuItem>
           {/* Render admin-only routes */}
-          {isAdmin && (
-            <>
-              <MenuItem onClick={() => router.push("/dashboard")}>
-                Admin Dashboard
-              </MenuItem>
-              <MenuItem onClick={() => router.push("/guides")}>
-                Manage Guides
-              </MenuItem>
-              <MenuItem onClick={() => router.push("/admins")}>
-                Manage Admins
-              </MenuItem>
-            </>
-          )}
+          {isAdmin &&
+              [
+                <MenuItem key="dashboard" onClick={() => router.push("/dashboard")}>
+                  Admin Dashboard
+                </MenuItem>,
+                <MenuItem key="guides" onClick={() => router.push("/guides")}>
+                  Manage Guides
+                </MenuItem>,
+                <MenuItem key="admins" onClick={() => router.push("/admins")}>
+                  Manage Admins
+                </MenuItem>,
+              ]}
+
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       )}

@@ -1,25 +1,14 @@
-import { useState, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     title: string;
-    fileUrl: string;
+    content?: string; // Now passed directly
 }
 
-export default function Modal({ isOpen, onClose, title, fileUrl }: ModalProps) {
-    const [content, setContent] = useState("");
-
-    useEffect(() => {
-        if (isOpen && fileUrl) {
-            fetch(fileUrl)
-                .then((res) => res.text())
-                .then(setContent)
-                .catch(() => setContent("Error loading guide content."));
-        }
-    }, [isOpen, fileUrl]);
+export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
+    console.log("📌 Modal Opened with Content:", content);
 
     return (
         <AnimatePresence>
@@ -39,7 +28,11 @@ export default function Modal({ isOpen, onClose, title, fileUrl }: ModalProps) {
                     >
                         <h2 className="text-2xl font-semibold mb-4">{title}</h2>
                         <div className="prose prose-invert max-w-none">
-                            <ReactMarkdown>{content}</ReactMarkdown>
+                            {content ? (
+                                <div dangerouslySetInnerHTML={{ __html: content }} />
+                            ) : (
+                                <p className="text-gray-300">Loading content...</p>
+                            )}
                         </div>
                         <div className="mt-6 flex justify-end">
                             <button
@@ -55,3 +48,4 @@ export default function Modal({ isOpen, onClose, title, fileUrl }: ModalProps) {
         </AnimatePresence>
     );
 }
+

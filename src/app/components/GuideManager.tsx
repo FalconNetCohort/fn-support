@@ -1,0 +1,264 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { db } from "../firebase";
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import RichTextEditor from "./RichTextEditor";
+import Modal from "./Modal";
+
+interface UserGuide {
+    id: string;
+    title: string;
+    content: string;
+    tags: string[];
+    lastUpdated?: string;
+    createdBy?: string;
+}
+
+interface GuideManagerProps {
+    searchEnabled?: boolean; // Enable search bar
+    adminMode?: boolean; // If true, allows creating, editing, and deleting guides
+}
+
+const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, adminMode = false }) => {
+    const [guides, setGuides] = useState<UserGuide[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [results, setResults] = useState<UserGuide[]>([]);
+    const [selectedGuide, setSelectedGuide] = useState<UserGuide | null>(null);
+    const [editingGuide, setEditingGuide] = useState<UserGuide | null>(null);
+    const [newGuide, setNewGuide] = useState<UserGuide | null>(null); // Separate state for new guides
+
+    // Fetch metadata only
+    const fetchGuideMetadata = async () => {
+        try {
+            console.log("📌 Fetching guide metadata...");
+            const querySnapshot = await getDocs(collection(db, "userGuides"));
+
+            if (querySnapshot.empty) console.warn("⚠️ No guides found in Firestore.");
+
+            const guideList = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                title: doc.data().title || "Untitled",
+                content: "", // Empty until fetched dynamically
+                tags: doc.data().tags || [],
+                lastUpdated: doc.data().lastUpdated || "",
+                createdBy: doc.data().createdBy || "",
+            }));
+
+            console.log("✅ Retrieved guides:", guideList);
+            setGuides(guideList);
+            setResults(guideList); // Ensure results is initialized
+        } catch (error) {
+            console.error("❌ Error fetching guide metadata:", error);
+        }
+    };
+
+
+    // Fetch full guide content when clicked
+    const fetchGuideById = async (guideId: string) => {
+        try {
+            console.log(`📌 Fetching content for guide ID: ${guideId}`);
+            const guideRef = doc(db, "userGuides", guideId);
+            const guideSnap = await getDoc(guideRef);
+
+            if (!guideSnap.exists()) {
+                console.warn(`⚠️ Guide not found: ${guideId}`);
+                return null;
+            }
+
+            return {
+                id: guideId,
+                title: guideSnap.data().title || "Untitled",
+                content: guideSnap.data().content || "<p>No content available.</p>",
+                tags: guideSnap.data().tags || [],
+                lastUpdated: guideSnap.data().lastUpdated || "",
+                createdBy: guideSnap.data().createdBy || "",
+            };
+        } catch (error) {
+            console.error("❌ Error fetching guide content:", error);
+            return null;
+        }
+    };
+
+    // Handle clicking a guide
+    const handleGuideClick = async (guide: UserGuide) => {
+        const fullGuide = await fetchGuideById(guide.id);
+        if (fullGuide) setSelectedGuide(fullGuide);
+    };
+
+    // Handle creating a new guide
+    const handleCreate = () => {
+        setNewGuide({ id: "", title: "", content: "", tags: [] });
+    };
+
+    // Handle saving a new guide
+    const handleSaveNewGuide = async () => {
+        if (!newGuide) return;
+        try {
+            const now = new Date().toISOString();
+            const docRef = await addDoc(collection(db, "userGuides"), {
+                title: newGuide.title,
+                content: newGuide.content,
+                tags: newGuide.tags,
+                lastUpdated: now,
+                createdAt: now,
+            });
+            console.log(`✅ Guide created: ${docRef.id}`);
+            setNewGuide(null); // Clear the form after saving
+            fetchGuideMetadata(); // Refresh guide list
+        } catch (error) {
+            console.error("❌ Error creating guide:", error);
+        }
+    };
+
+    // Handle saving an edited guide
+    const handleSaveEdit = async () => {
+        if (!editingGuide) return;
+        try {
+            const now = new Date().toISOString();
+            await updateDoc(doc(db, "userGuides", editingGuide.id), {
+                title: editingGuide.title,
+                content: editingGuide.content,
+                tags: editingGuide.tags,
+                lastUpdated: now,
+            });
+            console.log(`✅ Guide updated: ${editingGuide.id}`);
+            setEditingGuide(null);
+            fetchGuideMetadata(); // Refresh guide list
+        } catch (error) {
+            console.error("❌ Error updating guide:", error);
+        }
+    };
+
+    const handleEdit = async (guide: UserGuide) => {
+        console.log(`📌 Editing guide ID: ${guide.id}`);
+        const fullGuide = await fetchGuideById(guide.id);
+        if (fullGuide) setEditingGuide(fullGuide);
+    };
+
+    // Handle deleting a guide
+    const handleDelete = async (guideId: string) => {
+        if (!confirm("Are you sure you want to delete this guide?")) return;
+
+        try {
+            await deleteDoc(doc(db, "userGuides", guideId));
+            console.log(`✅ Guide deleted: ${guideId}`);
+            fetchGuideMetadata(); // Refresh guide list
+        } catch (error) {
+            console.error("❌ Error deleting guide:", error);
+        }
+    };
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const query = e.target.value.toLowerCase();
+        setSearchTerm(query);
+
+        if (query.length > 0) {
+            const filteredResults = guides.filter((guide) =>
+                guide.title.toLowerCase().includes(query) ||
+                guide.tags.some((tag) => tag.toLowerCase().includes(query))
+            );
+            setResults(filteredResults);
+        } else {
+            setResults(guides);
+        }
+    };
+
+
+    useEffect(() => {
+        fetchGuideMetadata();
+    }, []);
+
+    return (
+        <div className="p-6">
+            {searchEnabled && (
+                <input
+                    type="text"
+                    placeholder="Search for FAQs or user guides..."
+                    className="w-full p-4 mb-6 border border-gray-300 rounded-lg text-black"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                />
+            )}
+
+            {adminMode && !newGuide && (
+                <button onClick={handleCreate} className="bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700 mb-4">
+                    + Create New Guide
+                </button>
+            )}
+
+            {/* Inline form for creating a new guide */}
+            {newGuide && (
+                <div className="bg-gray-900 p-6 rounded-lg shadow-xl">
+                    <h2 className="text-2xl mb-4">Create New Guide</h2>
+                    <input
+                        type="text"
+                        value={newGuide.title}
+                        onChange={(e) => setNewGuide({ ...newGuide, title: e.target.value })}
+                        placeholder="Guide Title"
+                        className="w-full p-2 mb-4 bg-gray-800 text-white rounded"
+                    />
+                    <RichTextEditor content={newGuide.content} setContent={(content) => setNewGuide({ ...newGuide, content })} />
+                    <button onClick={handleSaveNewGuide} className="bg-blue-600 text-white px-3 py-2 mt-4 rounded hover:bg-blue-700">
+                        Save Guide
+                    </button>
+                    <button onClick={() => setNewGuide(null)} className="ml-2 bg-red-600 text-white px-3 py-2 mt-4 rounded hover:bg-red-700">
+                        Cancel
+                    </button>
+                </div>
+            )}
+
+            {selectedGuide && (
+                <Modal
+                    isOpen={!!selectedGuide}
+                    onClose={() => setSelectedGuide(null)}
+                    title={selectedGuide.title}
+                    content={selectedGuide.content}
+                />
+            )}
+
+            {editingGuide && (
+                <div className="bg-gray-900 p-6 rounded-lg shadow-xl">
+                    <h2 className="text-2xl mb-4">Edit Guide</h2>
+                    <input
+                        type="text"
+                        value={editingGuide.title}
+                        onChange={(e) => setEditingGuide({ ...editingGuide, title: e.target.value })}
+                        placeholder="Guide Title"
+                        className="w-full p-2 mb-4 bg-gray-800 text-white rounded"
+                    />
+                    <RichTextEditor content={editingGuide.content} setContent={(content) => setEditingGuide({ ...editingGuide, content })} />
+                    <button onClick={handleSaveEdit} className="bg-blue-600 text-white px-3 py-2 mt-4 rounded hover:bg-blue-700">
+                        Save Changes
+                    </button>
+                    <button onClick={() => setEditingGuide(null)} className="ml-2 bg-red-600 text-white px-3 py-2 mt-4 rounded hover:bg-red-700">
+                        Cancel
+                    </button>
+                </div>
+            )}
+
+            <div className="grid grid-cols-4 gap-6">
+                {(searchTerm.length > 0 ? results : guides).map((guide) => (
+                    <div key={guide.id} className="p-4 mb-4 border rounded-lg cursor-pointer bg-gray-800">
+                        <h2 className="mb-2 text-xl font-semibold text-white" onClick={() => handleGuideClick(guide)}>
+                            {guide.title}
+                        </h2>
+                        {/* Admin-only buttons inside each guide */}
+                        {adminMode && (
+                            <div className="mt-2 flex space-x-2">
+                                <button onClick={() => handleEdit(guide)} className="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700">
+                                    Edit
+                                </button>
+                                <button onClick={() => handleDelete(guide.id)} className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
+                                    Delete
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default GuideManager;
