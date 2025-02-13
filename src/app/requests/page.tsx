@@ -1,17 +1,18 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import AuthWrapper from "@/app/components/AuthWrapper";
-import React, {useState} from "react";
-import {addDoc, collection} from "firebase/firestore";
-import {db} from "@/app/firebase";
+import React, { useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/app/firebase";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import {getAuth} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
-const RequestsPage = () => {
+const RequestsPageContent = () => {
     const searchParams = useSearchParams();
-    const requestType = searchParams.get('type');
+    const requestType = searchParams.get("type");
 
     if (!requestType) {
         return <div>Invalid request type</div>;
@@ -27,7 +28,6 @@ const RequestsPage = () => {
         userId: getAuth().currentUser?.uid,
     });
     const [attachment, setAttachment] = useState<File | null>(null);
-
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -66,12 +66,12 @@ const RequestsPage = () => {
         setAttachment(null);
     };
 
-    const nameType = (requestType === "supportRequests" ? "Bug Report" : "Feature Request");
+    const nameType = requestType === "supportRequests" ? "Bug Report" : "Feature Request";
 
     return (
         <AuthWrapper>
             <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-                <Header/>
+                <Header />
                 <main className="flex-grow flex flex-col items-center justify-center p-6">
                     <h1 className="text-3xl mb-6">{nameType}</h1>
                     <form className="w-full max-w-lg" onSubmit={handleSubmit}>
@@ -83,7 +83,7 @@ const RequestsPage = () => {
                                 type="text"
                                 name="userName"
                                 id="userName"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formData.userName}
                                 onChange={handleChange}
                                 required
@@ -97,7 +97,7 @@ const RequestsPage = () => {
                                 type="text"
                                 name="userRank"
                                 id="userRank"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formData.userRank}
                                 onChange={handleChange}
                                 required
@@ -111,7 +111,7 @@ const RequestsPage = () => {
                                 type="email"
                                 name="userEmail"
                                 id="userEmail"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formData.userEmail}
                                 onChange={handleChange}
                                 required
@@ -125,7 +125,7 @@ const RequestsPage = () => {
                                 type="text"
                                 name="jobTitle"
                                 id="jobTitle"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formData.jobTitle}
                                 onChange={handleChange}
                             />
@@ -137,11 +137,11 @@ const RequestsPage = () => {
                             <input
                                 name="title"
                                 id="title"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formData.title}
                                 onChange={handleChange}
                                 required
-                            ></input>
+                            />
                         </div>
                         <div className="mb-4">
                             <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="attachment">
@@ -151,7 +151,7 @@ const RequestsPage = () => {
                                 type="file"
                                 name="attachment"
                                 id="attachment"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                                 onChange={handleFileChange}
                             />
                         </div>
@@ -162,10 +162,10 @@ const RequestsPage = () => {
                             <textarea
                                 name="description"
                                 id="description"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formData.description}
                                 onChange={handleChange}
-                            ></textarea>
+                            />
                         </div>
                         <div className="mb-4">
                             <button
@@ -177,9 +177,17 @@ const RequestsPage = () => {
                         </div>
                     </form>
                 </main>
-                <Footer/>
+                <Footer />
             </div>
         </AuthWrapper>
+    );
+};
+
+const RequestsPage = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RequestsPageContent />
+        </Suspense>
     );
 };
 
