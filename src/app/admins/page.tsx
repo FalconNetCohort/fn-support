@@ -141,47 +141,40 @@ export default function Admin() {
               .map((user) => (
                 <div
                   key={user.email}
-                  className="flex items-center space-x-2 w-full p-4 bg-gray-800 rounded-lg"
+                  className="flex flex-wrap items-center space-x-2 w-full p-4 bg-gray-800 rounded-lg"
                 >
-                  <div className="flex-1">
-                    <p>{user.email}</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center w-full">
+                    {/* Email Section */}
+                    <div className="flex-1 min-w-0 mb-2 sm:mb-0">
+                      <p className="whitespace-normal break-words">{user.email}</p>
+                    </div>
+
+                    {/* Badge & Action Section */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="px-2 py-1 rounded-lg text-sm whitespace-nowrap bg-green-500 flex items-center">
+                        <CheckMarkIcon fontSize="small" className="mr-1" />
+                        Email Verified
+                       </span>
+                      <span className="px-2 py-1 rounded-lg text-sm whitespace-nowrap bg-red-500">
+                        Admin
+                      </span>
+                      {user.admin ? (
+                          <IconButton
+                              onClick={() => handleRemoveAdmin(user.email)}
+                              color="error"
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                      ) : (
+                          <IconButton
+                              onClick={() => handleAddAdmin(user.email)}
+                              color="inherit"
+                          >
+                            <PlusIcon />
+                          </IconButton>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <span
-                      className={`px-2 py-1 rounded-lg ${
-                        user.emailVerified ? "bg-green-500" : "bg-red-500"
-                      }`}
-                    >
-                      <CheckMarkIcon fontSize="small" className="mr-1" />
-                      {user.emailVerified
-                        ? "Email Verified"
-                        : "Email Not Verified"}
-                    </span>
-                  </div>
-                  <div>
-                    <span
-                      className={`px-2 py-1 rounded-lg ${
-                        user.admin ? "bg-red-500" : "bg-green-500"
-                      }`}
-                    >
-                      {user.admin ? "Admin" : "User"}
-                    </span>
-                  </div>
-                  {user.admin ? (
-                    <IconButton
-                      onClick={() => handleRemoveAdmin(user.email)}
-                      color="error"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  ) : (
-                    <IconButton
-                      onClick={() => handleAddAdmin(user.email)}
-                      color="inherit"
-                    >
-                      <PlusIcon />
-                    </IconButton>
-                  )}
                 </div>
               ))}
           </div>

@@ -141,8 +141,8 @@ export default function Dashboard() {
           key={request.id}
           className="p-4 mb-4 border rounded-lg shadow bg-gray-800"
         >
-          <h3 className="text-xl font-semibold">{request.title}</h3>
-          <p className="text-gray-300 mb-2">{request.description}</p>
+          <h3 className="text-xl font-semibold break-words">{request.title}</h3>
+          <p className="text-gray-300 mb-2 break-words">{request.description}</p>
           <div className="mb-2">
             <label
               className="block text-gray-300 text-sm font-bold mb-2"
@@ -208,7 +208,7 @@ export default function Dashboard() {
             onClick={() => handleUpdate(request.id, type)}
             className="mt-2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
           >
-            Update/Post Comment
+            Post Comment
           </button>
           <button
             onClick={() => handleDelete(request.id, type)}
@@ -216,7 +216,7 @@ export default function Dashboard() {
           >
             Delete
           </button>
-          <div className="text-gray-400 text-sm mt-2">
+          <div className="text-gray-400 text-sm mt-2 break-words">
             <br /> Submitted by:
             <br /> Name: {request.userRank} {request.userName}
             <br/> Job Title: {request.jobTitle}

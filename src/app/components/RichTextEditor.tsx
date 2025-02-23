@@ -49,14 +49,14 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
         },
         editorProps: {
             attributes: {
-                class: "prose prose-invert max-w-none w-full min-h-[200px] p-4 outline-none", // ✅ Ensure dark text
+                class: "prose prose-invert max-w-none w-full min-h-[200px] p-4 outline-none"
             },
         },
     });
 
     if (!editor) return null;
 
-    // ✅ Handle Image Upload
+    // Handle Image Upload
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files || event.target.files.length === 0) return;
 
@@ -70,12 +70,12 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
 
             editor.chain().focus().setImage({ src: imageUrl }).run();
         } catch (error) {
-            console.error("❌ Error uploading image:", error);
+            console.error("Error uploading image:", error);
         }
         setUploading(false);
     };
 
-    // ✅ Handle Attachment Upload
+    // Handle Attachment Upload
     const handleAttachmentUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files || event.target.files.length === 0) return;
 
@@ -92,13 +92,13 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
                 attrs: { fileUrl },
             }).run();
         } catch (error) {
-            console.error("❌ Error uploading attachment:", error);
+            console.error("Error uploading attachment:", error);
         }
         setUploading(false);
     };
 
     return (
-        <Paper sx={{ padding: 2, borderRadius: 2, backgroundColor: "rgba(240, 240, 240, 0.8)" }}>
+        <Paper sx={{ padding: 2, borderRadius: 2, backgroundColor: "#181a1b" }}>
             {/* Formatting Buttons */}
             <Box display="flex" flexWrap="wrap" gap={1} marginBottom={2}>
                 <ToggleButtonGroup size="small" aria-label="text formatting">
@@ -108,7 +108,7 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
                         selected={activeFormats.includes("bold")}
                         aria-label="bold"
                     >
-                        <FormatBold />
+                        <FormatBold sx={{ color: "white" }} />
                     </ToggleButton>
                     <ToggleButton
                         value="italic"
@@ -116,7 +116,7 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
                         selected={activeFormats.includes("italic")}
                         aria-label="italic"
                     >
-                        <FormatItalic />
+                        <FormatItalic sx={{ color: "white" }} />
                     </ToggleButton>
                     <ToggleButton
                         value="underline"
@@ -124,7 +124,7 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
                         selected={activeFormats.includes("underline")}
                         aria-label="underline"
                     >
-                        <FormatUnderlined />
+                        <FormatUnderlined sx={{ color: "white" }} />
                     </ToggleButton>
                     <ToggleButton
                         value="bullet-list"
@@ -132,7 +132,7 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
                         selected={activeFormats.includes("bullet-list")}
                         aria-label="bullet-list"
                     >
-                        <FormatListBulleted />
+                        <FormatListBulleted sx={{ color: "white" }} />
                     </ToggleButton>
                     <ToggleButton
                         value="blockquote"
@@ -140,7 +140,7 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
                         selected={activeFormats.includes("blockquote")}
                         aria-label="blockquote"
                     >
-                        <FormatQuote />
+                        <FormatQuote sx={{ color: "white" }} />
                     </ToggleButton>
                 </ToggleButtonGroup>
 
@@ -148,58 +148,78 @@ export default function RichTextEditor({ content, setContent }: RichTextEditorPr
                 <ToggleButtonGroup size="small" aria-label="heading formatting">
                     <ToggleButton
                         value="h1"
+                        sx={{ color: "white" }}
                         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
                         selected={activeFormats.includes("h1")}
                         aria-label="Heading 1"
                     >
-                        <Title fontSize="small" />
+                        <Title sx={{ color: "white" }} fontSize="small" />
                         H1
                     </ToggleButton>
                     <ToggleButton
                         value="h2"
+                        sx={{ color: "white" }}
                         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
                         selected={activeFormats.includes("h2")}
                         aria-label="Heading 2"
                     >
-                        <Title fontSize="small" />
+                        <Title sx={{ color: "white" }} fontSize="small" />
                         H2
                     </ToggleButton>
                     <ToggleButton
                         value="h3"
+                        sx={{ color: "white" }}
                         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
                         selected={activeFormats.includes("h3")}
                         aria-label="Heading 3"
                     >
-                        <Title fontSize="small" />
+                        <Title sx={{ color: "white" }} fontSize="small" />
                         H3
                     </ToggleButton>
                 </ToggleButtonGroup>
             </Box>
 
             {/* Image & Attachment Upload Buttons */}
-            <Box display="flex" alignItems="center" gap={2} marginBottom={2}>
-                <Button component="label" variant="contained" startIcon={<ImageIcon />}>
+            <Box
+                display="flex"
+                flexWrap="wrap"
+                gap={2}
+                marginBottom={2}
+            >
+            <Button
+                    component="label"
+                    variant="contained"
+                    startIcon={<ImageIcon />}
+                    className="text-sm sm:text-base md:text-lg"
+                >
                     Upload Image
                     <input type="file" accept="image/*" hidden onChange={handleImageUpload} />
                 </Button>
-                <Button component="label" variant="contained" startIcon={<AttachFile />}>
+                <Button
+                    component="label"
+                    variant="contained"
+                    startIcon={<AttachFile />}
+                    className="text-sm sm:text-base md:text-lg"
+                >
                     Upload Attachment
                     <input type="file" hidden onChange={handleAttachmentUpload} />
                 </Button>
+
                 {uploading && <p>Uploading...</p>}
             </Box>
 
             {/* Text Editor */}
             <Paper
                 sx={{
-                    borderRadius: 2,
+                    borderRadius: 1,
                     padding: 2,
                     minHeight: "7em",
                     maxHeight: "32em",
                     overflowY: "auto",
                     cursor: "text",
                     width: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.6)", // ✅ Fixed background issue
+                    backgroundColor: "#0d0d0d", // Fully dark background
+                    color: "#ffffff", // Ensure text is readable
                 }}
                 onClick={() => editor?.commands.focus()}
             >

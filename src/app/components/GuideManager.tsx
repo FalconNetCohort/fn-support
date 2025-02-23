@@ -181,7 +181,7 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
                 <input
                     type="text"
                     placeholder="Search for FAQs or user guides..."
-                    className="w-full p-4 mb-6 border border-gray-300 rounded-lg text-black"
+                    className="w-full p-4 mb-6 border border-gray-700 rounded-lg text-black bg-neutral-900"
                     value={searchTerm}
                     onChange={handleSearch}
                 />
@@ -195,7 +195,7 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
 
             {/* Inline form for creating a new guide */}
             {newGuide && (
-                <div className="bg-gray-900 p-6 rounded-lg shadow-xl">
+                <div className="bg-gray-900 p-6 rounded-lg shadow-xl mb-8 border border-gray-700">
                     <h2 className="text-2xl mb-4">Create New Guide</h2>
                     <input
                         type="text"
@@ -239,17 +239,17 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
                         value={editingGuide.title}
                         onChange={(e) => setEditingGuide({ ...editingGuide, title: e.target.value })}
                         placeholder="Guide Title"
-                        className="w-full p-2 mb-4 bg-gray-800 text-white rounded"
+                        className="w-full p-2 mb-4 bg-gray-800 text-white rounded break-words"
                     />
                     <input
                         type="text"
                         value={editingGuide?.tags?.join(", ") || ""}
                         onChange={(e) => setNewGuide({ ...editingGuide, tags: e.target.value.split(", ") })}
                         placeholder="Tags (comma-separated)"
-                        className="w-full p-2 mb-4 bg-gray-800 text-white rounded"
+                        className="w-full p-2 mb-4 bg-gray-800 text-white rounded break-words"
                     />
                     <RichTextEditor content={editingGuide.content} setContent={(content) => setEditingGuide({ ...editingGuide, content })} />
-                    <button onClick={handleSaveEdit} className="bg-blue-600 text-white px-3 py-2 mt-4 rounded hover:bg-blue-700">
+                    <button onClick={handleSaveEdit} className="bg-blue-600 text-white px-3 py-2 mt-4 rounded hover:bg-blue-700 break-words">
                         Save Changes
                     </button>
                     <button onClick={() => setEditingGuide(null)} className="ml-2 bg-red-600 text-white px-3 py-2 mt-4 rounded hover:bg-red-700">
@@ -258,22 +258,22 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
                 </div>
             )}
 
-            <div className="grid grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {displayedGuides.map((guide) => (
                     <div key={guide.id} className="p-4 mb-4 border rounded-lg cursor-pointer bg-gray-800">
-                        <h2 className="mb-2 text-xl font-semibold text-white" onClick={() => handleGuideClick(guide)}>
+                        <h2 className="mb-2 text-xl font-semibold text-white break-words" onClick={() => handleGuideClick(guide)}>
                             {guide.title}
                         </h2>
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm text-gray-400 break-words">
                             {guide.tags?.join(" ") || ""}
                         </p>
                         {/* Admin-only buttons inside each guide */}
                         {adminMode && (
                             <div>
-                                <p className="text-sm text-gray-400">
+                                <p className="text-sm text-gray-400 break-words">
                                     Last updated: {guide.lastUpdated.toLocaleString()}
                                 </p>
-                                <div className="mt-2 flex space-x-2">
+                                <div className="mt-2 flex-wrap flex space-x-2">
                                     <button onClick={() => handleEdit(guide)} className="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700">
                                         Edit
                                     </button>

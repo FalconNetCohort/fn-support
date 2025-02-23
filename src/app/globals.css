@@ -33,3 +33,10 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Ensure text wraps and doesn't overflow */
+.break-words {
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Ensure words wrap */
+  white-space: normal; /* Allow text wrapping */
+}

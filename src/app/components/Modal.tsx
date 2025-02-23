@@ -11,7 +11,7 @@ interface ModalProps {
 export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
     console.log("📌 Modal Opened with Content:", content);
 
-    // ✅ Convert <attachment-card> placeholders to actual JSX components
+    // Convert <attachment-card> placeholders to actual JSX components
     const parseAttachments = (htmlContent: string) => {
         if (!htmlContent) return "";
 
@@ -21,18 +21,21 @@ export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
         doc.querySelectorAll("attachment-card").forEach((node) => {
             const fileUrl = node.getAttribute("data-url");
             if (fileUrl) {
-                const fileName = decodeURIComponent(fileUrl.split("/").pop()?.split("?")[0] || "Unknown File");
+                // Extract only the filename, removing directory structure
+                const fileName = decodeURIComponent(fileUrl.split("/").pop()?.split("?")[0] || "Unknown File")
+                    .replace(/^guideAttachments\/[0-9]+-/, ""); // Remove "guideAttachments/ and timestamp"
 
                 // Create a new div element to replace <attachment-card>
                 const attachmentDiv = document.createElement("div");
-                attachmentDiv.className = "flex items-center gap-2 bg-gray-800 p-3 rounded-lg";
+                attachmentDiv.className = "flex items-center gap-2 bg-gray-800 p-3 rounded-lg overflow-hidden";
+
                 attachmentDiv.innerHTML = `
-                    <span style="font-size:1.5rem;">📎</span>
-                    <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" 
-                        style="color:white;font-weight:bold;text-decoration:none;">
-                        ${fileName}
-                    </a>
-                `;
+                <span style="font-size:1.5rem; flex-shrink:0;">📎</span>
+                <a href="${fileUrl}" target="_blank" rel="noopener noreferrer"
+                    style="color:white; font-weight:bold; text-decoration:none; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: 100%;">
+                    ${fileName}
+                </a>
+            `;
 
                 node.replaceWith(attachmentDiv);
             }
@@ -40,6 +43,7 @@ export default function Modal({ isOpen, onClose, title, content }: ModalProps) {
 
         return doc.body.innerHTML;
     };
+
 
     return (
         <AnimatePresence>

@@ -9,8 +9,10 @@ export default function Home() {
   return (
       <div className="flex flex-col min-h-screen bg-gray-900 text-white">
         <Header />
-        <main className="flex-grow flex flex-col items-center justify-center p-6">
-          <h1 className="text-3xl mb-6">Welcome to FalconSupport</h1>
+        <main className={"flex-grow items-center justify-center p-6"}>
+          <h1 className="flex text-2xl md:text-3xl mb-6 justify-center py-6 font-bold">
+              Welcome to FalconSupport
+          </h1>
           <GuideManager searchEnabled showLimited />
         </main>
         <Footer />

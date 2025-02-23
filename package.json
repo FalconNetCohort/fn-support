@@ -24,6 +24,7 @@
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
     "clsx": "^2.1.1",
+    "eslint": "^9.20.1",
     "firebase": "^10.14.1",
     "framer-motion": "^11.2.10",
     "fs": "^0.0.1-security",
