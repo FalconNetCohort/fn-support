@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { db } from "../firebase";
-import { collection, getDocs, Timestamp } from "firebase/firestore";
+import { ref, get, child } from "firebase/database";
 
-type Priority = "Low" | "Medium" | "High" | "Critical" | undefined
-type SortField = "priority" | "status" | "name"
+type Priority = "Low" | "Medium" | "High" | "Critical" | undefined;
+type SortField = "priority" | "status" | "name";
 
 interface Ticket {
-    id: string; 
+    id: string;
     type: string;
     featureDescription?: string;
     bugDescription?: string;
@@ -17,10 +17,10 @@ interface Ticket {
     priority?: Priority;
     comments?: {
         text: string;
-        timestamp: Timestamp
+        timestamp: number; // RTDB stores timestamps as numbers (Unix epoch)
     }[];
     status?: string;
-    name?: string
+    name?: string;
 }
 
 export default function InProgress() {
@@ -30,34 +30,45 @@ export default function InProgress() {
 
     useEffect(() => {
         const fetchTickets = async () => {
-            const featureSnapshot = await getDocs(collection(db, "featureRequests"));
-            const supportSnapshot = await getDocs(collection(db, "supportRequests"));
-            const allTickets = [
-                ...featureSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id, type: "Feature" })),
-                ...supportSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id, type: "Support" })),
-            ];
-            setTickets(allTickets);
+            const dbRef = ref(db);
+            try {
+                const featureSnapshot = await get(child(dbRef, "featureRequests"));
+                const supportSnapshot = await get(child(dbRef, "supportRequests"));
+
+                const featureData = featureSnapshot.exists() ? featureSnapshot.val() : {};
+                const supportData = supportSnapshot.exists() ? supportSnapshot.val() : {};
+
+                const formatTickets = (data: any, type: string): Ticket[] =>
+                    Object.keys(data).map((key) => ({
+                        id: key,
+                        type,
+                        ...data[key],
+                    }));
+
+                setTickets([...formatTickets(featureData, "Feature"), ...formatTickets(supportData, "Support")]);
+            } catch (error) {
+                console.error("Error fetching tickets:", error);
+            }
         };
 
         fetchTickets();
     }, []);
 
     const filteredTickets = tickets
-        .filter(ticket =>
-            ticket.featureDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            ticket.bugDescription?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            ticket.supplementalInfo?.toLowerCase().includes(searchTerm.toLowerCase())
+        .filter((ticket) =>
+            [ticket.featureDescription, ticket.bugDescription, ticket.supplementalInfo]
+                .some((desc) => desc?.toLowerCase().includes(searchTerm.toLowerCase()))
         )
         .sort((a, b) => {
             if (sortField === "priority") {
                 const priorityOrder: Priority[] = ["Low", "Medium", "High", "Critical"];
                 return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
             }
-            
-            const aValue = a[sortField] ?? String.fromCharCode(255)
-            const bValue = b[sortField] ?? String.fromCharCode(255)
 
-            return aValue.localeCompare(bValue)
+            const aValue = a[sortField] ?? String.fromCharCode(255);
+            const bValue = b[sortField] ?? String.fromCharCode(255);
+
+            return aValue.localeCompare(bValue);
         });
 
     return (
@@ -90,22 +101,44 @@ export default function InProgress() {
                     </div>
                     {filteredTickets.map((ticket) => (
                         <div key={ticket.id} className="p-4 mb-4 border rounded-lg shadow bg-gray-800">
-                            <h2 className="text-xl font-semibold">{ticket.type}: {ticket.featureDescription || ticket.bugDescription}</h2>
+                            <h2 className="text-xl font-semibold">
+                                {ticket.type}: {ticket.featureDescription || ticket.bugDescription}
+                            </h2>
                             <p className="text-gray-300 mb-2">{ticket.supplementalInfo}</p>
                             <div className="flex justify-between items-center mb-2">
-                                <span className={`px-2 py-1 rounded-lg text-sm ${ticket.priority === "Critical" ? "bg-red-500 text-white" : ticket.priority === "High" ? "bg-yellow-500 text-white" : "bg-green-500 text-white"}`}>
+                                <span
+                                    className={`px-2 py-1 rounded-lg text-sm ${
+                                        ticket.priority === "Critical"
+                                            ? "bg-red-500 text-white"
+                                            : ticket.priority === "High"
+                                                ? "bg-yellow-500 text-white"
+                                                : "bg-green-500 text-white"
+                                    }`}
+                                >
                                     {ticket.priority || "N/A"}
                                 </span>
-                                <span className={`px-2 py-1 rounded-lg text-sm ${ticket.status === "complete" ? "bg-green-500 text-white" : "bg-yellow-500 text-white"}`}>
+                                <span
+                                    className={`px-2 py-1 rounded-lg text-sm ${
+                                        ticket.status === "complete"
+                                            ? "bg-green-500 text-white"
+                                            : "bg-yellow-500 text-white"
+                                    }`}
+                                >
                                     {ticket.status || "in-progress"}
                                 </span>
                                 <span className="text-gray-400 text-sm">Submitted by: {ticket.name}</span>
                             </div>
-                            {ticket.comments && ticket.comments.map((comment, index) => (
-                                <div key={index} className="mt-4 p-2 border-t border-gray-600">
-                                    <p className="text-gray-300"><strong>Comment from FalconNet Team:</strong> {comment.text} <span className="text-xs text-gray-500">({new Date(comment.timestamp?.seconds * 1000).toLocaleString()})</span></p>
-                                </div>
-                            ))}
+                            {ticket.comments &&
+                                ticket.comments.map((comment, index) => (
+                                    <div key={index} className="mt-4 p-2 border-t border-gray-600">
+                                        <p className="text-gray-300">
+                                            <strong>Comment from FalconNet Team:</strong> {comment.text}{" "}
+                                            <span className="text-xs text-gray-500">
+                                                ({new Date(comment.timestamp * 1000).toLocaleString()})
+                                            </span>
+                                        </p>
+                                    </div>
+                                ))}
                         </div>
                     ))}
                 </div>

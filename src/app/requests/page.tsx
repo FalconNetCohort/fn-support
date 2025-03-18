@@ -4,11 +4,12 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import React, { useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { ref, push, set } from "firebase/database";
 import { db } from "@/app/firebase";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { getAuth } from "firebase/auth";
+import Loading from "@/app/loading/page";
 
 const RequestsPageContent = () => {
     const searchParams = useSearchParams();
@@ -21,7 +22,7 @@ const RequestsPageContent = () => {
     const [formData, setFormData] = useState({
         userName: "",
         userRank: "",
-        userEmail: "",
+        userEmail: getAuth().currentUser?.email,
         jobTitle: "",
         title: "",
         description: "",
@@ -41,14 +42,17 @@ const RequestsPageContent = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            await addDoc(collection(db, requestType), {
+            const requestRef = push(ref(db, requestType)); // Generate unique key
+            await set(requestRef, {
                 ...formData,
                 attachment: attachment ? attachment.name : "",
+                timestamp: Date.now(), // Store submission time
             });
+
             alert("Support request submitted successfully!");
             clearForm();
         } catch (err) {
-            console.error(err);
+            console.error("Error submitting support request:", err);
             alert("Error submitting support request");
         }
     };
@@ -57,7 +61,7 @@ const RequestsPageContent = () => {
         setFormData({
             userName: "",
             userRank: "",
-            userEmail: "",
+            userEmail: getAuth().currentUser?.email,
             jobTitle: "",
             title: "",
             description: "",
@@ -75,9 +79,12 @@ const RequestsPageContent = () => {
                 <main className="flex-grow flex flex-col items-center justify-center p-6">
                     <h1 className="text-3xl mb-6">{nameType}</h1>
                     <form className="w-full max-w-lg" onSubmit={handleSubmit}>
+                        <div className={"mb-4 text-center text-lg"}>
+                            User Information
+                        </div>
                         <div className="mb-4">
                             <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="userName">
-                                Name
+                                Your Name
                             </label>
                             <input
                                 type="text"
@@ -91,7 +98,7 @@ const RequestsPageContent = () => {
                         </div>
                         <div className="mb-4">
                             <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="userRank">
-                                Rank
+                                Your Rank
                             </label>
                             <input
                                 type="text"
@@ -104,22 +111,8 @@ const RequestsPageContent = () => {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="userEmail">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                name="userEmail"
-                                id="userEmail"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
-                                value={formData.userEmail}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
                             <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="jobTitle">
-                                Job Title
+                                Your Job Title
                             </label>
                             <input
                                 type="text"
@@ -129,6 +122,9 @@ const RequestsPageContent = () => {
                                 value={formData.jobTitle}
                                 onChange={handleChange}
                             />
+                        </div>
+                        <div className={"my-4 text-center text-lg"}>
+                            {nameType} Information
                         </div>
                         <div className="mb-4">
                             <label className="block text-neutral-100 text-sm font-bold mb-2" htmlFor="title">
@@ -185,7 +181,7 @@ const RequestsPageContent = () => {
 
 const RequestsPage = () => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
             <RequestsPageContent />
         </Suspense>
     );

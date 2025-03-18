@@ -1,6 +1,6 @@
 // firebase.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {getDatabase} from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import {getStorage} from "firebase/storage";
@@ -20,9 +20,9 @@ export const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore and Auth (these don't depend on the window object)
 export const auth = getAuth(app);
-export const db = getFirestore(app);
 export const functions = getFunctions(app);
 export const storage = getStorage(app);
+export const db = getDatabase(app);
 
 export const addAdminRole = httpsCallable(functions, "addAdminRole");
 export const removeAdminRole = httpsCallable(functions, "removeAdminRole");

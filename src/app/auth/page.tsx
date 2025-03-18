@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from 'react';
+import React, {Suspense, useState} from 'react';
 import LogIn from "@/app/components/LogIn"; // adjust the path accordingly
 import SignUp from "@/app/components/SignUp";
 import Header from "@/app/components/Header";
-import AuthWrapper from "@/app/components/AuthWrapper"; // adjust the path accordingly
+import AuthWrapper from "@/app/components/AuthWrapper";
+import Loading from "@/app/loading/page"; // adjust the path accordingly
 
-export default function Auth() {
+function AuthContent() {
     const [isSignUp, setIsSignUp] = useState(false);
 
     return (
@@ -21,3 +22,13 @@ export default function Auth() {
         </AuthWrapper>
     );
 }
+
+const Auth = () => {
+    return (
+        <Suspense fallback={<Loading />}>
+            <AuthContent />
+        </Suspense>
+    );
+};
+
+export default Auth;

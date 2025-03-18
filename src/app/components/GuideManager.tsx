@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { ref, push, update, remove, child, get, set } from "firebase/database";
 import RichTextEditor from "./RichTextEditor";
 import Modal from "./Modal";
+import {getAuth} from "firebase/auth";
 
 interface UserGuide {
     id: string;
@@ -33,27 +34,33 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
     const fetchGuideMetadata = async () => {
         try {
             console.log("📌 Fetching guide metadata...");
-            const querySnapshot = await getDocs(collection(db, "userGuides"));
+            const dbRef = ref(db);
+            const snapshot = await get(child(dbRef, "userGuides"));
 
-            if (querySnapshot.empty) console.warn("⚠️ No guides found in Firestore.");
+            // Check if snapshot exists and contains valid data
+            if (!snapshot.exists() || snapshot.val() === null) {
+                console.warn("⚠️ No guides found in Firebase Realtime Database.");
+                setGuides([]); // Set empty array to avoid undefined errors
+                setFilteredGuides([]);
+                return;
+            }
 
-            let guideList = querySnapshot.docs.map((doc) => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    title: data.title || "Untitled",
-                    content: "", // Empty until fetched dynamically
-                    tags: data.tags || [],
-                    lastUpdated: data.lastUpdated ? (data.lastUpdated.toDate ? data.lastUpdated.toDate() : new Date(data.lastUpdated)) : new Date(), // Convert Firestore Timestamp to Date
-                    createdBy: data.createdBy || "FalconNet Admin",
-                };
-            });
+            const guideData = snapshot.val();
+            const guideList = Object.keys(guideData).map((key) => ({
+                id: key,
+                title: guideData[key]?.title || "Untitled",
+                content: "", // Content is loaded dynamically
+                tags: guideData[key]?.tags || [],
+                lastUpdated: guideData[key]?.lastUpdated ? new Date(guideData[key].lastUpdated) : new Date(),
+                createdBy: guideData[key]?.createdBy,
+            }));
+
             // 🔹 Sort guides by lastUpdated (newest first)
             guideList.sort((a, b) => b.lastUpdated.getTime() - a.lastUpdated.getTime());
 
             console.log("✅ Retrieved guides:", guideList);
             setGuides(guideList);
-            setFilteredGuides(guideList); // Initially, display all guides
+            setFilteredGuides(guideList);
         } catch (error) {
             console.error("❌ Error fetching guide metadata:", error);
         }
@@ -63,21 +70,22 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
     const fetchGuideById = async (guideId: string) => {
         try {
             console.log(`📌 Fetching content for guide ID: ${guideId}`);
-            const guideRef = doc(db, "userGuides", guideId);
-            const guideSnap = await getDoc(guideRef);
+            const guideRef = ref(db, `userGuides/${guideId}`);
+            const snapshot = await get(guideRef);
 
-            if (!guideSnap.exists()) {
+            if (!snapshot.exists()) {
                 console.warn(`⚠️ Guide not found: ${guideId}`);
                 return null;
             }
 
+            const guideData = snapshot.val();
             return {
                 id: guideId,
-                title: guideSnap.data().title || "Untitled",
-                content: guideSnap.data().content || "<p>No content available.</p>",
-                tags: guideSnap.data().tags || [],
-                lastUpdated: guideSnap.data().lastUpdated ? (guideSnap.data().lastUpdated.toDate ? guideSnap.data().lastUpdated.toDate() : new Date(guideSnap.data().lastUpdated)) : new Date(),
-                createdBy: guideSnap.data().createdBy || "",
+                title: guideData.title || "Untitled",
+                content: guideData.content || "<p>No content available.</p>",
+                tags: guideData.tags || [],
+                lastUpdated: guideData.lastUpdated ? new Date(guideData.lastUpdated) : new Date(),
+                createdBy: guideData.createdBy,
             };
         } catch (error) {
             console.error("❌ Error fetching guide content:", error);
@@ -100,15 +108,20 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
     const handleSaveNewGuide = async () => {
         if (!newGuide) return;
         try {
-            const docRef = await addDoc(collection(db, "userGuides"), {
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+
+            const guideRef = await push(ref(db, "userGuides"));
+            await set(guideRef, {
+                id: guideRef.key,
                 title: newGuide.title,
                 content: newGuide.content,
                 tags: newGuide.tags,
                 lastUpdated: new Date(),
-                createdBy: newGuide.createdBy,
+                createdBy: currentUser?.email || "FN Admin",
             });
-            console.log(`✅ Guide created: ${docRef.id}`);
-            setNewGuide(null); // Clear the form after saving
+            console.log(`✅ Guide created with ID: ${guideRef.key}`);
+            setNewGuide(null);
             fetchGuideMetadata(); // Refresh guide list
         } catch (error) {
             console.error("❌ Error creating guide:", error);
@@ -119,11 +132,16 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
     const handleSaveEdit = async () => {
         if (!editingGuide) return;
         try {
-            await updateDoc(doc(db, "userGuides", editingGuide.id), {
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+
+            const guideRef = ref(db, `userGuides/${editingGuide.id}`);
+            await update(guideRef, {
                 title: editingGuide.title,
                 content: editingGuide.content,
                 tags: editingGuide.tags,
                 lastUpdated: new Date(),
+                createdBy: currentUser?.email || "FN Admin",
             });
             console.log(`✅ Guide updated: ${editingGuide.id}`);
             setEditingGuide(null);
@@ -144,7 +162,9 @@ const GuideManager: React.FC<GuideManagerProps> = ({ searchEnabled = false, admi
         if (!confirm("Are you sure you want to delete this guide?")) return;
 
         try {
-            await deleteDoc(doc(db, "userGuides", guideId));
+            const guideRef = ref(db, `userGuides/${guideId}`);
+            await remove(guideRef);
+
             console.log(`✅ Guide deleted: ${guideId}`);
             fetchGuideMetadata(); // Refresh guide list
         } catch (error) {

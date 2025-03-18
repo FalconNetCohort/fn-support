@@ -1,20 +1,14 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, {useState, useEffect, Suspense} from "react";
 import { useRouter } from "next/navigation";
 import { User } from "firebase/auth";
 import { db, auth } from "../firebase";
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  doc,
-  arrayUnion,
-} from "firebase/firestore";
+import { get, child, ref, update, remove } from "firebase/database";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import AdminAuthWrapper from "../components/AdminAuthWrapper";
+import Loading from "@/app/loading/page";
 
 // Define types for requests
 interface Request {
@@ -39,7 +33,7 @@ interface CommentData {
   [key: string]: string;
 }
 
-export default function Dashboard() {
+function DashboardContent() {
   const [featureRequests, setFeatureRequests] = useState<Request[]>([]);
   const [supportRequests, setSupportRequests] = useState<Request[]>([]);
   const [comments, setComments] = useState<CommentData>({});
@@ -59,57 +53,73 @@ export default function Dashboard() {
   }, [router]);
 
   const fetchRequests = async () => {
-    const featureSnapshot = await getDocs(collection(db, "featureRequests"));
-    const supportSnapshot = await getDocs(collection(db, "supportRequests"));
+    try {
+      const dbRef = ref(db);
+      const featureSnapshot = await get(child(dbRef, "featureRequests"));
+      const supportSnapshot = await get(child(dbRef, "supportRequests"));
 
-    setFeatureRequests(
-      featureSnapshot.docs.map(
-        (doc) => ({ ...doc.data(), id: doc.id } as Request)
-      )
-    );
-    setSupportRequests(
-      supportSnapshot.docs.map(
-        (doc) => ({ ...doc.data(), id: doc.id } as Request)
-      )
-    );
+      const featureData = featureSnapshot.exists() ? featureSnapshot.val() : {};
+      const supportData = supportSnapshot.exists() ? supportSnapshot.val() : {};
+
+      const formatRequests = (data: any): Request[] =>
+          Object.keys(data).map((key) => ({
+            id: key,
+            ...data[key],
+          }));
+
+      setFeatureRequests(formatRequests(featureData));
+      setSupportRequests(formatRequests(supportData));
+    } catch (error) {
+      console.error("Error fetching requests:", error);
+    }
   };
 
   const handleUpdate = async (id: string, type: "feature" | "support") => {
-    const requestRef = doc(
-      db,
-      type === "feature" ? "featureRequests" : "supportRequests",
-      id
-    );
+    try {
+      const requestPath = `${type === "feature" ? "featureRequests" : "supportRequests"}/${id}`;
+      const requestRef = ref(db, requestPath);
 
-    const updateData: UpdateData = updates[id] || {};
+      const updateData: UpdateData = updates[id] || {};
 
-    // Ensure updateData is non-empty before updating
-    if (comments[id]) {
-      // Cast the update object to the expected Firestore format
-      await updateDoc(requestRef, {
-        ...updateData,
-        comments: arrayUnion({ text: comments[id], timestamp: new Date() }),
-      } as Partial<UpdateData>); // Ensure Firestore accepts it as a partial update
-    } else {
-      // If no comments to add, update only the existing data
-      await updateDoc(requestRef, updateData as Partial<UpdateData>);
+      if (comments[id]) {
+        // Fetch existing comments
+        const snapshot = await get(child(ref(db), requestPath));
+        const requestData = snapshot.exists() ? snapshot.val() : {};
+
+        const currentComments = requestData.comments || [];
+
+        // Update the request with new comment
+        await update(requestRef, {
+          ...updateData,
+          comments: [...currentComments, { text: comments[id], timestamp: Date.now() }],
+        });
+      } else {
+        await update(requestRef, updateData);
+      }
+
+      alert("Request updated successfully!");
+      setComments({ ...comments, [id]: "" });
+      setUpdates({});
+      await fetchRequests();
+    } catch (error) {
+      console.error("Error updating request:", error);
+      alert("Error updating request");
     }
-
-    alert("Request updated successfully");
-    setComments({ ...comments, [id]: "" });
-    setUpdates({});
-    await fetchRequests();
   };
 
   const handleDelete = async (id: string, type: "feature" | "support") => {
-    const requestRef = doc(
-      db,
-      type === "feature" ? "featureRequests" : "supportRequests",
-      id
-    );
-    await deleteDoc(requestRef);
-    alert("Request deleted successfully");
-    await fetchRequests();
+    try {
+      const requestPath = `${type === "feature" ? "featureRequests" : "supportRequests"}/${id}`;
+      const requestRef = ref(db, requestPath);
+
+      await remove(requestRef);
+
+      alert("Request deleted successfully!");
+      await fetchRequests();
+    } catch (error) {
+      console.error("Error deleting request:", error);
+      alert("Error deleting request");
+    }
   };
 
   const handleChange = (id: string, field: keyof UpdateData, value: string) => {
@@ -287,3 +297,13 @@ export default function Dashboard() {
     </AdminAuthWrapper>
   );
 }
+
+const Dashboard = () => {
+  return (
+      <Suspense fallback={<Loading />}>
+        <DashboardContent />
+      </Suspense>
+  );
+};
+
+export default Dashboard;

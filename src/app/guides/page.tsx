@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, {Suspense} from "react";
 import GuideManager from "../components/GuideManager";
 import AdminAuthWrapper from "../components/AdminAuthWrapper";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loading from "@/app/loading/page";
 
-export default function GuidesPage() {
+const GuidesPageContent = () => {
   return (
       <AdminAuthWrapper>
         <Header />
@@ -18,3 +19,13 @@ export default function GuidesPage() {
       </AdminAuthWrapper>
   );
 }
+
+const GuidesPage = () => {
+    return (
+        <Suspense fallback={<Loading />}>
+            <GuidesPageContent />
+        </Suspense>
+    );
+};
+
+export default GuidesPage;

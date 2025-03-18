@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import Header from "../components/Header";
 import { Alert, Icon, IconButton, Slide } from "@mui/material";
 import { addAdminRole, listUsers, removeAdminRole } from "../firebase";
@@ -8,6 +8,7 @@ import PlusIcon from "@mui/icons-material/Add";
 import CheckMarkIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AdminAuthWrapper from "../components/AdminAuthWrapper";
+import Loading from "@/app/loading/page";
 
 interface User {
   email: string;
@@ -15,7 +16,7 @@ interface User {
   admin: boolean;
 }
 
-export default function Admin() {
+function AdminContent() {
   const [adminInput, setAdminInput] = useState("");
   const [alert, setAlert] = useState<{
     open: boolean;
@@ -185,3 +186,13 @@ export default function Admin() {
     </AdminAuthWrapper>
   );
 }
+
+const Admin = () => {
+  return (
+      <Suspense fallback={<Loading />}>
+        <AdminContent />
+      </Suspense>
+  );
+};
+
+export default Admin;

@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from 'react';
+import React, {Suspense, useState} from 'react';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import {auth} from "@/app/firebase";
+import Loading from "@/app/loading/page";
 
-export default function ForgotPassword() {
+function ForgotPasswordContent() {
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [message, setMessage] = useState('');
@@ -44,3 +45,13 @@ export default function ForgotPassword() {
         </div>
     );
 }
+
+const ForgotPassword = () => {
+    return (
+        <Suspense fallback={<Loading />}>
+            <ForgotPasswordContent />
+        </Suspense>
+    );
+};
+
+export default ForgotPassword;
