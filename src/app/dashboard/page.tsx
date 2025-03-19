@@ -84,7 +84,7 @@ function DashboardContent() {
       const user = getAuth().currentUser;
 
       if (!user) {
-        alert("You must be logged in to post a comment.");
+        alert("You must be logged in to update a post.");
         return;
       }
 
@@ -135,9 +135,39 @@ function DashboardContent() {
     }
   };
 
-  const handleChange = (id: string, field: keyof UpdateData, value: string) => {
-    setUpdates({ ...updates, [id]: { ...updates[id], [field]: value } });
+  const handleChange = async (
+      id: string,
+      field: keyof UpdateData,
+      value: string,
+      type: "feature" | "support"
+  ) => {
+    try {
+      const requestPath = `${type === "feature" ? "featureRequests" : "supportRequests"}/${id}`;
+      const requestRef = ref(db, requestPath);
+
+      // Immediately update Firebase with the new value
+      await update(requestRef, { [field]: value });
+
+      // Update UI state by modifying the appropriate request list
+      setFeatureRequests((prev) =>
+          prev.map((request) =>
+              request.id === id ? { ...request, [field]: value } : request
+          )
+      );
+
+      setSupportRequests((prev) =>
+          prev.map((request) =>
+              request.id === id ? { ...request, [field]: value } : request
+          )
+      );
+
+    } catch (error) {
+      console.error("Error updating request:", error);
+      alert("Error updating request");
+    }
   };
+
+
 
   const handleCommentChange = (id: string, value: string) => {
     setComments({
@@ -156,9 +186,22 @@ function DashboardContent() {
       request.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Pick color based on status
+    const statusColor = (status: string) => {
+        switch (status) {
+        case "complete":
+            return "bg-green-600";
+        case "in-progress":
+            return "bg-yellow-600";
+        default:
+            return "bg-gray-600";
+        }
+    };
+
+
   const renderRequests = (requests: Request[], type: "feature" | "support") =>
     requests.length === 0 ? (
-      <div className="text-gray-400">No posts yet</div>
+      <div className="text-gray-400 text-center">No posts yet</div>
     ) : (
       requests.map((request) => (
         <div
@@ -178,14 +221,14 @@ function DashboardContent() {
               id="priority"
               value={updates[request.id]?.priority || request.priority || "Low"}
               onChange={(e) =>
-                handleChange(request.id, "priority", e.target.value)
+                handleChange(request.id, "priority", e.target.value, type)
               }
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-              <option value="Critical">Critical</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
             </select>
           </div>
           <div className="mb-2">
@@ -201,15 +244,13 @@ function DashboardContent() {
                 updates[request.id]?.status || request.status || "in-progress"
               }
               onChange={(e) =>
-                handleChange(request.id, "status", e.target.value)
+                handleChange(request.id, "status", e.target.value, type)
               }
-              className={`px-2 py-1 rounded-lg text-sm ${
-                updates[request.id]?.status === "complete" ||
-                request.status === "complete"
-                  ? "bg-green-500 text-white"
-                  : "bg-yellow-500 text-white"
+              className={`px-2 py-1 rounded-lg text-sm text-white ${
+                statusColor(updates[request.id]?.status || request.status || "in-progress")
               } shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             >
+                <option value="pending">Pending</option>
               <option value="in-progress">In Progress</option>
               <option value="complete">Complete</option>
             </select>
@@ -271,52 +312,80 @@ function DashboardContent() {
       <main className="flex min-h-screen flex-col items-center justify-center p-6 bg-gray-900 text-white">
         <h1 className="text-3xl mb-6">Dashboard</h1>
         <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-4 mb-6 border border-gray-300 rounded-lg text-black"
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-4 mb-6 border border-gray-300 rounded-lg text-black"
         />
+
         <div className="w-full max-w-5xl">
-          <h2 className="text-2xl mb-4">In Progress</h2>
+          <h2 className="text-2xl mb-4 text-center">Pending</h2>
           <div className="flex justify-between">
             <div className="w-1/2 pr-2">
-              <h3 className="text-xl mb-2">Feature Requests</h3>
+              <h3 className="text-xl mb-2 text-center">Feature Requests</h3>
               {renderRequests(
-                filteredFeatureRequests.filter(
-                  (request) => request.status !== "complete"
-                ),
-                "feature"
+                  filteredFeatureRequests.filter(
+                      (request) => request.status === "pending"
+                  ),
+                  "feature"
               )}
             </div>
             <div className="w-1/2 pl-2">
-              <h3 className="text-xl mb-2">Support Requests</h3>
+              <h3 className="text-xl mb-2 text-center">Support Requests</h3>
               {renderRequests(
-                filteredSupportRequests.filter(
-                  (request) => request.status !== "complete"
-                ),
-                "support"
+                  filteredSupportRequests.filter(
+                      (request) => request.status === "pending"
+                  ),
+                  "support"
               )}
             </div>
           </div>
-          <h2 className="text-2xl mt-6 mb-4">Complete</h2>
+
+          <hr className="my-6 border-t border-gray-700" />
+
+          <h2 className="text-2xl mt-6 mb-4 text-center">In Progress</h2>
           <div className="flex justify-between">
             <div className="w-1/2 pr-2">
-              <h3 className="text-xl mb-2">Feature Requests</h3>
+              <h3 className="text-xl mb-2 text-center">Feature Requests</h3>
               {renderRequests(
-                filteredFeatureRequests.filter(
-                  (request) => request.status === "complete"
-                ),
-                "feature"
+                  filteredFeatureRequests.filter(
+                      (request) => request.status === "in-progress"
+                  ),
+                  "feature"
               )}
             </div>
             <div className="w-1/2 pl-2">
-              <h3 className="text-xl mb-2">Support Requests</h3>
+              <h3 className="text-xl mb-2 text-center">Support Requests</h3>
               {renderRequests(
-                filteredSupportRequests.filter(
-                  (request) => request.status === "complete"
-                ),
-                "support"
+                  filteredSupportRequests.filter(
+                      (request) => request.status === "in-progress"
+                  ),
+                  "support"
+              )}
+            </div>
+          </div>
+
+          <hr className="my-6 border-t border-gray-700" />
+
+          <h2 className="text-2xl mt-6 mb-4 text-center">Completed</h2>
+          <div className="flex justify-between">
+            <div className="w-1/2 pr-2">
+              <h3 className="text-xl mb-2 text-center">Feature Requests</h3>
+              {renderRequests(
+                  filteredFeatureRequests.filter(
+                      (request) => request.status === "complete"
+                  ),
+                  "feature"
+              )}
+            </div>
+            <div className="w-1/2 pl-2">
+              <h3 className="text-xl mb-2 text-center">Support Requests</h3>
+              {renderRequests(
+                  filteredSupportRequests.filter(
+                      (request) => request.status === "complete"
+                  ),
+                  "support"
               )}
             </div>
           </div>
