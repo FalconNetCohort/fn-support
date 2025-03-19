@@ -18,15 +18,20 @@ const RequestsPageContent = () => {
     if (!requestType) {
         return <div>Invalid request type</div>;
     }
+    const user = getAuth().currentUser;
+    if (!user) {
+        alert("You must be logged in to submit a request");
+        return null;
+    }
 
     const [formData, setFormData] = useState({
         userName: "",
         userRank: "",
-        userEmail: getAuth().currentUser?.email,
+        userEmail: user.email,
         jobTitle: "",
         title: "",
         description: "",
-        userId: getAuth().currentUser?.uid,
+        userId: user.uid,
     });
     const [attachment, setAttachment] = useState<File | null>(null);
 
@@ -61,11 +66,11 @@ const RequestsPageContent = () => {
         setFormData({
             userName: "",
             userRank: "",
-            userEmail: getAuth().currentUser?.email,
+            userEmail: user.email,
             jobTitle: "",
             title: "",
             description: "",
-            userId: getAuth().currentUser?.uid,
+            userId: user.uid,
         });
         setAttachment(null);
     };
