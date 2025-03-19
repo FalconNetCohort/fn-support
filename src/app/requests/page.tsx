@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import React, { useState } from "react";
-import { ref, push, set } from "firebase/database";
+import {ref, push, set, get} from "firebase/database";
 import { db } from "@/app/firebase";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -18,21 +18,13 @@ const RequestsPageContent = () => {
     if (!requestType) {
         return <div>Invalid request type</div>;
     }
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (!user) {
-        alert("You must be logged in to submit a request");
-        return null;
-    }
 
     const [formData, setFormData] = useState({
         userName: "",
         userRank: "",
-        userEmail: auth.currentUser.email,
         jobTitle: "",
         title: "",
         description: "",
-        userId: auth.currentUser.uid,
     });
     const [attachment, setAttachment] = useState<File | null>(null);
 
@@ -52,6 +44,8 @@ const RequestsPageContent = () => {
             await set(requestRef, {
                 ...formData,
                 attachment: attachment ? attachment.name : "",
+                userEmail: getAuth().currentUser?.email,
+                userId: getAuth().currentUser?.uid,
                 timestamp: Date.now(), // Store submission time
             });
 
@@ -67,11 +61,9 @@ const RequestsPageContent = () => {
         setFormData({
             userName: "",
             userRank: "",
-            userEmail: user.email,
             jobTitle: "",
             title: "",
             description: "",
-            userId: user.uid,
         });
         setAttachment(null);
     };
