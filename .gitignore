@@ -37,3 +37,11 @@ next-env.d.ts
 
 # firebase
 .firebase/*
+.firebase/fn-support-e5ac9/hosting/404.html
+.firebase/fn-support-e5ac9/hosting/auth.html
+.firebase/fn-support-e5ac9/hosting/dashboard.html
+.firebase/fn-support-e5ac9/hosting/forgot-password.html
+.firebase/fn-support-e5ac9/hosting/in-progress.html
+.firebase/fn-support-e5ac9/hosting/index.html
+.firebase/fn-support-e5ac9/hosting/loading.html
+.firebase/hosting.LmZpcmViYXNlL2ZuLXN1cHBvcnQtZTVhYzkvaG9zdGluZw.cache
