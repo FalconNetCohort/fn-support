@@ -1,7 +1,7 @@
 "use client";
 import React, {useState, useEffect, Suspense} from "react";
 import { useRouter } from "next/navigation";
-import { User } from "firebase/auth";
+import { User, getAuth } from "firebase/auth";
 import { db, auth } from "../firebase";
 import { get, child, ref, update, remove } from "firebase/database";
 
@@ -16,6 +16,7 @@ interface Request {
   title?: string;
   description: string;
   priority?: string;
+  comments?: any[];
   status?: string;
   userName: string;
   userRank: string;
@@ -80,6 +81,12 @@ function DashboardContent() {
       const requestRef = ref(db, requestPath);
 
       const updateData: UpdateData = updates[id] || {};
+      const user = getAuth().currentUser;
+
+      if (!user) {
+        alert("You must be logged in to post a comment.");
+        return;
+      }
 
       if (comments[id]) {
         // Fetch existing comments
@@ -88,10 +95,16 @@ function DashboardContent() {
 
         const currentComments = requestData.comments || [];
 
-        // Update the request with new comment
+        // Append new comment with user details
+        const newComment = {
+          text: comments[id],
+          authorEmail: user.email || "FN Admin",
+          timestamp: Date.now(),
+        };
+
         await update(requestRef, {
           ...updateData,
-          comments: [...currentComments, { text: comments[id], timestamp: Date.now() }],
+          comments: [...currentComments, newComment],
         });
       } else {
         await update(requestRef, updateData);
@@ -127,7 +140,8 @@ function DashboardContent() {
   };
 
   const handleCommentChange = (id: string, value: string) => {
-    setComments({ ...comments, [id]: value });
+    setComments({
+      ...comments, [id]: value });
   };
 
   const filteredFeatureRequests = featureRequests.filter(
@@ -199,6 +213,21 @@ function DashboardContent() {
               <option value="in-progress">In Progress</option>
               <option value="complete">Complete</option>
             </select>
+          </div>
+          <div className="mb-2">
+            <h4 className="text-lg font-semibold mb-2">Comments</h4>
+            {request.comments?.map((comment: any, index: number) => (
+              <div
+                key={index}
+                className="p-2 mb-2 border rounded-lg bg-gray-700"
+              >
+                <div className="text-gray-300">{comment.text}</div>
+                <div className="text-gray-400 text-sm">{comment.authorEmail}</div>
+                <div className="text-gray-400 text-sm">
+                  {new Date(comment.timestamp).toLocaleString()}
+                </div>
+              </div>
+            ))}
           </div>
           <div className="mb-2">
             <label
