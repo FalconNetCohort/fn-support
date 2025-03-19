@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import React, { useState } from "react";
-import {ref, push, set, get} from "firebase/database";
+import { ref, push, set } from "firebase/database";
 import { db } from "@/app/firebase";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -47,6 +47,8 @@ const RequestsPageContent = () => {
                 userEmail: getAuth().currentUser?.email,
                 userId: getAuth().currentUser?.uid,
                 timestamp: Date.now(), // Store submission time
+                priority: "medium", // Default priority
+                status: "pending", // Default status
             });
 
             alert("Support request submitted successfully!");
