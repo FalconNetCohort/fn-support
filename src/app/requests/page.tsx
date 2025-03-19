@@ -22,7 +22,7 @@ const RequestsPageContent = () => {
     const [formData, setFormData] = useState({
         userName: "",
         userRank: "",
-        userEmail: "",
+        userEmail: getAuth().currentUser?.email,
         jobTitle: "",
         title: "",
         description: "",
@@ -58,15 +58,10 @@ const RequestsPageContent = () => {
     };
 
     const clearForm = () => {
-        const user = getAuth().currentUser;
-        if (!user) {
-            alert("You must be logged in to post a comment.");
-            return;
-        }
         setFormData({
             userName: "",
             userRank: "",
-            userEmail: user.email || "FN Admin",
+            userEmail: getAuth().currentUser?.email,
             jobTitle: "",
             title: "",
             description: "",
