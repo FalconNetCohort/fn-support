@@ -18,7 +18,8 @@ const RequestsPageContent = () => {
     if (!requestType) {
         return <div>Invalid request type</div>;
     }
-    const user = getAuth().currentUser;
+    const auth = getAuth();
+    const user = auth.currentUser;
     if (!user) {
         alert("You must be logged in to submit a request");
         return null;
@@ -27,11 +28,11 @@ const RequestsPageContent = () => {
     const [formData, setFormData] = useState({
         userName: "",
         userRank: "",
-        userEmail: user.email,
+        userEmail: auth.currentUser.email,
         jobTitle: "",
         title: "",
         description: "",
-        userId: user.uid,
+        userId: auth.currentUser.uid,
     });
     const [attachment, setAttachment] = useState<File | null>(null);
 
